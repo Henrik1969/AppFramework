@@ -1,0 +1,9 @@
+testing (1.0-1) unstable; urgency=low
+
+  * Project creation
+
+ -- Henrik Sørensen <henriksorensen@gmail.com>  Wed, 01 Jan 2020 00:00:00 +0000
+
+  * Preparation for release on github of a first alpha version
+
+  -- Henrik Sørensen <henriksorensen@gmail.com>  Sat, 18 Nov 2023 14:55:14 +0000

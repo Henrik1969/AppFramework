@@ -1,0 +1,3 @@
+/home/henrik/Projekter/AppFramework/build/CMakeFiles/testing.dir
+/home/henrik/Projekter/AppFramework/build/CMakeFiles/edit_cache.dir
+/home/henrik/Projekter/AppFramework/build/CMakeFiles/rebuild_cache.dir

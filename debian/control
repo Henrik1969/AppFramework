@@ -1,0 +1,11 @@
+Source: AppFramework
+Section: utils
+Priority: optional
+Maintainer: Henrik Sørensen <henriksorensen@gmail.com>
+Build-Depends: debhelper (>= 9), cmake, cmake
+Standards-Version: 3.9.6
+
+Package: AppFramework
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: A Project Framework that includes CommandlineHandeling, Environment variables facilitation, and logging.

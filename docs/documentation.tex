@@ -1,0 +1,41 @@
+\documentclass{article}
+\usepackage{listings}  % Add this line
+\usepackage{xcolor}
+
+% Define custom colors
+\definecolor{commentcolor}{rgb}{0.5, 0.5, 0.5} % gray
+\definecolor{keywordcolor}{rgb}{0, 0.5, 0}     % dark green
+\definecolor{stringcolor}{rgb}{0.58, 0, 0.82}  % purple
+
+% Listings package configuration with colors
+\lstset{
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    frame=single,
+    commentstyle=\color{commentcolor},
+    keywordstyle=\color{keywordcolor},
+    stringstyle=\color{stringcolor},
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    showspaces=false,
+    showstringspaces=false,
+    tabsize=2,
+    language=C++  % Default language
+}
+
+\title{Project Documentation}
+\author{Your Name}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+\newpage
+
+% Include class documentation files
+\input{EnvVar.tex}
+\input{ConfigManager.tex}
+\input{Logger.tex}
+
+\end{document}
