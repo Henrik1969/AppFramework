@@ -1,1 +1,0 @@
-/usr/bin/c++ CMakeFiles/testing.dir/src/ConfigManager.cpp.o CMakeFiles/testing.dir/src/EnvVar.cpp.o CMakeFiles/testing.dir/src/Logger.cpp.o CMakeFiles/testing.dir/src/Arguments.cpp.o CMakeFiles/testing.dir/src/Argument.cpp.o CMakeFiles/testing.dir/src/CommandLineProcessor.cpp.o CMakeFiles/testing.dir/src/main.cpp.o -o testing 
