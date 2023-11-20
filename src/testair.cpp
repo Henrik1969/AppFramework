@@ -14,25 +14,11 @@
   along with AppFramework. If not, see <https://www.gnu.org/licenses/>.
 */
 
-#ifndef ARGUMENTS_HPP
-#define ARGUMENTS_HPP
+// testair.cpp
 
-#include "Argument.hpp"
-#include <string>
-#include <map>
+#include "testair.hpp"
 
-class Arguments {
-public:
-    Arguments(int argc, char* argv[], const std::map<std::string, Argument>& definedArgs);
-       // Add this method
-    
-    const std::map<std::string, std::string>& getArgValues() const { return argValues; }
-    std::string getArgValue(const std::string& argName) const;
-    bool isInArgs(const std::string& str) const;
-
-private:
-    std::map<std::string, std::string> argValues; // Maps argument names to their values
-};
-
-#endif // ARGUMENTS_HPP
-
+#ifdef THREAD_SAFE
+#include <mutex>
+std::mutex EnvVar::mtx;  // Define the static mutex
+#endif

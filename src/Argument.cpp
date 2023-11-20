@@ -41,3 +41,8 @@ bool Argument::needsValue() const {
 E_Argument_ValueType Argument::getValueType() const {
     return valueType;
 }
+
+void Argument::setValue(const std::string& value) {
+    this->value = value;
+}
+

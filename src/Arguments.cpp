@@ -13,32 +13,53 @@
   You should have received a copy of the GNU General Public License
   along with AppFramework. If not, see <https://www.gnu.org/licenses/>.
 */
-
+#include <iostream>
 #include "Arguments.hpp"
-#include <stdexcept>
 
-Arguments::Arguments(int argc, char* argv[]) {
-    for (int i = 0; i < argc; ++i) {
-        Args.push_back(std::string(argv[i]));
+Arguments::Arguments(int argc, char* argv[], const std::map<std::string, Argument>& definedArgs) {
+    for (int i = 1; i < argc; ++i) {
+        std::string currentArg = argv[i];
+        std::cout << "Processing argument: " << currentArg << std::endl;
+
+        // First, try to find the argument as is (works for long names)
+        auto it = definedArgs.find(currentArg);
+        if (it == definedArgs.end()) {
+            // If not found, try to match it as a short name
+            for (const auto& argPair : definedArgs) {
+                if (argPair.second.getShortName() == currentArg) {
+                    it = definedArgs.find(argPair.second.getLongName());
+                    break;
+                }
+            }
+        }
+
+        if (it != definedArgs.end()) {
+            const Argument& arg = it->second;
+
+            if (arg.needsValue()) {
+                if (i + 1 < argc) {
+                    argValues[it->first] = argv[i + 1]; // Use the long name as key
+                    ++i; // Skip the value as it's already processed
+                }
+                // Optionally, add else part for error handling if value is expected but not provided
+            } else {
+                argValues[it->first] = ""; // No value needed, just mark as present
+            }
+        } else {
+            std::cout << "Unrecognized argument: " << currentArg << std::endl;
+        }
     }
 }
 
-int Arguments::getNumArgs() const {
-    return Args.size();
-}
-
-std::string Arguments::getArg(int index) const {
-    if (index < 0 || index >= Args.size()) {
-        throw std::out_of_range("Index is out of bounds");
+std::string Arguments::getArgValue(const std::string& argName) const {
+    auto it = argValues.find(argName);
+    if (it != argValues.end()) {
+        return it->second;
     }
-    return Args[index];
+    return ""; // Return empty string if argument not found
 }
 
 bool Arguments::isInArgs(const std::string& str) const {
-    for (const auto& arg : Args) {
-        if (arg == str) {
-            return true;
-        }
-    }
-    return false;
+    return argValues.find(str) != argValues.end();
 }
+

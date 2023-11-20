@@ -32,40 +32,47 @@ void handleVersion(const std::shared_ptr<Argument>& arg) {
     std::cout << "Version requested: " << arg->getDescription() << std::endl;
 }
 
+void handleConfig(const std::shared_ptr<Argument>& arg) {
+    std::cout << "Config requested. ";
+    std::cout << "Long Name: " << arg->getLongName() << ", ";
+    std::cout << "Short Name: " << arg->getShortName() << ", ";
+    std::cout << "Value: " << arg->getValue<std::string>() << std::endl;
+}
 
 int main(int argc, char* argv[]) {
 
-
-    // Initialize Arguments instance
-    Arguments cmdArgs(argc, argv);
-
-    // Initialize CommandLineProcessor with Arguments instance
-    CommandLineProcessor cmdProcessor(cmdArgs);
-
-    // Define arguments and add to processor
+    // Define your arguments
     Argument helpArg("--help", "-h", "Display help information", false, E_Argument_ValueType::None);
     Argument versionArg("--version", "-v", "Display version information", false, E_Argument_ValueType::None);
-    cmdProcessor.AddArgumentHandler(helpArg, handleHelp);
+    Argument configArg("--config", "-c", "Specify config file", true, E_Argument_ValueType::String);
+
+    // Map of defined arguments
+    std::map<std::string, Argument> definedArgs = {
+        {helpArg.getLongName(), helpArg},
+        {versionArg.getLongName(), versionArg},
+        {configArg.getLongName(), configArg}
+    };
+
+    // Initialize Arguments instance
+    Arguments cmdArgs(argc, argv, definedArgs);
+
+    // Initialize CommandLineProcessor and add handler functions
+    CommandLineProcessor cmdProcessor(cmdArgs);
+
+	cmdProcessor.AddArgumentHandler(helpArg, handleHelp);
     cmdProcessor.AddArgumentHandler(versionArg, handleVersion);
+	cmdProcessor.AddArgumentHandler(configArg, handleConfig);
 
     // Process the command line arguments
     cmdProcessor.Process();
-    
 
 /*
-    std::string configFile = args.getConfigFile();
-    // Use configFile with ConfigManager
-
-    std::string logFile = args.getLogFile();
-    // Use logFile with Logger
-
     EnvVar myVar("LOGPATH");
 
     // Log using Logger after getting environment variable
     std::string logPathValue = myVar.get();
     Logger::getInstance().log("LOGPATH value: " + logPathValue, "main", Logger::Severity::Info);
     std::cout << "LOGPATH: " << logPathValue << std::endl;
-
 
     //test for the ConfigManager class
 

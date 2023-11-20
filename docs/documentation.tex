@@ -9,12 +9,13 @@
 
 % Listings package configuration with colors
 \lstset{
-    basicstyle=\ttfamily\small,
+    basicstyle=\ttfamily\footnotesize,
     breaklines=true,
-    frame=single,
+    %frame=tb,
     commentstyle=\color{commentcolor},
     keywordstyle=\color{keywordcolor},
     stringstyle=\color{stringcolor},
+    xrightmargin=-1cm,
     numbers=left,
     numberstyle=\tiny\color{gray},
     showspaces=false,
@@ -24,7 +25,7 @@
 }
 
 \title{Project Documentation}
-\author{Your Name}
+\author{Henrik Sørensen}
 \date{\today}
 
 \begin{document}
@@ -37,5 +38,6 @@
 \input{EnvVar.tex}
 \input{ConfigManager.tex}
 \input{Logger.tex}
-
+\input{testair.tex}
+%insertclasshere
 \end{document}

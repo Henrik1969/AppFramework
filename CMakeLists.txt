@@ -22,6 +22,8 @@ set(SOURCES
     src/Argument.cpp
 	src/CommandLineProcessor.cpp
     src/main.cpp
+    src/testair.cpp
+#INSERTCLASSPOINT
 )
 
 add_executable(testing ${SOURCES})

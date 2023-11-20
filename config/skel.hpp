@@ -14,25 +14,16 @@
   along with AppFramework. If not, see <https://www.gnu.org/licenses/>.
 */
 
-#ifndef ARGUMENTS_HPP
-#define ARGUMENTS_HPP
+// <classname>.hpp
 
-#include "Argument.hpp"
-#include <string>
-#include <map>
+#ifndef <CAPITALIZED CLASSNAME>_HPP
+#define <CAPITALIZED CLASSNAME>_HPP
 
-class Arguments {
-public:
-    Arguments(int argc, char* argv[], const std::map<std::string, Argument>& definedArgs);
-       // Add this method
-    
-    const std::map<std::string, std::string>& getArgValues() const { return argValues; }
-    std::string getArgValue(const std::string& argName) const;
-    bool isInArgs(const std::string& str) const;
+#ifdef THREAD_SAFE
+#include <mutex>
+#endif
 
-private:
-    std::map<std::string, std::string> argValues; // Maps argument names to their values
+class <classname> {
+
 };
-
-#endif // ARGUMENTS_HPP
-
+#endif // <CAPITALIZED CLASSNAME>_HPP
