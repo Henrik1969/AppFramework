@@ -29,11 +29,25 @@ enum class E_Argument_ValueType {
     // Add more types as needed
 };
 
+// Define a struct to hold all argument data (if you are using this approach)
+struct ArgumentData {
+    std::string longName;
+    std::string shortName;
+    std::string description;
+    bool needValue;
+    E_Argument_ValueType valueType;
+    std::string defaultValue;
+    bool hasDefaultValue;
+};
+
 class Argument {
 public:
     Argument(const std::string& longname, const std::string& shortname,
              const std::string& description, bool needValue, 
              E_Argument_ValueType valueType);
+
+    // Constructor that takes ArgumentData struct
+    Argument(const ArgumentData& data);
 
     std::string getLongName() const;
     std::string getShortName() const;
@@ -42,32 +56,13 @@ public:
     E_Argument_ValueType getValueType() const;
 
     void setValue(const std::string& value);
+    void setDefaultValue(const std::string& defaultValue);
+    std::string getDefaultValue() const;
+    bool hasDefaultValue() const;
 
-    template<typename T>
-    T getValue() const {
-        std::istringstream iss(value);
-        T convertedValue;
-
-        switch(valueType) {
-            case E_Argument_ValueType::Integer:
-                iss >> convertedValue;
-                break;
-            case E_Argument_ValueType::Float:
-                iss >> convertedValue;
-                break;
-            case E_Argument_ValueType::String:
-                return value;
-            // Handle other types as needed
-            default:
-                throw std::invalid_argument("Unsupported value type");
-        }
-
-        if (iss.fail()) {
-            throw std::runtime_error("Value conversion failed");
-        }
-
-        return convertedValue;
-    }
+    //CHANGED: Moved the template function definition to the header file
+    template <typename T>
+    T getValue() const;
 
 private:
     std::string longName;
@@ -76,6 +71,12 @@ private:
     bool needValue;
     E_Argument_ValueType valueType;
     std::string value; // Store the value as a string
+
+    // New members for default value handling
+    std::string defaultValue;
+    bool hasDefaultValueFlag = false;
 };
 
 #endif // ARGUMENT_HPP
+
+

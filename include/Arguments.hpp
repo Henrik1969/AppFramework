@@ -20,12 +20,12 @@
 #include "Argument.hpp"
 #include <string>
 #include <map>
+#include <stdexcept>
 
 class Arguments {
 public:
     Arguments(int argc, char* argv[], const std::map<std::string, Argument>& definedArgs);
-       // Add this method
-    
+
     const std::map<std::string, std::string>& getArgValues() const { return argValues; }
     std::string getArgValue(const std::string& argName) const;
     bool isInArgs(const std::string& str) const;

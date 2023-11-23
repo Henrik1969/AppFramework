@@ -13,18 +13,22 @@
   You should have received a copy of the GNU General Public License
   along with AppFramework. If not, see <https://www.gnu.org/licenses/>.
 */
+
 #include <iostream>
 #include "Arguments.hpp"
 
 Arguments::Arguments(int argc, char* argv[], const std::map<std::string, Argument>& definedArgs) {
+    for (const auto& argPair : definedArgs) {
+        if (argPair.second.hasDefaultValue()) {
+            argValues[argPair.first] = argPair.second.getDefaultValue();
+        }
+    }
+
     for (int i = 1; i < argc; ++i) {
         std::string currentArg = argv[i];
-        std::cout << "Processing argument: " << currentArg << std::endl;
-
-        // First, try to find the argument as is (works for long names)
         auto it = definedArgs.find(currentArg);
+
         if (it == definedArgs.end()) {
-            // If not found, try to match it as a short name
             for (const auto& argPair : definedArgs) {
                 if (argPair.second.getShortName() == currentArg) {
                     it = definedArgs.find(argPair.second.getLongName());
@@ -38,15 +42,16 @@ Arguments::Arguments(int argc, char* argv[], const std::map<std::string, Argumen
 
             if (arg.needsValue()) {
                 if (i + 1 < argc) {
-                    argValues[it->first] = argv[i + 1]; // Use the long name as key
-                    ++i; // Skip the value as it's already processed
+                    argValues[it->first] = argv[i + 1];
+                    ++i;
+                } else {
+                    throw std::runtime_error("Missing argument value for " + currentArg);
                 }
-                // Optionally, add else part for error handling if value is expected but not provided
             } else {
-                argValues[it->first] = ""; // No value needed, just mark as present
+                argValues[it->first] = "";
             }
         } else {
-            std::cout << "Unrecognized argument: " << currentArg << std::endl;
+            throw std::runtime_error("Unknown argument " + currentArg);
         }
     }
 }
@@ -56,10 +61,9 @@ std::string Arguments::getArgValue(const std::string& argName) const {
     if (it != argValues.end()) {
         return it->second;
     }
-    return ""; // Return empty string if argument not found
+    return "";
 }
 
 bool Arguments::isInArgs(const std::string& str) const {
     return argValues.find(str) != argValues.end();
 }
-

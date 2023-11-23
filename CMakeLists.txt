@@ -23,6 +23,7 @@ set(SOURCES
 	src/CommandLineProcessor.cpp
     src/main.cpp
     src/testair.cpp
+    src/ArgumentConfig.cpp
 #INSERTCLASSPOINT
 )
 

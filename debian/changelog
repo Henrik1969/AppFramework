@@ -7,3 +7,30 @@ testing (1.0-1) unstable; urgency=low
   * Preparation for release on github of a first alpha version
 
   -- Henrik Sørensen <henriksorensen@gmail.com>  Sat, 18 Nov 2023 14:55:14 +0000
+
+ * Argument Class:
+    - Added support for default values in command line arguments.
+    - Implemented a mechanism to indicate whether an argument has a default value.
+  
+  * Arguments Class:
+    - Modified constructor to initialize arguments with default values if not explicitly provided.
+    - Refined command-line argument parsing to work seamlessly with the new Argument class structure.
+
+  * CommandLineProcessor Class:
+    - Added new functionality to handle arguments with user-defined functions.
+    - Introduced capability for linking specific arguments to their corresponding handler functions for dynamic processing.
+
+ -- Henrik Sørensen <henriksorensen1969@gmail.com>  Thu, 23 Nov 2023 21:16:08 +0100
+  
+  * Updated ArgumentConfig class to include necessary <iostream> for std::cout usage.
+  * Modified getDefinedArguments method in ArgumentConfig to use emplace for direct construction of Argument objects, avoiding the need for a default constructor.
+  * General code enhancements and bug fixes.
+
+ -- Henrik Sørensen <henriksorensen1969@gmail.com>  Thu, 23 Nov 2023 21:30:19 +0100
+
+  * Fixed linker errors related to the Argument class template.
+  * Added explicit instantiations for Argument::getValue<T>() for common types.
+  * Improved error handling for Argument::getValue<T>() conversions.
+  * Updated CMake configuration to ensure proper compilation and linking.
+
+ -- Henrik Sørensen <henriksorensen1969@gmail.com>  Thu, 23 Nov 2023 09:00:00 +010

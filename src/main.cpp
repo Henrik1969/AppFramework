@@ -20,49 +20,22 @@
 #include "EnvVar.hpp"
 #include "ConfigManager.hpp"
 #include "Logger.hpp"
+#include "ArgumentConfig.hpp"
 #include "Argument.hpp"
 #include "Arguments.hpp"
 #include "CommandLineProcessor.hpp"
 
-void handleHelp(const std::shared_ptr<Argument>& arg) {
-    std::cout << "Help requested: " << arg->getDescription() << std::endl;
-}
-
-void handleVersion(const std::shared_ptr<Argument>& arg) {
-    std::cout << "Version requested: " << arg->getDescription() << std::endl;
-}
-
-void handleConfig(const std::shared_ptr<Argument>& arg) {
-    std::cout << "Config requested. ";
-    std::cout << "Long Name: " << arg->getLongName() << ", ";
-    std::cout << "Short Name: " << arg->getShortName() << ", ";
-    std::cout << "Value: " << arg->getValue<std::string>() << std::endl;
-}
-
 int main(int argc, char* argv[]) {
+    // Fetch the map of defined arguments from ArgumentConfig
+    auto definedArgs = ArgumentConfig::getDefinedArguments();
 
-    // Define your arguments
-    Argument helpArg("--help", "-h", "Display help information", false, E_Argument_ValueType::None);
-    Argument versionArg("--version", "-v", "Display version information", false, E_Argument_ValueType::None);
-    Argument configArg("--config", "-c", "Specify config file", true, E_Argument_ValueType::String);
-
-    // Map of defined arguments
-    std::map<std::string, Argument> definedArgs = {
-        {helpArg.getLongName(), helpArg},
-        {versionArg.getLongName(), versionArg},
-        {configArg.getLongName(), configArg}
-    };
-
-    // Initialize Arguments instance
+    // Initialize Arguments instance with defined arguments
     Arguments cmdArgs(argc, argv, definedArgs);
 
     // Initialize CommandLineProcessor and add handler functions
     CommandLineProcessor cmdProcessor(cmdArgs);
-
-	cmdProcessor.AddArgumentHandler(helpArg, handleHelp);
-    cmdProcessor.AddArgumentHandler(versionArg, handleVersion);
-	cmdProcessor.AddArgumentHandler(configArg, handleConfig);
-
+    ArgumentConfig::setupArguments(cmdProcessor);
+    
     // Process the command line arguments
     cmdProcessor.Process();
 
@@ -73,7 +46,7 @@ int main(int argc, char* argv[]) {
     std::string logPathValue = myVar.get();
     Logger::getInstance().log("LOGPATH value: " + logPathValue, "main", Logger::Severity::Info);
     std::cout << "LOGPATH: " << logPathValue << std::endl;
-
+*/
     //test for the ConfigManager class
 
     ConfigManager configManager("config.json");
@@ -86,7 +59,5 @@ int main(int argc, char* argv[]) {
         std::cerr << "Error reading nested key: " << e.what() << std::endl;
     }
 
-	std::cout<<"Hello, world!"<<std::endl;
-*/
     return 0;
 }
