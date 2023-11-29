@@ -1,0 +1,661 @@
+/*
+  This file is part of the AppFramework project.
+
+  AppFramework is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, GPL version 4.
+
+  AppFramework is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License version 4 for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with AppFramework. If not, see <https://www.gnu.org/licenses/>.
+*/
+
+// ArgumentConfig.cpp
+
+#include <iostream>
+#include "ArgumentConfig.hpp"
+#include "Version.hpp"
+
+void handleHelp(const std::shared_ptr<Argument>& arg) {
+    std::cout << "Help requested: " << arg->getDescription() << std::endl;
+}
+
+void handleVersion(const std::shared_ptr<Argument>& arg) {
+     std::cout << VERSION << std::endl;
+}
+
+void handleConfig(const std::shared_ptr<Argument>& arg) {
+    std::cout << "Config requested. ";
+    std::cout << "Long Name: " << arg->getLongName() << ", ";
+    std::cout << "Short Name: " << arg->getShortName() << ", ";
+    std::cout << "Value: " << arg->getValue<std::string>() << std::endl;
+}
+
+std::map<std::string, Argument> ArgumentConfig::getDefinedArguments() {
+    std::map<std::string, Argument> definedArgs;
+
+    // Directly constructing Argument objects in the map using emplace
+    definedArgs.emplace("--help", Argument("--help", "-h", "Display help information", false, E_Argument_ValueType::None));
+    definedArgs.emplace("--version", Argument("--version", "-v", "Display version information", false, E_Argument_ValueType::None));
+    definedArgs.emplace("--config", Argument("--config", "-c", "Specify config file", true, E_Argument_ValueType::String));
+    // ... other Argument objects ...
+
+    return definedArgs;
+}
+
+void ArgumentConfig::setupArguments(CommandLineProcessor& cmdProcessor) {
+    // Define your arguments
+    Argument helpArg("--help", "-h", "Display help information", false, E_Argument_ValueType::None);
+    Argument versionArg("--version", "-v", "Display version information", false, E_Argument_ValueType::None);
+    Argument configArg("--config", "-c", "Specify config file", true, E_Argument_ValueType::String);
+    // ... other arguments ...
+
+    // Add handler functions
+    cmdProcessor.AddArgumentHandler(helpArg, handleHelp);
+    cmdProcessor.AddArgumentHandler(versionArg, handleVersion);
+    cmdProcessor.AddArgumentHandler(configArg, handleConfig);
+    // ... other handlers ...
+}/*
+  This file is part of the AppFramework project.
+
+  AppFramework is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, GPL version 4.
+
+  AppFramework is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License version 4 for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with AppFramework. If not, see <https://www.gnu.org/licenses/>.
+*/
+
+#include "Argument.hpp"
+
+Argument::Argument(const std::string& longname, const std::string& shortname,
+                   const std::string& description, bool needValue,
+                   E_Argument_ValueType valueType) 
+    : longName(longname), shortName(shortname), description(description),
+      needValue(needValue), valueType(valueType) {}
+
+Argument::Argument(const ArgumentData& data):
+longName(data.longName), 
+shortName(data.shortName), 
+description(data.description),
+needValue(data.needValue), 
+valueType(data.valueType), 
+defaultValue(data.defaultValue),
+hasDefaultValueFlag(data.hasDefaultValue){}
+
+std::string Argument::getLongName() const	{return longName;}
+std::string Argument::getShortName() const 	{return shortName;}
+std::string Argument::getDescription() const {return description;}
+bool Argument::needsValue() const {return needValue;}
+
+E_Argument_ValueType Argument::getValueType() const {
+    return valueType;
+}
+
+void Argument::setValue(const std::string& value) {
+    this->value = value;
+}
+
+void Argument::setDefaultValue(const std::string& defaultValue) {
+    this->defaultValue = defaultValue;
+    this->hasDefaultValueFlag = true;
+}
+
+std::string Argument::getDefaultValue() const {
+    return defaultValue;
+}
+
+bool Argument::hasDefaultValue() const {
+    return hasDefaultValueFlag;
+}
+
+//CHANGED: Moved the template function definition to the header file
+template <typename T>
+T Argument::getValue() const {
+    // Check if a value has been set for this argument
+    if (value.empty()) {
+        // If no value has been set and a default value is available, return it
+        if (hasDefaultValueFlag) {
+            std::istringstream defaultValueStream(defaultValue);
+            T defaultValueValue;
+            defaultValueStream >> defaultValueValue;
+            return defaultValueValue;
+        } else {
+            // If no value or default value is available, throw an exception or return a suitable default value
+            throw std::logic_error("No value set for this argument.");
+        }
+    }
+
+    // Convert the stored string value to the requested type based on valueType
+    std::istringstream valueStream(value);
+    T typedValue;
+
+    // Use try-catch for error handling during conversion
+    try {
+        valueStream >> typedValue;
+    } catch (const std::exception& e) {
+        // Conversion failed; throw an exception or handle the error accordingly
+        throw std::invalid_argument("Error converting argument value to the requested type.");
+    }
+
+    if (valueStream.fail() || !valueStream.eof()) {
+        // Conversion failed or there is extra data in the string
+        throw std::invalid_argument("Invalid argument value.");
+    }
+
+    return typedValue;
+}
+// Instantiate the template function for specific types you use in Argument.cpp
+template std::string Argument::getValue<std::string>() const;
+template int Argument::getValue<int>() const;
+template float Argument::getValue<float>() const;/*
+  This file is part of the AppFramework project.
+
+  AppFramework is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, GPL version 4.
+
+  AppFramework is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License version 4 for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with AppFramework. If not, see <https://www.gnu.org/licenses/>.
+*/
+
+#include <iostream>
+#include "Arguments.hpp"
+
+Arguments::Arguments(int argc, char* argv[], const std::map<std::string, Argument>& definedArgs) {
+    for (const auto& argPair : definedArgs) {
+        if (argPair.second.hasDefaultValue()) {
+            argValues[argPair.first] = argPair.second.getDefaultValue();
+        }
+    }
+
+    for (int i = 1; i < argc; ++i) {
+        std::string currentArg = argv[i];
+        auto it = definedArgs.find(currentArg);
+
+        if (it == definedArgs.end()) {
+            for (const auto& argPair : definedArgs) {
+                if (argPair.second.getShortName() == currentArg) {
+                    it = definedArgs.find(argPair.second.getLongName());
+                    break;
+                }
+            }
+        }
+
+        if (it != definedArgs.end()) {
+            const Argument& arg = it->second;
+
+            if (arg.needsValue()) {
+                if (i + 1 < argc) {
+                    argValues[it->first] = argv[i + 1];
+                    ++i;
+                } else {
+                    throw std::runtime_error("Missing argument value for " + currentArg);
+                }
+            } else {
+                argValues[it->first] = "";
+            }
+        } else {
+            throw std::runtime_error("Unknown argument " + currentArg);
+        }
+    }
+}
+
+std::string Arguments::getArgValue(const std::string& argName) const {
+    auto it = argValues.find(argName);
+    if (it != argValues.end()) {
+        return it->second;
+    }
+    return "";
+}
+
+bool Arguments::isInArgs(const std::string& str) const {
+    return argValues.find(str) != argValues.end();
+}/*
+  This file is part of the AppFramework project.
+
+  AppFramework is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, GPL version 4.
+
+  AppFramework is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License version 4 for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with AppFramework. If not, see <https://www.gnu.org/licenses/>.
+*/
+#include <iostream>
+#include "CommandLineProcessor.hpp"
+
+CommandLineProcessor::CommandLineProcessor(const Arguments& args) : args(args) {}
+
+void CommandLineProcessor::AddArgumentHandler(const Argument& arg, ArgumentHandler handler) {
+    auto argPtr = std::make_shared<Argument>(arg);
+    handlers[arg.getLongName()] = ArgumentHandlerPair(argPtr, handler);
+    std::cout << "Handler added for long name: " << arg.getLongName() << std::endl;
+
+    if (!arg.getShortName().empty()) {
+        handlers[arg.getShortName()] = ArgumentHandlerPair(argPtr, handler);
+        std::cout << "Handler added for short name: " << arg.getShortName() << std::endl;
+    }
+}
+
+void CommandLineProcessor::Process() {
+    for (const auto& argPair : args.getArgValues()) {
+        std::string argName = argPair.first;
+        std::cout << "Processing argument: " << argName << std::endl;
+
+        auto it = handlers.find(argName);
+        if (it != handlers.end()) {
+        	std::cout << "Handler found for: " << argName << std::endl;
+            // Update the value of the argument before calling the handler
+            it->second.arg->setValue(argPair.second);
+            it->second.handler(it->second.arg);
+        }else{
+        	std::cout << "No handler found for: " << argName << std::endl;
+        }
+    }
+}/*
+  This file is part of the AppFramework project.
+
+  AppFramework is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, GPL version 4.
+
+  AppFramework is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License version 4 for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with AppFramework. If not, see <https://www.gnu.org/licenses/>.
+*/
+
+// ConfigManager.cpp
+
+#include "Arguments.hpp"
+#include "ConfigManager.hpp"
+#include "Logger.hpp"
+#include <iostream>
+#include <fstream>
+#include <sstream>
+
+#ifdef THREAD_SAFE
+std::mutex ConfigManager::mtx;
+#endif//
+
+ConfigManager::ConfigManager(const std::string& configFilePath, const Arguments& cmdArgs):filePath(configFilePath) 
+{
+    std::ifstream file(filePath);
+    if (file) {
+        try {
+            file >> config;
+        } catch (const nlohmann::json::parse_error& e) {
+            Logger::getInstance().log("JSON parsing error: " + std::string(e.what()), "ConfigManager::ConfigManager", Logger::Severity::Error);
+            std::cerr << "Configuration loading error. Check log file for details." << std::endl;
+            config = nlohmann::json::object(); // Ensure config is a valid JSON object
+        }
+    } else {
+        Logger::getInstance().log("Config file not found: " + filePath, "ConfigManager::ConfigManager", Logger::Severity::Warning);
+        std::cerr << "Configuration file missing. A new one will be created." << std::endl;
+        config = nlohmann::json::object(); // Initialize config as an empty object
+    }
+
+    // Additional check to ensure config is not null
+    if (config.is_null()) {
+        config = nlohmann::json::object();
+    }
+
+    // Parse and store command line arguments from cmdArgs
+    for (const auto& argPair : cmdArgs.getArgValues()) {
+        std::string key = argPair.first;
+        std::string value = argPair.second;
+        commandLineArgs[key] = value;
+    }
+}
+
+ConfigManager::~ConfigManager() {
+    sync();
+}
+
+void ConfigManager::parseCommandLineArgs(int argc, char** argv) {
+    for (int i = 1; i < argc; ++i) {
+        std::string arg = argv[i];
+        if (arg.size() >= 2 && arg.substr(0, 2) == "--") {
+            // This is a command line argument of the form "--key=value"
+            size_t equalPos = arg.find('=');
+            if (equalPos != std::string::npos) {
+                std::string key = arg.substr(2, equalPos - 2);
+                std::string value = arg.substr(equalPos + 1);
+                commandLineArgs[key] = value;
+            }
+        }
+    }
+}
+
+template<typename T>
+T ConfigManager::get(const std::string& key) const {
+#ifdef THREAD_SAFE
+    std::lock_guard<std::mutex> lock(mtx);
+#endif
+    // Check if a command line argument exists and has a value for the key
+    if (commandLineArgs.find(key) != commandLineArgs.end()) {
+        std::istringstream valueStream(commandLineArgs.at(key));
+        T typedValue;
+        valueStream >> typedValue;
+        return typedValue;
+    }
+
+    try {
+        const nlohmann::json& ref = getRefToValue(key, true);
+        return ref.get<T>();
+    } catch (const nlohmann::json::out_of_range& e) {
+        // Handle the case where the key does not exist
+        Logger::getInstance().log("Key not found in configuration: " + key, "ConfigManager::get", Logger::Severity::Warning);
+        throw std::runtime_error("Configuration key not found: " + key);
+    } catch (const nlohmann::json::exception& e) {
+        // Handle other JSON exceptions
+        Logger::getInstance().log("Error accessing key '" + key + "': " + e.what(), "ConfigManager::get", Logger::Severity::Error);
+        throw;
+    }
+}
+
+template<typename T>
+void ConfigManager::set(const std::string& key, const T& value) {
+#ifdef THREAD_SAFE
+    std::lock_guard<std::mutex> lock(mtx);
+#endif
+    nlohmann::json& ref = getRefToValue(key); // Use non-const ref
+    ref = value;
+}
+
+void ConfigManager::sync() {
+#ifdef THREAD_SAFE
+    std::lock_guard<std::mutex> lock(mtx);
+#endif
+    std::ofstream file(filePath);
+    if (file) {
+        file << config.dump(4);  // Save the JSON in a pretty format
+    }
+}
+
+const nlohmann::json& ConfigManager::getRefToValue(const std::string& key, bool forRead) const {
+    const nlohmann::json* j = &config;
+    std::istringstream iss(key);
+    std::string token;
+    while (std::getline(iss, token, '.')) {
+        j = &((*j).at(token));
+    }
+    return *j;
+}
+
+nlohmann::json& ConfigManager::getRefToValue(const std::string& key) {
+    nlohmann::json* j = &config;
+    std::istringstream iss(key);
+    std::string token;
+    while (std::getline(iss, token, '.')) {
+        j = &((*j)[token]);
+    }
+    return *j;
+}
+
+// Explicit template instantiation
+template int ConfigManager::get<int>(const std::string& key) const;
+template std::string ConfigManager::get<std::string>(const std::string& key) const;
+template void ConfigManager::set<int>(const std::string& key, const int& value);
+template void ConfigManager::set<std::string>(const std::string& key, const std::string& value);
+
+/*
+  This file is part of the AppFramework project.
+
+  AppFramework is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, GPL version 4.
+
+  AppFramework is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License version 4 for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with AppFramework. If not, see <https://www.gnu.org/licenses/>.
+*/
+
+#include "DefaultSettings.hpp"
+
+const nlohmann::json DefaultSettings::defaultConfig = {
+//=============================================================================
+// Write your default hardcoded configs here in json format
+//=============================================================================
+    {"AppFramework", {
+        {"Config", {
+            {"Defaults", {
+                {"Bg", "Lime"}
+                // Add more nested settings as needed
+            }}
+        }}
+    }}
+//=============================================================================
+//
+//=============================================================================
+
+};
+
+const nlohmann::json DefaultSettings::getDefaultConfig() {
+    return defaultConfig;
+}/*
+  This file is part of the AppFramework project.
+
+  AppFramework is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, GPL version 4.
+
+  AppFramework is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License version 4 for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with AppFramework. If not, see <https://www.gnu.org/licenses/>.
+*/
+
+// EnvVar.cpp
+
+#include "EnvVar.hpp"
+#include "Logger.hpp"
+#include <cstdlib>
+#ifdef THREAD_SAFE
+#include <mutex>
+std::mutex EnvVar::mtx;  // Define the static mutex
+#endif
+
+EnvVar::EnvVar(const std::string& name) : varName(name) {}
+
+std::string EnvVar::get() const {
+#ifdef THREAD_SAFE
+    std::lock_guard<std::mutex> lock(mtx);  // Lock the mutex
+#endif
+    const char* value = std::getenv(varName.c_str());
+    return (value != nullptr) ? std::string(value) : std::string();
+}
+
+bool EnvVar::set(const std::string& value) const {
+#ifdef THREAD_SAFE
+    std::lock_guard<std::mutex> lock(mtx);  // Lock the mutex
+#endif
+    return setenv(varName.c_str(), value.c_str(), 1) == 0;
+}
+
+void EnvVar::store() {
+#ifdef THREAD_SAFE
+    std::lock_guard<std::mutex> lock(mtx);  // Lock the mutex
+#endif
+    storedValue = get();
+}
+
+bool EnvVar::restore() const {
+#ifdef THREAD_SAFE
+    std::lock_guard<std::mutex> lock(mtx);  // Lock the mutex
+#endif
+    if (storedValue.has_value()) {
+        return set(storedValue.value());
+    }
+    return false;
+}/*
+  This file is part of the AppFramework project.
+
+  AppFramework is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, GPL version 4.
+
+  AppFramework is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License version 4 for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with AppFramework. If not, see <https://www.gnu.org/licenses/>.
+*/
+// Logger.cpp
+
+#include "Logger.hpp"
+#include "EnvVar.hpp"
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <chrono>
+#include <iomanip>
+
+Logger::Logger() {
+    std::string logPath = "testing.log"; // Default log file name
+
+    // Use std::getenv directly to avoid dependency on EnvVar
+    const char* configPath = std::getenv("LOGPATH");
+    if (configPath != nullptr) {
+        logPath = std::string(configPath) + "/testing.log"; // Use the directory from LOGPATH
+    }
+
+    logFile.open(logPath, std::ios::out | std::ios::app);
+}
+
+Logger::~Logger() {
+    if (logFile.is_open()) {
+        logFile.close();
+    }
+}
+
+Logger& Logger::getInstance() {
+    static Logger instance;
+    return instance;
+}
+
+void Logger::log(const std::string& message, const std::string& location, Severity severity) {
+    std::lock_guard<std::mutex> lock(mtx);
+
+    // Get current time
+    auto now = std::chrono::system_clock::now();
+    auto now_time_t = std::chrono::system_clock::to_time_t(now);
+    auto now_localtime = *std::localtime(&now_time_t);
+
+    if (logFile.is_open()) {
+        logFile << "[" << std::put_time(&now_localtime, "%Y-%m-%d %H:%M:%S") << "] "
+                << "[" << severityToString(severity) << "] "
+                << location << ": " << message << std::endl;
+    }
+}
+
+std::string Logger::severityToString(Severity severity) {
+    switch (severity) {
+    	case Severity::Trace:	return "TRACE";
+    	case Severity::Debug:	return "DEBUG";
+        case Severity::Info:	return "INFO";
+        case Severity::Warning:	return "WARNING";
+        case Severity::Error:	return "ERROR";
+        case Severity::Fatal:	return "FATAL";
+        default:
+            return "UNKNOWN";
+    }
+}/*
+  This file is part of the AppFramework project.
+
+  AppFramework is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, GPL version 4.
+
+  AppFramework is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License version 4 for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with AppFramework. If not, see <https://www.gnu.org/licenses/>.
+===============================================================================*/
+
+#include <iostream>
+#include "EnvVar.hpp"
+#include "ConfigManager.hpp"
+#include "Logger.hpp"
+#include "ArgumentConfig.hpp"
+#include "Argument.hpp"
+#include "Arguments.hpp"
+#include "CommandLineProcessor.hpp"
+
+//=============================================================================
+/* @brief Main enterancepoint of the program.
+ * @param[in] argc The count of arguments provided
+ * @param[in] argv A list of char* of arguments
+ * @return An integer that denotes the endstate of the program to the OS
+ * @since 1.0.0
+ * @version 1.1
+ * @author Henrik Sørensen <henriksorensen1969@gmail.com>
+ * @date 2023-01-01
+ * @todo Further Development
+*/
+//=============================================================================
+int main(int argc, char* argv[]) {
+	//=========================================================================
+	// Initalization 
+	//=========================================================================
+    try {
+        auto definedArgs = ArgumentConfig::getDefinedArguments();
+        Arguments cmdArgs(argc, argv, definedArgs);
+        CommandLineProcessor cmdProcessor(cmdArgs);
+        ArgumentConfig::setupArguments(cmdProcessor);
+        cmdProcessor.Process();
+        EnvVar myVar("LOGPATH");
+        std::string logPathValue = myVar.get();
+        Logger::getInstance().log("LOGPATH value: " + logPathValue, "main", Logger::Severity::Info);
+        ConfigManager configManager("config.json", cmdArgs);
+    } catch (const std::exception& e) {
+        std::cerr << "Error During Initialization: " << e.what() << std::endl;
+        exit(1);
+    }
+    //=========================================================================
+    // Do the actual work here 
+    //=========================================================================
+
+
+	//=========================================================================
+    // Cleanup code
+    //=========================================================================
+
+    //§ TODO
+
+    return 0;
+}

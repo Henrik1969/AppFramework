@@ -19,14 +19,16 @@
 #ifndef CONFIGMANAGER_HPP
 #define CONFIGMANAGER_HPP
 
+#include "Arguments.hpp"
 #include <iostream>
 #include <string>
 #include <mutex>
 #include <nlohmann/json.hpp>
+#include <unordered_map> // For storing command line arguments
 
 class ConfigManager {
 public:
-    explicit ConfigManager(const std::string& configFilePath);
+    explicit ConfigManager(const std::string& configFilePath, const Arguments& cmdArgs);
     ~ConfigManager();
 
     template<typename T>
@@ -37,8 +39,8 @@ public:
 
     void sync();
 
-#ifdef THREAD_SAFE
-    static std::mutex mtx;  // Mutex for thread safety
+#ifdef THREAD_SAFE // Mutex for thread safety
+    static std::mutex mtx;  
 #endif
 
 private:
@@ -46,6 +48,12 @@ private:
     std::string filePath;
     const nlohmann::json& getRefToValue(const std::string& key, bool forRead) const;
     nlohmann::json& getRefToValue(const std::string& key);
+
+    std::unordered_map<std::string, std::string> commandLineArgs; // Store command line arguments
+
+    void parseCommandLineArgs(int argc, char** argv);
 };
 
 #endif // CONFIGMANAGER_HPP
+
+

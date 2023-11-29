@@ -3,3 +3,14 @@
 [2023-11-23 21:40:57] [WARNING] ConfigManager::get: Key not found in configuration: foo.bar.doo.tar
 [2023-11-23 22:40:44] [WARNING] ConfigManager::get: Key not found in configuration: foo.bar.doo.tar
 [2023-11-23 22:40:47] [WARNING] ConfigManager::get: Key not found in configuration: foo.bar.doo.tar
+[2023-11-24 16:38:07] [INFO] main: LOGPATH value: 
+[2023-11-24 16:38:07] [ERROR] ConfigManager::get: Error accessing key 'AppFramework.Config.Defaults.Bg': [json.exception.type_error.304] cannot use at() with string
+[2023-11-24 16:40:31] [INFO] main: LOGPATH value: 
+[2023-11-24 17:55:10] [INFO] main: LOGPATH value: 
+[2023-11-24 17:56:02] [INFO] main: LOGPATH value: 
+[2023-11-24 20:37:09] [INFO] main: LOGPATH value: 
+[2023-11-24 20:37:14] [INFO] main: LOGPATH value: 
+[2023-11-26 11:16:27] [INFO] main: LOGPATH value: 
+[2023-11-26 11:16:33] [INFO] main: LOGPATH value: 
+[2023-11-26 11:16:43] [INFO] main: LOGPATH value: 
+[2023-11-26 11:17:15] [INFO] main: LOGPATH value: 

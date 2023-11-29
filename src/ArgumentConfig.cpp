@@ -16,14 +16,16 @@
 
 // ArgumentConfig.cpp
 
+#include <iostream>
 #include "ArgumentConfig.hpp"
+#include "Version.hpp"
 
 void handleHelp(const std::shared_ptr<Argument>& arg) {
     std::cout << "Help requested: " << arg->getDescription() << std::endl;
 }
 
 void handleVersion(const std::shared_ptr<Argument>& arg) {
-    std::cout << "Version requested: " << arg->getDescription() << std::endl;
+     std::cout << VERSION << std::endl;
 }
 
 void handleConfig(const std::shared_ptr<Argument>& arg) {

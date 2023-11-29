@@ -12,9 +12,7 @@
 
   You should have received a copy of the GNU General Public License
   along with AppFramework. If not, see <https://www.gnu.org/licenses/>.
-*/
-
-// main.cpp
+===============================================================================*/
 
 #include <iostream>
 #include "EnvVar.hpp"
@@ -25,39 +23,46 @@
 #include "Arguments.hpp"
 #include "CommandLineProcessor.hpp"
 
-int main(int argc, char* argv[]) {
-    // Fetch the map of defined arguments from ArgumentConfig
-    auto definedArgs = ArgumentConfig::getDefinedArguments();
-
-    // Initialize Arguments instance with defined arguments
-    Arguments cmdArgs(argc, argv, definedArgs);
-
-    // Initialize CommandLineProcessor and add handler functions
-    CommandLineProcessor cmdProcessor(cmdArgs);
-    ArgumentConfig::setupArguments(cmdProcessor);
-    
-    // Process the command line arguments
-    cmdProcessor.Process();
-
-/*
-    EnvVar myVar("LOGPATH");
-
-    // Log using Logger after getting environment variable
-    std::string logPathValue = myVar.get();
-    Logger::getInstance().log("LOGPATH value: " + logPathValue, "main", Logger::Severity::Info);
-    std::cout << "LOGPATH: " << logPathValue << std::endl;
+//=============================================================================
+/* @brief Main enterancepoint of the program.
+ * @param[in] argc The count of arguments provided
+ * @param[in] argv A list of char* of arguments
+ * @return An integer that denotes the endstate of the program to the OS
+ * @since 1.0.0
+ * @version 1.1
+ * @author Henrik Sørensen <henriksorensen1969@gmail.com>
+ * @date 2023-01-01
+ * @todo Further Development
 */
-    //test for the ConfigManager class
-
-    ConfigManager configManager("config.json");
-
-    // Retrieve the nested value for "foo.bar.doo.tar"
+//=============================================================================
+int main(int argc, char* argv[]) {
+	//=========================================================================
+	// Initalization 
+	//=========================================================================
     try {
-        std::string value = configManager.get<std::string>("foo.bar.doo.tar");
-        std::cout << "Value of foo.bar.doo.tar: " << value << std::endl;
+        auto definedArgs = ArgumentConfig::getDefinedArguments();
+        Arguments cmdArgs(argc, argv, definedArgs);
+        CommandLineProcessor cmdProcessor(cmdArgs);
+        ArgumentConfig::setupArguments(cmdProcessor);
+        cmdProcessor.Process();
+        EnvVar myVar("LOGPATH");
+        std::string logPathValue = myVar.get();
+        Logger::getInstance().log("LOGPATH value: " + logPathValue, "main", Logger::Severity::Info);
+        ConfigManager configManager("config.json", cmdArgs);
     } catch (const std::exception& e) {
-        std::cerr << "Error reading nested key: " << e.what() << std::endl;
+        std::cerr << "Error During Initialization: " << e.what() << std::endl;
+        exit(1);
     }
+    //=========================================================================
+    // Do the actual work here 
+    //=========================================================================
+
+
+	//=========================================================================
+    // Cleanup code
+    //=========================================================================
+
+    //§ TODO
 
     return 0;
 }

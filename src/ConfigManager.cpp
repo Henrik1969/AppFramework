@@ -16,6 +16,7 @@
 
 // ConfigManager.cpp
 
+#include "Arguments.hpp"
 #include "ConfigManager.hpp"
 #include "Logger.hpp"
 #include <iostream>
@@ -24,9 +25,10 @@
 
 #ifdef THREAD_SAFE
 std::mutex ConfigManager::mtx;
-#endif
+#endif//
 
-ConfigManager::ConfigManager(const std::string& configFilePath) : filePath(configFilePath) {
+ConfigManager::ConfigManager(const std::string& configFilePath, const Arguments& cmdArgs):filePath(configFilePath) 
+{
     std::ifstream file(filePath);
     if (file) {
         try {
@@ -46,10 +48,32 @@ ConfigManager::ConfigManager(const std::string& configFilePath) : filePath(confi
     if (config.is_null()) {
         config = nlohmann::json::object();
     }
+
+    // Parse and store command line arguments from cmdArgs
+    for (const auto& argPair : cmdArgs.getArgValues()) {
+        std::string key = argPair.first;
+        std::string value = argPair.second;
+        commandLineArgs[key] = value;
+    }
 }
 
 ConfigManager::~ConfigManager() {
     sync();
+}
+
+void ConfigManager::parseCommandLineArgs(int argc, char** argv) {
+    for (int i = 1; i < argc; ++i) {
+        std::string arg = argv[i];
+        if (arg.size() >= 2 && arg.substr(0, 2) == "--") {
+            // This is a command line argument of the form "--key=value"
+            size_t equalPos = arg.find('=');
+            if (equalPos != std::string::npos) {
+                std::string key = arg.substr(2, equalPos - 2);
+                std::string value = arg.substr(equalPos + 1);
+                commandLineArgs[key] = value;
+            }
+        }
+    }
 }
 
 template<typename T>
@@ -57,6 +81,14 @@ T ConfigManager::get(const std::string& key) const {
 #ifdef THREAD_SAFE
     std::lock_guard<std::mutex> lock(mtx);
 #endif
+    // Check if a command line argument exists and has a value for the key
+    if (commandLineArgs.find(key) != commandLineArgs.end()) {
+        std::istringstream valueStream(commandLineArgs.at(key));
+        T typedValue;
+        valueStream >> typedValue;
+        return typedValue;
+    }
+
     try {
         const nlohmann::json& ref = getRefToValue(key, true);
         return ref.get<T>();
@@ -67,7 +99,7 @@ T ConfigManager::get(const std::string& key) const {
     } catch (const nlohmann::json::exception& e) {
         // Handle other JSON exceptions
         Logger::getInstance().log("Error accessing key '" + key + "': " + e.what(), "ConfigManager::get", Logger::Severity::Error);
-        throw; 
+        throw;
     }
 }
 
@@ -115,3 +147,4 @@ template int ConfigManager::get<int>(const std::string& key) const;
 template std::string ConfigManager::get<std::string>(const std::string& key) const;
 template void ConfigManager::set<int>(const std::string& key, const int& value);
 template void ConfigManager::set<std::string>(const std::string& key, const std::string& value);
+

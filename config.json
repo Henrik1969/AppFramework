@@ -1,1 +1,9 @@
-{}
+{
+    "AppFramework": {
+        "Config": {
+            "Defaults": {
+                "Bg": "Lime"
+            }
+        }
+    }
+}

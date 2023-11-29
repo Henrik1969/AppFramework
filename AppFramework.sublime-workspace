@@ -1,0 +1,393 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"get",
+				"getArgValues"
+			],
+			[
+				"v",
+				"value"
+			],
+			[
+				"un",
+				"unordered_map"
+			],
+			[
+				"arg",
+				"argv"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+		[
+			[
+				[
+					"Default",
+					""
+				],
+				[
+					"Default",
+					"DmenuDisplay"
+				],
+				[
+					"Default",
+					"MenuHandler"
+				],
+				[
+					"Default",
+					"Run: MenuHandler"
+				],
+				[
+					"Default",
+					"Run under GDB: MenuHandler"
+				],
+				[
+					"Default",
+					"NcursesDisplay"
+				],
+				[
+					"Default",
+					"RofiDisplay"
+				],
+				[
+					"Default",
+					"ctest"
+				]
+			],
+			[
+				"Default",
+				""
+			]
+		]
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"Set syntax: Cm",
+				"Set Syntax: CMakeEditor"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"open",
+				"OpenAI: Chat Model Select"
+			],
+			[
+				"install pa",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/home/henrik/Projekter/AppFramework/src"
+	],
+	"file_history":
+	[
+		"/home/henrik/Projekter/AppFramework/src/Arguments.cpp",
+		"/home/henrik/Projekter/AppFramework/src/ArgumentConfig.cpp",
+		"/home/henrik/Projekter/AppFramework/src/Argument.cpp",
+		"/home/henrik/Projekter/AppFramework/include/Version.hpp",
+		"/home/henrik/Projekter/AppFramework/include/Logger.hpp",
+		"/home/henrik/Projekter/AppFramework/include/EnvVar.hpp",
+		"/home/henrik/Projekter/AppFramework/include/DefaultSettings.hpp",
+		"/home/henrik/Projekter/AppFramework/include/ConfigManager.hpp",
+		"/home/henrik/Projekter/AppFramework/include/Arguments.hpp",
+		"/home/henrik/Projekter/AppFramework/include/CommandLineProcessor.hpp",
+		"/home/henrik/Projekter/AppFramework/include/ArgumentConfig.hpp",
+		"/home/henrik/Projekter/AppFramework/include/Argument.hpp",
+		"/home/henrik/Projekter/AppFramework/src/CommandLineProcessor.cpp",
+		"/home/henrik/Projekter/AppFramework/src/ConfigManager.cpp",
+		"/home/henrik/Projekter/AppFramework/src/DefaultSettings.cpp",
+		"/home/henrik/Projekter/AppFramework/src/EnvVar.cpp",
+		"/home/henrik/Projekter/AppFramework/src/Logger.cpp",
+		"/home/henrik/Projekter/AppFramework/src/main.cpp",
+		"/home/henrik/Dokumenter/screenplays/Ideer/DeSent.tex",
+		"/home/henrik/Projekter/AppFramework/CMakeLists.txt",
+		"/home/henrik/Projekter/AppFramework/large_file.txt",
+		"/home/henrik/Projekter/AppFramework/include/CommandParser.hpp",
+		"/home/henrik/Projekter/AppFramework/src/testair.cpp",
+		"/home/henrik/Projekter/AppFramework/include/testair.hpp",
+		"/home/henrik/Projekter/AppFramework/config.json",
+		"/home/henrik/Projekter/AppFramework/docs/documentation.tex",
+		"/home/henrik/Projekter/AppFramework/TODO:",
+		"/home/henrik/Projekter/AppFramework/debian/changelog",
+		"/home/henrik/Projekter/AppFramework/debian/control",
+		"/home/henrik/Projekter/AppFramework/docs/ArgumentConfig.tex",
+		"/home/henrik/Projekter/AppFramework/.gitattributes",
+		"/home/henrik/Projekter/AppFramework/.gitignore",
+		"/home/henrik/Billeder/Baggrunde/package/rename.sh",
+		"/home/henrik/Projekter/AppFramework/Makefile",
+		"/home/henrik/Projekter/Project Ideas/Enhanced Project Prospect: Comprehensive Integrate.txt",
+		"/home/henrik/Projekter/Project Ideas/Integrated Development Environment (IDE) for Code.txt",
+		"/home/henrik/Projekter/Project Ideas/SQL Database for Code Management and Collaboration.txt",
+		"/home/henrik/Projekter/Project Ideas/Document-Centric Code Organization",
+		"/home/henrik/Dokumenter/githubPAT.txt",
+		"/home/henrik/Projekter/AppFramework/tools/toggle_flags_gui.sh",
+		"/home/henrik/Projekter/AppFramework/config/possible_flags.conf",
+		"/home/henrik/Projekter/AppFramework/config/active_flags.conf",
+		"/home/henrik/Projekter/AppFramework/tools/toggle_flags.sh",
+		"/home/henrik/Projekter/AppFramework/tools/create_class.sh",
+		"/home/henrik/Projekter/AppFramework/config/skel.hpp",
+		"/home/henrik/Projekter/AppFramework/config/compiler_flags.conf",
+		"/home/henrik/Projekter/AppFramework/src/testwater.cpp",
+		"/home/henrik/Projekter/AppFramework/docs/testwater.tex",
+		"/home/henrik/Projekter/AppFramework/include/testwater.hpp",
+		"/home/henrik/Projekter/AppFramework/docs/documentation.synctex.gz",
+		"/home/henrik/Projekter/AppFramework/config/skel.cpp",
+		"/home/henrik/Projekter/AppEssentials/tools/setprojectname.sh",
+		"/home/henrik/Projekter/AppEssentials/include/EnvVar.hpp",
+		"/home/henrik/Projekter/AppEssentials/CMakeLists.txt",
+		"/home/henrik/Projekter/AppEssentials/debian/control",
+		"/home/henrik/Projekter/AppEssentials/src/Logger.cpp",
+		"/home/henrik/Projekter/AppEssentials/correctmytypo.sh",
+		"/home/henrik/Projekter/AppEssentials/include/Argument.hpp",
+		"/home/henrik/Projekter/AppEssentials/include/Arguments.hpp",
+		"/home/henrik/Projekter/AppEssentials/include/CommandLineProcessor.hpp",
+		"/home/henrik/Projekter/AppEssentials/include/CommandParser.hpp",
+		"/home/henrik/Projekter/AppEssentials/include/ConfigManager.hpp",
+		"/home/henrik/Projekter/AppEssentials/include/Logger.hpp",
+		"/home/henrik/Projekter/AppEssentials/src/Argument.cpp",
+		"/home/henrik/Projekter/AppEssentials/src/Arguments.cpp",
+		"/home/henrik/Projekter/AppEssentials/src/CommandLineProcessor.cpp",
+		"/home/henrik/Projekter/AppEssentials/src/CommandParser.cpp",
+		"/home/henrik/Projekter/AppEssentials/src/ConfigManager.cpp",
+		"/home/henrik/Projekter/AppEssentials/src/EnvVar.cpp",
+		"/home/henrik/Projekter/AppEssentials/src/main.cpp",
+		"/home/henrik/Projekter/AppEssentials/tools/append_disclaimer.sh",
+		"/home/henrik/Projekter/AppEssentials/debian/changelog",
+		"/home/henrik/Projekter/testing/src/Arguments.cpp",
+		"/home/henrik/Projekter/testing/src/Argument.cpp",
+		"/home/henrik/Projekter/testing/include/Arguments.hpp",
+		"/home/henrik/Projekter/testing/include/Argument.hpp",
+		"/home/henrik/Projekter/testing/include/CommandLineProcessor.hpp",
+		"/home/henrik/Projekter/testing/src/main.cpp",
+		"/home/henrik/Projekter/testing/src/CommandLineProcessor.cpp",
+		"/home/henrik/Projekter/testing/filedisclaimer.txt",
+		"/home/henrik/Projekter/testing/include/CommandParser.hpp",
+		"/home/henrik/Projekter/testing/list_includes.sh",
+		"/home/henrik/Projekter/testing/src/CommandParser.cpp",
+		"/home/henrik/Dokumenter/screenplays/Emilys Secret/emilys secret.tex",
+		"/home/henrik/Hentet/screenplay/README",
+		"/home/henrik/Projekter/framework/Version_1a/include/OptionsManager.hxx",
+		"/home/henrik/Projekter/framework/Version_1a/src/OptionsManager.cxx",
+		"/home/henrik/Projekter/testing/build/config.json",
+		"/home/henrik/Projekter/testing/debian/control",
+		"/home/henrik/Projekter/testing/TODO.txt",
+		"/home/henrik/Projekter/testing/src/Logger.cpp",
+		"/home/henrik/Projekter/testing/include/Logger.hpp",
+		"/home/henrik/Projekter/testing/src/ConfigManager.cpp",
+		"/home/henrik/Projekter/testing/include/ConfigManager.hpp",
+		"/home/henrik/Projekter/testing/src/EnvVar.cpp",
+		"/home/henrik/Projekter/testing/include/EnvVar.hpp",
+		"/home/henrik/Projekter/testing/envars.sh",
+		"/home/henrik/Projekter/testing/docs/Logger.tex",
+		"/home/henrik/Projekter/testing/docs/ConfigManager.tex",
+		"/home/henrik/Projekter/testing/docs/EnvVar.tex",
+		"/home/henrik/Projekter/testing/docs/documentation.tex",
+		"/home/henrik/Projekter/testing/docs/ChatGPT - Linux Code Optimizer with PDF Generation-filer/main-2c03450a19a7bc03.js",
+		"/home/henrik/Projekter/testing/docs/untitled.html",
+		"/home/henrik/Projekter/testing/docs/ChatGPT - Linux Code Optimizer with PDF Generation-filer/4635-67a565e1b76be9aa.js",
+		"/home/henrik/Projekter/testing/CMakeLists.txt",
+		"/home/soerensen/Dokumenter/chatgptpoem1.txt",
+		"/home/soerensen/Projekter/Framework/main.cpp",
+		"/home/soerensen/Projekter/argslib/CommandLineParser.h",
+		"/home/soerensen/Dokumenter/note.txt",
+		"/home/soerensen/Dokumenter/scorord.txt",
+		"/home/henrik/Projekter/generic/CMakeLists.txt",
+		"/home/henrik/Projekter/create_project.py",
+		"/home/henrik/Projekter/generic/debian/control",
+		"/home/henrik/Projekter/add_file.py",
+		"/home/henrik/Projekter/untitled.mk",
+		"/home/henrik/Projekter/config.json",
+		"/home/henrik/Projekter/menuhandler/include/configparser.hpp",
+		"/home/henrik/Projekter/menuhandler/src/pluginloader.cpp",
+		"/home/henrik/Projekter/menuhandler/src/menuhandler.cpp",
+		"/home/henrik/Projekter/menuhandler/src/main.cpp",
+		"/home/henrik/Projekter/menuhandler/include/Menu.hpp",
+		"/home/henrik/Projekter/menuhandler/include/MenuItem.hpp",
+		"/home/henrik/Projekter/menuhandler/src/logger.cpp",
+		"/home/henrik/Projekter/menuhandler/src/configparser.cpp",
+		"/home/henrik/Projekter/menuhandler/src/.main.cpp.swp",
+		"/home/henrik/.config/sublime-text/Packages/OpenAI completion/Default.sublime-keymap",
+		"/home/henrik/.config/sublime-text/Packages/User/Default (Linux).sublime-keymap",
+		"/usr/include/c++/11/bits/stl_pair.h"
+	],
+	"find":
+	{
+		"height": 28.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"ENVVAR_THREAD_SAFE",
+			"CONFIG_THREAD_SAFE",
+			"super+"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"THREAD_SAFE",
+			"alt+shift+"
+		],
+		"reverse": false,
+		"scrollbar_highlights": true,
+		"show_context": true,
+		"use_buffer2": true,
+		"use_gitignore": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"folders":
+	[
+		{
+			"path": "/home/henrik/Projekter/AppFramework/src"
+		}
+	],
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 28.0
+	},
+	"input":
+	{
+		"height": 38.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.OpenAI Chat":
+	{
+		"height": 810.0
+	},
+	"output.exec":
+	{
+		"height": 188.0
+	},
+	"output.files_to_be_deleted":
+	{
+		"height": 120.0
+	},
+	"output.find_results":
+	{
+		"height": 120.0
+	},
+	"pinned_build_system": "",
+	"project": "",
+	"replace":
+	{
+		"height": 52.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": false,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 234.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

@@ -37,6 +37,7 @@ public:
 private:
     std::string varName;
     std::optional<std::string> storedValue;
+
 #ifdef THREAD_SAFE
     static std::mutex mtx;  // Mutex for thread safety
 #endif
