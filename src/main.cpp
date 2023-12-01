@@ -45,7 +45,7 @@ int main(int argc, char* argv[]) {
         CommandLineProcessor cmdProcessor(cmdArgs);
         ArgumentConfig::setupArguments(cmdProcessor);
         cmdProcessor.Process();
-        EnvVar myVar("LOGPATH");
+        EnvVarUtils myVar("LOGPATH");
         std::string logPathValue = myVar.get();
         Logger::getInstance().log("LOGPATH value: " + logPathValue, "main", Logger::Severity::Info);
         ConfigManager configManager("config.json", cmdArgs);

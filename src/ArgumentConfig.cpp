@@ -25,14 +25,16 @@ void handleHelp(const std::shared_ptr<Argument>& arg) {
 }
 
 void handleVersion(const std::shared_ptr<Argument>& arg) {
-     std::cout << VERSION << std::endl;
+	std::cout << VERSION << std::endl;
 }
 
 void handleConfig(const std::shared_ptr<Argument>& arg) {
+	#ifdef ENABLE_DEBUG
     std::cout << "Config requested. ";
     std::cout << "Long Name: " << arg->getLongName() << ", ";
     std::cout << "Short Name: " << arg->getShortName() << ", ";
     std::cout << "Value: " << arg->getValue<std::string>() << std::endl;
+    #endif //ENABLE_DEBUG
 }
 
 std::map<std::string, Argument> ArgumentConfig::getDefinedArguments() {

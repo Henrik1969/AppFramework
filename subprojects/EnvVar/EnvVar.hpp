@@ -25,9 +25,9 @@
 #include <mutex>
 #endif
 
-class EnvVar {
+class EnvVarUtils {
 public:
-    explicit EnvVar(const std::string& name);
+    explicit EnvVarUtils(const std::string& name);
     
     std::string get() const;
     bool set(const std::string& value) const;

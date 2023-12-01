@@ -36,7 +36,10 @@ public:
 
     static Logger& getInstance();
     void log(const std::string& message, const std::string& location, Severity severity);
-
+    void setFormat(const std::string& format) {
+        this->logFormat = format;
+    }
+    std::string formatMessage(const std::string& message, Severity severity, const std::string& location);
 private:
     std::ofstream logFile;
     std::mutex mtx;
@@ -45,7 +48,7 @@ private:
     ~Logger();
     Logger(const Logger&) = delete;
     Logger& operator=(const Logger&) = delete;
-
+    std::string logFormat;
     std::string severityToString(Severity severity);
 };
 

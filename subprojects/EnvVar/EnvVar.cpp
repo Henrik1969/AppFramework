@@ -14,19 +14,19 @@
   along with AppFramework. If not, see <https://www.gnu.org/licenses/>.
 */
 
-// EnvVar.cpp
+// EnvVarUtils.cpp
 
 #include "EnvVar.hpp"
-#include "Logger.hpp"
+//#include "Logger.hpp"
 #include <cstdlib>
 #ifdef THREAD_SAFE
 #include <mutex>
-std::mutex EnvVar::mtx;  // Define the static mutex
+std::mutex EnvVarUtils::mtx;  // Define the static mutex
 #endif
 
-EnvVar::EnvVar(const std::string& name) : varName(name) {}
+EnvVarUtils::EnvVarUtils(const std::string& name) : varName(name) {}
 
-std::string EnvVar::get() const {
+std::string EnvVarUtils::get() const {
 #ifdef THREAD_SAFE
     std::lock_guard<std::mutex> lock(mtx);  // Lock the mutex
 #endif
@@ -34,21 +34,21 @@ std::string EnvVar::get() const {
     return (value != nullptr) ? std::string(value) : std::string();
 }
 
-bool EnvVar::set(const std::string& value) const {
+bool EnvVarUtils::set(const std::string& value) const {
 #ifdef THREAD_SAFE
     std::lock_guard<std::mutex> lock(mtx);  // Lock the mutex
 #endif
     return setenv(varName.c_str(), value.c_str(), 1) == 0;
 }
 
-void EnvVar::store() {
+void EnvVarUtils::store() {
 #ifdef THREAD_SAFE
     std::lock_guard<std::mutex> lock(mtx);  // Lock the mutex
 #endif
     storedValue = get();
 }
 
-bool EnvVar::restore() const {
+bool EnvVarUtils::restore() const {
 #ifdef THREAD_SAFE
     std::lock_guard<std::mutex> lock(mtx);  // Lock the mutex
 #endif

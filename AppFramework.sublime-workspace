@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"E",
+				"ENABLE_DEBUG"
+			],
+			[
 				"get",
 				"getArgValues"
 			],
@@ -23,6 +27,14 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "/home/soerensen/Dokumenter/Hamilton.cpp",
+			"settings":
+			{
+				"buffer_size": 2582,
+				"line_ending": "Unix"
+			}
+		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -96,9 +108,10 @@
 	},
 	"console":
 	{
-		"height": 0.0,
+		"height": 136.0,
 		"history":
 		[
+			"ls"
 		]
 	},
 	"distraction_free":
@@ -112,15 +125,66 @@
 	},
 	"expanded_folders":
 	[
-		"/home/henrik/Projekter/AppFramework/src"
+		"/home/henrik/Projekter/AppFramework",
+		"/home/henrik/Projekter/AppFramework/include",
+		"/home/henrik/Projekter/AppFramework/src",
+		"/home/henrik/Projekter/AppFramework/subprojects",
+		"/home/henrik/Projekter/AppFramework/subprojects/EnvVar",
+		"/home/henrik/Projekter/AppFramework/subprojects/Logger",
+		"/home/henrik/Projekter/AppFramework/subprojects/StringUtils",
+		"/home/henrik/Projekter/AppFramework/subprojects/TimeUtils"
 	],
 	"file_history":
 	[
-		"/home/henrik/Projekter/AppFramework/src/Arguments.cpp",
-		"/home/henrik/Projekter/AppFramework/src/ArgumentConfig.cpp",
-		"/home/henrik/Projekter/AppFramework/src/Argument.cpp",
+		"/home/soerensen/Projekter/argslib/main.cpp",
+		"/home/soerensen/Projekter/argslib/CommandLineParser.cpp",
+		"/home/soerensen/Projekter/anothercmdparser/example.cpp",
+		"/home/soerensen/Projekter/anothercmdparser/foo.cpp",
+		"/home/soerensen/Projekter/Backup/askgp/askgpt.cpp",
+		"/home/soerensen/Projekter/Backup/argumentandsettings/Arguments.cxx",
+		"/home/soerensen/Projekter/Composite/Compositeex.cpp",
+		"/home/henrik/Projekter/AppFramework/CMakeLists.txt",
+		"/home/henrik/Projekter/AppFramework/subprojects/StringUtils/CMakeLists.txt",
+		"/home/henrik/Projekter/AppFramework/subprojects/TimeUtils/CMakeLists.txt",
+		"/home/henrik/Projekter/AppFramework/subprojects/EnvVar/CMakeLists.txt",
+		"/home/henrik/Projekter/AppFramework/src/EnvVar.cpp",
+		"/home/henrik/Projekter/AppFramework/subprojects/Logger/CMakeLists.txt",
+		"/home/henrik/Projekter/AppFramework/subprojects/EnvVar/EnvVar.hpp",
+		"/home/henrik/Projekter/AppFramework/src/main.cpp",
 		"/home/henrik/Projekter/AppFramework/include/Version.hpp",
+		"/home/soerensen/Projekter/Language/symtab.cxx",
+		"/home/soerensen/Projekter/teaching_project/main.cpp",
+		"/home/soerensen/Projekter/Scratch/Scratch.cpp",
+		"/home/soerensen/Projekter/Ny mappe/main.cxx",
+		"/home/soerensen/Projekter/MyLibraries/SortingAlgoritms/Empty.cpp",
+		"/home/soerensen/Projekter/MyDocLib/src/mydoclib.cpp",
+		"/home/soerensen/Projekter/MyCrazyEditor/main.cpp",
+		"/home/soerensen/Projekter/Framework/main.cpp",
+		"/home/henrik/Projekter/AppFramework/subprojects/EnvVar/EnvVar.cpp",
+		"/home/henrik/Projekter/AppFramework/src/ArgumentConfig.cpp",
+		"/home/henrik/Projekter/AppFramework/src/CommandLineProcessor.cpp",
+		"/home/soerensen/Projekter/elfstripsearch/gtktest.cpp",
+		"/home/henrik/Projekter/AppFramework/Makefile",
+		"/home/henrik/.config/sublime-text/Settings/SideBarEnhancements.json",
+		"/home/henrik/.bashrc",
+		"/home/henrik/.bash_aliases",
+		"/home/henrik/Projekter/AppFramework/src/TimeUtils.cpp",
+		"/home/henrik/Projekter/AppFramework/include/TimeUtils.hpp",
+		"/home/henrik/Projekter/AppFramework/src/TimeUtils/CMakeLists.txt",
+		"/home/henrik/Projekter/AppFramework/src/StringUtils/CMakeLists.txt",
+		"/home/henrik/Projekter/AppFramework/tools/create_class.sh",
+		"/home/henrik/Projekter/AppFramework/src/Logger.cpp",
 		"/home/henrik/Projekter/AppFramework/include/Logger.hpp",
+		"/home/henrik/Projekter/AppFramework/src/StringUtils.cpp",
+		"/home/henrik/Projekter/AppFramework/include/StringUtils.hpp",
+		"/home/henrik/Projekter/AppFramework/include/CMakeFiles",
+		"/home/henrik/Projekter/AppFramework/tools/append_disclaimer.sh",
+		"/home/henrik/Projekter/AppFramework/debian/control",
+		"/home/henrik/Projekter/AppFramework/config.json",
+		"/home/henrik/Projekter/AppFramework/include/largefile",
+		"/home/henrik/Projekter/AppFramework/tools/setprojectname.sh",
+		"/home/henrik/Projekter/AppFramework/src/Arguments.cpp",
+		"/home/henrik/Projekter/AppFramework/src/Argument.cpp",
 		"/home/henrik/Projekter/AppFramework/include/EnvVar.hpp",
 		"/home/henrik/Projekter/AppFramework/include/DefaultSettings.hpp",
 		"/home/henrik/Projekter/AppFramework/include/ConfigManager.hpp",
@@ -128,28 +192,20 @@
 		"/home/henrik/Projekter/AppFramework/include/CommandLineProcessor.hpp",
 		"/home/henrik/Projekter/AppFramework/include/ArgumentConfig.hpp",
 		"/home/henrik/Projekter/AppFramework/include/Argument.hpp",
-		"/home/henrik/Projekter/AppFramework/src/CommandLineProcessor.cpp",
 		"/home/henrik/Projekter/AppFramework/src/ConfigManager.cpp",
 		"/home/henrik/Projekter/AppFramework/src/DefaultSettings.cpp",
-		"/home/henrik/Projekter/AppFramework/src/EnvVar.cpp",
-		"/home/henrik/Projekter/AppFramework/src/Logger.cpp",
-		"/home/henrik/Projekter/AppFramework/src/main.cpp",
 		"/home/henrik/Dokumenter/screenplays/Ideer/DeSent.tex",
-		"/home/henrik/Projekter/AppFramework/CMakeLists.txt",
 		"/home/henrik/Projekter/AppFramework/large_file.txt",
 		"/home/henrik/Projekter/AppFramework/include/CommandParser.hpp",
 		"/home/henrik/Projekter/AppFramework/src/testair.cpp",
 		"/home/henrik/Projekter/AppFramework/include/testair.hpp",
-		"/home/henrik/Projekter/AppFramework/config.json",
 		"/home/henrik/Projekter/AppFramework/docs/documentation.tex",
 		"/home/henrik/Projekter/AppFramework/TODO:",
 		"/home/henrik/Projekter/AppFramework/debian/changelog",
-		"/home/henrik/Projekter/AppFramework/debian/control",
 		"/home/henrik/Projekter/AppFramework/docs/ArgumentConfig.tex",
 		"/home/henrik/Projekter/AppFramework/.gitattributes",
 		"/home/henrik/Projekter/AppFramework/.gitignore",
 		"/home/henrik/Billeder/Baggrunde/package/rename.sh",
-		"/home/henrik/Projekter/AppFramework/Makefile",
 		"/home/henrik/Projekter/Project Ideas/Enhanced Project Prospect: Comprehensive Integrate.txt",
 		"/home/henrik/Projekter/Project Ideas/Integrated Development Environment (IDE) for Code.txt",
 		"/home/henrik/Projekter/Project Ideas/SQL Database for Code Management and Collaboration.txt",
@@ -159,7 +215,6 @@
 		"/home/henrik/Projekter/AppFramework/config/possible_flags.conf",
 		"/home/henrik/Projekter/AppFramework/config/active_flags.conf",
 		"/home/henrik/Projekter/AppFramework/tools/toggle_flags.sh",
-		"/home/henrik/Projekter/AppFramework/tools/create_class.sh",
 		"/home/henrik/Projekter/AppFramework/config/skel.hpp",
 		"/home/henrik/Projekter/AppFramework/config/compiler_flags.conf",
 		"/home/henrik/Projekter/AppFramework/src/testwater.cpp",
@@ -208,42 +263,7 @@
 		"/home/henrik/Projekter/testing/TODO.txt",
 		"/home/henrik/Projekter/testing/src/Logger.cpp",
 		"/home/henrik/Projekter/testing/include/Logger.hpp",
-		"/home/henrik/Projekter/testing/src/ConfigManager.cpp",
-		"/home/henrik/Projekter/testing/include/ConfigManager.hpp",
-		"/home/henrik/Projekter/testing/src/EnvVar.cpp",
-		"/home/henrik/Projekter/testing/include/EnvVar.hpp",
-		"/home/henrik/Projekter/testing/envars.sh",
-		"/home/henrik/Projekter/testing/docs/Logger.tex",
-		"/home/henrik/Projekter/testing/docs/ConfigManager.tex",
-		"/home/henrik/Projekter/testing/docs/EnvVar.tex",
-		"/home/henrik/Projekter/testing/docs/documentation.tex",
-		"/home/henrik/Projekter/testing/docs/ChatGPT - Linux Code Optimizer with PDF Generation-filer/main-2c03450a19a7bc03.js",
-		"/home/henrik/Projekter/testing/docs/untitled.html",
-		"/home/henrik/Projekter/testing/docs/ChatGPT - Linux Code Optimizer with PDF Generation-filer/4635-67a565e1b76be9aa.js",
-		"/home/henrik/Projekter/testing/CMakeLists.txt",
-		"/home/soerensen/Dokumenter/chatgptpoem1.txt",
-		"/home/soerensen/Projekter/Framework/main.cpp",
-		"/home/soerensen/Projekter/argslib/CommandLineParser.h",
-		"/home/soerensen/Dokumenter/note.txt",
-		"/home/soerensen/Dokumenter/scorord.txt",
-		"/home/henrik/Projekter/generic/CMakeLists.txt",
-		"/home/henrik/Projekter/create_project.py",
-		"/home/henrik/Projekter/generic/debian/control",
-		"/home/henrik/Projekter/add_file.py",
-		"/home/henrik/Projekter/untitled.mk",
-		"/home/henrik/Projekter/config.json",
-		"/home/henrik/Projekter/menuhandler/include/configparser.hpp",
-		"/home/henrik/Projekter/menuhandler/src/pluginloader.cpp",
-		"/home/henrik/Projekter/menuhandler/src/menuhandler.cpp",
-		"/home/henrik/Projekter/menuhandler/src/main.cpp",
-		"/home/henrik/Projekter/menuhandler/include/Menu.hpp",
-		"/home/henrik/Projekter/menuhandler/include/MenuItem.hpp",
-		"/home/henrik/Projekter/menuhandler/src/logger.cpp",
-		"/home/henrik/Projekter/menuhandler/src/configparser.cpp",
-		"/home/henrik/Projekter/menuhandler/src/.main.cpp.swp",
-		"/home/henrik/.config/sublime-text/Packages/OpenAI completion/Default.sublime-keymap",
-		"/home/henrik/.config/sublime-text/Packages/User/Default (Linux).sublime-keymap",
-		"/usr/include/c++/11/bits/stl_pair.h"
+		"/home/henrik/Projekter/testing/src/ConfigManager.cpp"
 	],
 	"find":
 	{
@@ -261,6 +281,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"EnvVar",
 			"ENVVAR_THREAD_SAFE",
 			"CONFIG_THREAD_SAFE",
 			"super+"
@@ -271,6 +292,7 @@
 		"regex": false,
 		"replace_history":
 		[
+			"EnvVarUtils",
 			"THREAD_SAFE",
 			"alt+shift+"
 		],
@@ -285,7 +307,7 @@
 	"folders":
 	[
 		{
-			"path": "/home/henrik/Projekter/AppFramework/src"
+			"path": "/home/henrik/Projekter/AppFramework"
 		}
 	],
 	"groups":
@@ -293,6 +315,36 @@
 		{
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "/home/soerensen/Dokumenter/Hamilton.cpp",
+					"selected": true,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2582,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 855.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"stack_multiselect": false,
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -385,7 +437,7 @@
 	"show_open_files": true,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 234.0,
+	"side_bar_width": 246.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

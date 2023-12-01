@@ -1,3 +1,19 @@
+#
+#  This file is part of the AppFramework project.
+#
+#  AppFramework is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, GPL version 4.
+#
+#  AppFramework is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License version 4 for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with AppFramework. If not, see <https://www.gnu.org/licenses/>.
+#
+
 .PHONY: rebuild clean git-add git-commit git-push list-targets help
 
 rebuild:
@@ -8,6 +24,12 @@ rebuild:
 	cmake .. $$COMPILER_FLAGS && \
 	make
 	@echo "Project Rebuild Complete"
+mr-proper:
+	@if [ -d "build" ]; then \
+		rm -r build\
+	else \
+		echo "Build directory does not exist"; \
+	fi
 clean:
 	@if [ -d "build" ]; then \
 		cd build && make clean; \

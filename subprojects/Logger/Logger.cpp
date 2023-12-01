@@ -13,10 +13,13 @@
   You should have received a copy of the GNU General Public License
   along with AppFramework. If not, see <https://www.gnu.org/licenses/>.
 */
+
 // Logger.cpp
 
 #include "Logger.hpp"
 #include "EnvVar.hpp"
+#include "StringUtils.hpp"
+#include "TimeUtils.hpp"
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -71,5 +74,17 @@ std::string Logger::severityToString(Severity severity) {
         case Severity::Fatal:	return "FATAL";
         default:
             return "UNKNOWN";
-    }
+	}
+}
+
+std::string Logger::formatMessage(const std::string& message, Severity severity, const std::string& location) {
+    std::string formattedMessage = logFormat;
+
+    // Replace each placeholder with actual data
+    StringUtils::replaceAll(formattedMessage, "%timestamp%", TimeUtils::getCurrentTimestamp());
+    StringUtils::replaceAll(formattedMessage, "%level%", severityToString(severity));
+    StringUtils::replaceAll(formattedMessage, "%message%", message);
+    StringUtils::replaceAll(formattedMessage, "%location%", location);
+
+    return formattedMessage;
 }

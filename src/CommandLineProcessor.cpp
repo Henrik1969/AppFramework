@@ -21,22 +21,35 @@ CommandLineProcessor::CommandLineProcessor(const Arguments& args) : args(args) {
 void CommandLineProcessor::AddArgumentHandler(const Argument& arg, ArgumentHandler handler) {
     auto argPtr = std::make_shared<Argument>(arg);
     handlers[arg.getLongName()] = ArgumentHandlerPair(argPtr, handler);
+    
+    #ifdef ENABLE_DEBUG
     std::cout << "Handler added for long name: " << arg.getLongName() << std::endl;
+    #endif //ENABLE_DEBUG
 
     if (!arg.getShortName().empty()) {
         handlers[arg.getShortName()] = ArgumentHandlerPair(argPtr, handler);
+    
+        #ifdef ENABLE_DEBUG
         std::cout << "Handler added for short name: " << arg.getShortName() << std::endl;
+    	#endif //ENABLE_DEBUG
     }
 }
 
 void CommandLineProcessor::Process() {
     for (const auto& argPair : args.getArgValues()) {
         std::string argName = argPair.first;
+        
+        #ifdef ENABLE_DEBUG
         std::cout << "Processing argument: " << argName << std::endl;
+        #endif //ENABLE_DEBUG
 
         auto it = handlers.find(argName);
         if (it != handlers.end()) {
+
+        	#ifdef ENABLE_DEBUG	
         	std::cout << "Handler found for: " << argName << std::endl;
+            #endif //ENABLE_DEBUG
+
             // Update the value of the argument before calling the handler
             it->second.arg->setValue(argPair.second);
             it->second.handler(it->second.arg);
