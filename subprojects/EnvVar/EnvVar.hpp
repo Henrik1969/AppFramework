@@ -33,7 +33,7 @@ public:
     bool set(const std::string& value) const;
     void store();
     bool restore() const;
-
+//Todo: Expand the functionality and add more EnvVar methodes
 private:
     std::string varName;
     std::optional<std::string> storedValue;
