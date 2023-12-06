@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+<title>include/CommandLineProcessor.hpp</title>
+<meta name='robots' content='noindex,nofollow' />
+<meta name='generator' content='GLOBAL-6.6.7' />
+<meta http-equiv='Content-Style-Type' content='text/css' />
+<link rel='stylesheet' type='text/css' href='../style.css' />
+</head>
+<body>
+<a id='TOP' name='TOP'></a><h2 class='header'><a href='../mains.html'>root</a>/<a href='../files/181.html'>include</a>/CommandLineProcessor.hpp</h2>
+<em class='comment'>/* [&lt;][&gt;]<a href='#L34'>[^]</a>[v][top]<a href='#BOTTOM'>[bottom]</a><a href='../mains.html'>[index]</a><a href='../help.html'>[help]</a> */</em>
+<hr />
+<h2 class='header'><a href='../J/6.html' title='Multiple included from 3 places.'>INCLUDED FROM</a></h2>
+<hr />
+<h2 class='header'>DEFINITIONS</h2>
+This source file includes following definitions.
+<ol>
+<li><a href='#L34' title='Defined at 34.'>handler</a></li>
+</ol>
+<hr />
+<pre>
+<a id='L1' name='L1'></a><em class='comment'>/*</em>
+<a id='L2' name='L2'></a><em class='comment'>  This file is part of the AppFramework project.</em>
+<a id='L3' name='L3'></a><em class='comment'></em>
+<a id='L4' name='L4'></a><em class='comment'>  AppFramework is free software: you can redistribute it and/or modify</em>
+<a id='L5' name='L5'></a><em class='comment'>  it under the terms of the GNU General Public License as published by</em>
+<a id='L6' name='L6'></a><em class='comment'>  the Free Software Foundation, GPL version 4.</em>
+<a id='L7' name='L7'></a><em class='comment'></em>
+<a id='L8' name='L8'></a><em class='comment'>  AppFramework is distributed in the hope that it will be useful,</em>
+<a id='L9' name='L9'></a><em class='comment'>  but WITHOUT ANY WARRANTY; without even the implied warranty of</em>
+<a id='L10' name='L10'></a><em class='comment'>  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</em>
+<a id='L11' name='L11'></a><em class='comment'>  GNU General Public License version 4 for more details.</em>
+<a id='L12' name='L12'></a><em class='comment'></em>
+<a id='L13' name='L13'></a><em class='comment'>  You should have received a copy of the GNU General Public License</em>
+<a id='L14' name='L14'></a><em class='comment'>  along with AppFramework. If not, see &lt;https://www.gnu.org/licenses/&gt;.</em>
+<a id='L15' name='L15'></a><em class='comment'>*/</em>
+<a id='L16' name='L16'></a>
+<a id='L17' name='L17'></a><em class='sharp'>#ifndef</em> <a href='../S/151.html#L18' title='Defined at 18 in include/CommandLineProcessor.hpp.'>COMMANDLINEPROCESSOR_HPP</a>
+<a id='L18' name='L18'></a><em class='sharp'>#define</em> <a href='../S/151.html#L17' title='Referred from 17 in include/CommandLineProcessor.hpp.'>COMMANDLINEPROCESSOR_HPP</a>
+<a id='L19' name='L19'></a>
+<a id='L20' name='L20'></a><em class='sharp'>#include</em> &lt;functional&gt;
+<a id='L21' name='L21'></a><em class='sharp'>#include</em> &lt;map&gt;
+<a id='L22' name='L22'></a><em class='sharp'>#include</em> &lt;string&gt;
+<a id='L23' name='L23'></a><em class='sharp'>#include</em> &lt;memory&gt;
+<a id='L24' name='L24'></a><em class='sharp'>#include</em> "<a href='149.html'>Argument.hpp</a>"
+<a id='L25' name='L25'></a><em class='sharp'>#include</em> "<a href='148.html'>Arguments.hpp</a>"
+<a id='L26' name='L26'></a>
+<a id='L27' name='L27'></a><strong class='reserved'>using</strong> <a href='../R/8.html' title='Multiple referred from 4 places.'>ArgumentHandler</a> = std::function&lt;<strong class='reserved'>void</strong>(<strong class='reserved'>const</strong> std::shared_ptr&lt;<a href='../S/149.html#L43' title='Defined at 43 in include/Argument.hpp.'>Argument</a>&gt;&amp;)&gt;;
+<a id='L28' name='L28'></a>
+<a id='L29' name='L29'></a><strong class='reserved'>struct</strong> <a href='../R/9.html' title='Multiple referred from 5 places.'>ArgumentHandlerPair</a> <em class='brace'>{</em>
+<a id='L30' name='L30'></a>    std::shared_ptr&lt;<a href='../S/149.html#L43' title='Defined at 43 in include/Argument.hpp.'>Argument</a>&gt; arg;
+<a id='L31' name='L31'></a>    <a href='../S/151.html#L27' title='Defined at 27 in include/CommandLineProcessor.hpp.'>ArgumentHandler</a> <a href='../S/151.html#L34' title='Defined at 34 in include/CommandLineProcessor.hpp.'>handler</a>;
+<a id='L32' name='L32'></a>
+<a id='L33' name='L33'></a>    <a href='../S/151.html#L29' title='Defined at 29 in include/CommandLineProcessor.hpp.'>ArgumentHandlerPair</a>(std::shared_ptr&lt;<a href='../S/149.html#L43' title='Defined at 43 in include/Argument.hpp.'>Argument</a>&gt; arg, <strong class='reserved'>const</strong> <a href='../S/151.html#L27' title='Defined at 27 in include/CommandLineProcessor.hpp.'>ArgumentHandler</a>&amp; <a href='../S/151.html#L34' title='Defined at 34 in include/CommandLineProcessor.hpp.'>handler</a>)
+<a id='L34' name='L34'></a>        : arg(std::move(arg)), <a href='../R/61.html' title='Multiple referred from 8 places.'>handler</a>(<a href='../S/151.html#L34' title='Defined at 34 in include/CommandLineProcessor.hpp.'>handler</a>) <em class='brace'>{</em><em class='brace'>}</em>
+<a id='L35' name='L35'></a>
+<a id='L36' name='L36'></a>    <a href='../S/151.html#L29' title='Defined at 29 in include/CommandLineProcessor.hpp.'>ArgumentHandlerPair</a>() = <strong class='reserved'>default</strong>;
+<a id='L37' name='L37'></a><em class='brace'>}</em>;
+<a id='L38' name='L38'></a>
+<a id='L39' name='L39'></a><strong class='reserved'>class</strong> <a href='../R/15.html' title='Multiple referred from 7 places.'>CommandLineProcessor</a> <em class='brace'>{</em>
+<a id='L40' name='L40'></a><strong class='reserved'>public</strong>:
+<a id='L41' name='L41'></a>    <strong class='reserved'>explicit</strong> <a href='../D/15.html' title='Multiple defined in 2 places.'>CommandLineProcessor</a>(<strong class='reserved'>const</strong> <a href='../D/10.html' title='Multiple defined in 2 places.'>Arguments</a>&amp; args);
+<a id='L42' name='L42'></a>
+<a id='L43' name='L43'></a>    <strong class='reserved'>void</strong> <a href='../S/139.html#L21' title='Defined at 21 in src/CommandLineProcessor.cpp.'>AddArgumentHandler</a>(<strong class='reserved'>const</strong> <a href='../S/149.html#L43' title='Defined at 43 in include/Argument.hpp.'>Argument</a>&amp; arg, <a href='../S/151.html#L27' title='Defined at 27 in include/CommandLineProcessor.hpp.'>ArgumentHandler</a> <a href='../S/151.html#L34' title='Defined at 34 in include/CommandLineProcessor.hpp.'>handler</a>);
+<a id='L44' name='L44'></a>    <strong class='reserved'>void</strong> <a href='../S/139.html#L38' title='Defined at 38 in src/CommandLineProcessor.cpp.'>Process</a>();
+<a id='L45' name='L45'></a>
+<a id='L46' name='L46'></a><strong class='reserved'>private</strong>:
+<a id='L47' name='L47'></a>    <strong class='reserved'>const</strong> <a href='../D/10.html' title='Multiple defined in 2 places.'>Arguments</a>&amp; args;
+<a id='L48' name='L48'></a>    std::map&lt;std::string, <a href='../S/151.html#L29' title='Defined at 29 in include/CommandLineProcessor.hpp.'>ArgumentHandlerPair</a>&gt; handlers;
+<a id='L49' name='L49'></a><em class='brace'>}</em>;
+<a id='L50' name='L50'></a>
+<a id='L51' name='L51'></a><em class='sharp'>#endif</em> <em class='comment'>// COMMANDLINEPROCESSOR_HPP</em>
+</pre>
+<hr />
+<a id='BOTTOM' name='BOTTOM'></a>
+<em class='comment'>/* [&lt;][&gt;][^]<a href='#L34'>[v]</a><a href='#TOP'>[top]</a>[bottom]<a href='../mains.html'>[index]</a><a href='../help.html'>[help]</a> */</em>
+</body>
+</html>

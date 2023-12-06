@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+<title>subprojects/gtkversion/GtkWindow.h</title>
+<meta name='robots' content='noindex,nofollow' />
+<meta name='generator' content='GLOBAL-6.6.7' />
+<meta http-equiv='Content-Style-Type' content='text/css' />
+<link rel='stylesheet' type='text/css' href='../style.css' />
+</head>
+<body>
+<a id='TOP' name='TOP'></a><h2 class='header'><a href='../mains.html'>root</a>/<a href='../files/183.html'>subprojects</a>/<a href='../files/188.html'>gtkversion</a>/GtkWindow.h</h2>
+<em class='comment'>/* [&lt;][&gt;][^][v][top]<a href='#BOTTOM'>[bottom]</a><a href='../mains.html'>[index]</a><a href='../help.html'>[help]</a> */</em>
+<hr />
+<h2 class='header'><a href='165.html#L7' title='Included from 7 in subprojects/gtkversion/GtkWidgetFactory.h.'>INCLUDED FROM</a></h2>
+<hr />
+<pre>
+<a id='L1' name='L1'></a><em class='comment'>// MyGtkWindow.h</em>
+<a id='L2' name='L2'></a>
+<a id='L3' name='L3'></a><em class='sharp'>#ifndef</em> <a href='../S/164.html#L4' title='Defined at 4 in subprojects/gtkversion/GtkWindow.h.'>MYGTKWINDOW_H</a>
+<a id='L4' name='L4'></a><em class='sharp'>#define</em> <a href='../S/164.html#L3' title='Referred from 3 in subprojects/gtkversion/GtkWindow.h.'>MYGTKWINDOW_H</a>
+<a id='L5' name='L5'></a>
+<a id='L6' name='L6'></a><em class='sharp'>#include</em> "<a href='167.html'>IWindow.h</a>"
+<a id='L7' name='L7'></a><em class='sharp'>#include</em> &lt;gtk/gtk.h&gt;
+<a id='L8' name='L8'></a>
+<a id='L9' name='L9'></a>class MyGtkWindow : public IWindow <em class='brace'>{</em>
+<a id='L10' name='L10'></a>private:
+<a id='L11' name='L11'></a>    GtkWidget *window;
+<a id='L12' name='L12'></a>
+<a id='L13' name='L13'></a>public:
+<a id='L14' name='L14'></a>    MyGtkWindow() <em class='brace'>{</em>
+<a id='L15' name='L15'></a>        gtk_init(0, nullptr);
+<a id='L16' name='L16'></a>        window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+<a id='L17' name='L17'></a>        gtk_window_set_title(GTK_WINDOW(window), "GTK Window");
+<a id='L18' name='L18'></a>        gtk_window_set_default_size(GTK_WINDOW(window), 400, 300);
+<a id='L19' name='L19'></a>    <em class='brace'>}</em>
+<a id='L20' name='L20'></a>
+<a id='L21' name='L21'></a>    ~MyGtkWindow() <em class='brace'>{</em>
+<a id='L22' name='L22'></a>        gtk_widget_destroy(window);
+<a id='L23' name='L23'></a>    <em class='brace'>}</em>
+<a id='L24' name='L24'></a>
+<a id='L25' name='L25'></a>    <strong class='reserved'>void</strong> show() override <em class='brace'>{</em>
+<a id='L26' name='L26'></a>        gtk_widget_show_all(window);
+<a id='L27' name='L27'></a>        gtk_main();
+<a id='L28' name='L28'></a>    <em class='brace'>}</em>
+<a id='L29' name='L29'></a><em class='brace'>}</em>;
+<a id='L30' name='L30'></a>
+<a id='L31' name='L31'></a><em class='sharp'>#endif</em> <em class='comment'>// MYGTKWINDOW_H</em>
+<a id='L32' name='L32'></a>
+</pre>
+<hr />
+<a id='BOTTOM' name='BOTTOM'></a>
+<em class='comment'>/* [&lt;][&gt;][^][v]<a href='#TOP'>[top]</a>[bottom]<a href='../mains.html'>[index]</a><a href='../help.html'>[help]</a> */</em>
+</body>
+</html>

@@ -26,7 +26,7 @@ rebuild:
 	@echo "Project Rebuild Complete"
 mr-proper:
 	@if [ -d "build" ]; then \
-		rm -r build\
+		rm -rf build\
 	else \
 		echo "Build directory does not exist"; \
 	fi

@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+<title>Argument</title>
+<meta name='robots' content='noindex,nofollow' />
+<meta name='generator' content='GLOBAL-6.6.7' />
+<meta http-equiv='Content-Style-Type' content='text/css' />
+<link rel='stylesheet' type='text/css' href='../style.css' />
+</head>
+<body>
+<pre>
+<span class='curline'><a href='../S/149.html#L45'>Argument</a>           45 include/Argument.hpp     Argument(const std::string&amp; longname, const std::string&amp; shortname,</span>
+<span class='curline'><a href='../S/149.html#L50'>Argument</a>           50 include/Argument.hpp     Argument(const ArgumentData&amp; data);</span>
+<span class='curline'><a href='../S/145.html#L28'>Argument</a>           28 include/ArgumentConfig.hpp void handleHelp(const std::shared_ptr&lt;Argument&gt;&amp; arg);</span>
+<span class='curline'><a href='../S/145.html#L29'>Argument</a>           29 include/ArgumentConfig.hpp void handleVersion(const std::shared_ptr&lt;Argument&gt;&amp; arg);</span>
+<span class='curline'><a href='../S/145.html#L30'>Argument</a>           30 include/ArgumentConfig.hpp void handleConfig(const std::shared_ptr&lt;Argument&gt;&amp; arg);</span>
+<span class='curline'><a href='../S/145.html#L34'>Argument</a>           34 include/ArgumentConfig.hpp     static std::map&lt;std::string, Argument&gt; getDefinedArguments();</span>
+<span class='curline'><a href='../S/148.html#L27'>Argument</a>           27 include/Arguments.hpp     Arguments(int argc, char* argv[], const std::map&lt;std::string, Argument&gt;&amp; definedArgs);</span>
+<span class='curline'><a href='../S/151.html#L27'>Argument</a>           27 include/CommandLineProcessor.hpp using ArgumentHandler = std::function&lt;void(const std::shared_ptr&lt;Argument&gt;&amp;)&gt;;</span>
+<span class='curline'><a href='../S/151.html#L30'>Argument</a>           30 include/CommandLineProcessor.hpp     std::shared_ptr&lt;Argument&gt; arg;</span>
+<span class='curline'><a href='../S/151.html#L33'>Argument</a>           33 include/CommandLineProcessor.hpp     ArgumentHandlerPair(std::shared_ptr&lt;Argument&gt; arg, const ArgumentHandler&amp; handler)</span>
+<span class='curline'><a href='../S/151.html#L43'>Argument</a>           43 include/CommandLineProcessor.hpp     void AddArgumentHandler(const Argument&amp; arg, ArgumentHandler handler);</span>
+<span class='curline'><a href='../S/137.html#L19'>Argument</a>           19 src/Argument.cpp Argument::Argument(const std::string&amp; longname, const std::string&amp; shortname,</span>
+<span class='curline'><a href='../S/137.html#L25'>Argument</a>           25 src/Argument.cpp Argument::Argument(const ArgumentData&amp; data):</span>
+<span class='curline'><a href='../S/137.html#L34'>Argument</a>           34 src/Argument.cpp std::string Argument::getLongName() const	{return longName;}</span>
+<span class='curline'><a href='../S/137.html#L35'>Argument</a>           35 src/Argument.cpp std::string Argument::getShortName() const 	{return shortName;}</span>
+<span class='curline'><a href='../S/137.html#L36'>Argument</a>           36 src/Argument.cpp std::string Argument::getDescription() const {return description;}</span>
+<span class='curline'><a href='../S/137.html#L37'>Argument</a>           37 src/Argument.cpp bool Argument::needsValue() const {return needValue;}</span>
+<span class='curline'><a href='../S/137.html#L39'>Argument</a>           39 src/Argument.cpp E_Argument_ValueType Argument::getValueType() const {</span>
+<span class='curline'><a href='../S/137.html#L43'>Argument</a>           43 src/Argument.cpp void Argument::setValue(const std::string&amp; value) {</span>
+<span class='curline'><a href='../S/137.html#L47'>Argument</a>           47 src/Argument.cpp void Argument::setDefaultValue(const std::string&amp; defaultValue) {</span>
+<span class='curline'><a href='../S/137.html#L52'>Argument</a>           52 src/Argument.cpp std::string Argument::getDefaultValue() const {</span>
+<span class='curline'><a href='../S/137.html#L56'>Argument</a>           56 src/Argument.cpp bool Argument::hasDefaultValue() const {</span>
+<span class='curline'><a href='../S/137.html#L62'>Argument</a>           62 src/Argument.cpp T Argument::getValue() const {</span>
+<span class='curline'><a href='../S/137.html#L97'>Argument</a>           97 src/Argument.cpp template std::string Argument::getValue&lt;std::string&gt;() const;</span>
+<span class='curline'><a href='../S/137.html#L98'>Argument</a>           98 src/Argument.cpp template int Argument::getValue&lt;int&gt;() const;</span>
+<span class='curline'><a href='../S/137.html#L99'>Argument</a>           99 src/Argument.cpp template float Argument::getValue&lt;float&gt;() const;</span>
+<span class='curline'><a href='../S/135.html#L23'>Argument</a>           23 src/ArgumentConfig.cpp void handleHelp(const std::shared_ptr&lt;Argument&gt;&amp; arg) {</span>
+<span class='curline'><a href='../S/135.html#L27'>Argument</a>           27 src/ArgumentConfig.cpp void handleVersion(const std::shared_ptr&lt;Argument&gt;&amp; arg) {</span>
+<span class='curline'><a href='../S/135.html#L31'>Argument</a>           31 src/ArgumentConfig.cpp void handleConfig(const std::shared_ptr&lt;Argument&gt;&amp; arg) {</span>
+<span class='curline'><a href='../S/135.html#L40'>Argument</a>           40 src/ArgumentConfig.cpp std::map&lt;std::string, Argument&gt; ArgumentConfig::getDefinedArguments() {</span>
+<span class='curline'><a href='../S/135.html#L41'>Argument</a>           41 src/ArgumentConfig.cpp     std::map&lt;std::string, Argument&gt; definedArgs;</span>
+<span class='curline'><a href='../S/135.html#L44'>Argument</a>           44 src/ArgumentConfig.cpp     definedArgs.emplace("--help", Argument("--help", "-h", "Display help information", false, E_Argument_ValueType::None));</span>
+<span class='curline'><a href='../S/135.html#L45'>Argument</a>           45 src/ArgumentConfig.cpp     definedArgs.emplace("--version", Argument("--version", "-v", "Display version information", false, E_Argument_ValueType::None));</span>
+<span class='curline'><a href='../S/135.html#L46'>Argument</a>           46 src/ArgumentConfig.cpp     definedArgs.emplace("--config", Argument("--config", "-c", "Specify config file", true, E_Argument_ValueType::String));</span>
+<span class='curline'><a href='../S/135.html#L54'>Argument</a>           54 src/ArgumentConfig.cpp     Argument helpArg("--help", "-h", "Display help information", false, E_Argument_ValueType::None);</span>
+<span class='curline'><a href='../S/135.html#L55'>Argument</a>           55 src/ArgumentConfig.cpp     Argument versionArg("--version", "-v", "Display version information", false, E_Argument_ValueType::None);</span>
+<span class='curline'><a href='../S/135.html#L56'>Argument</a>           56 src/ArgumentConfig.cpp     Argument configArg("--config", "-c", "Specify config file", true, E_Argument_ValueType::String);</span>
+<span class='curline'><a href='../S/138.html#L20'>Argument</a>           20 src/Arguments.cpp Arguments::Arguments(int argc, char* argv[], const std::map&lt;std::string, Argument&gt;&amp; definedArgs) {</span>
+<span class='curline'><a href='../S/138.html#L41'>Argument</a>           41 src/Arguments.cpp             const Argument&amp; arg = it-&gt;second;</span>
+<span class='curline'><a href='../S/139.html#L21'>Argument</a>           21 src/CommandLineProcessor.cpp void CommandLineProcessor::AddArgumentHandler(const Argument&amp; arg, ArgumentHandler handler) {</span>
+<span class='curline'><a href='../S/139.html#L22'>Argument</a>           22 src/CommandLineProcessor.cpp     auto argPtr = std::make_shared&lt;Argument&gt;(arg);</span>
+</pre>
+</body>
+</html>

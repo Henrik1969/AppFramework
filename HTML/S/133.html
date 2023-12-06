@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+<title>src/main.cpp</title>
+<meta name='robots' content='noindex,nofollow' />
+<meta name='generator' content='GLOBAL-6.6.7' />
+<meta http-equiv='Content-Style-Type' content='text/css' />
+<link rel='stylesheet' type='text/css' href='../style.css' />
+</head>
+<body>
+<a id='TOP' name='TOP'></a><h2 class='header'><a href='../mains.html'>root</a>/<a href='../files/182.html'>src</a>/main.cpp</h2>
+<em class='comment'>/* [&lt;][&gt;]<a href='#L38'>[^]</a>[v][top]<a href='#BOTTOM'>[bottom]</a><a href='../mains.html'>[index]</a><a href='../help.html'>[help]</a> */</em>
+<hr />
+<h2 class='header'>DEFINITIONS</h2>
+This source file includes following definitions.
+<ol>
+<li><a href='#L38' title='Defined at 38.'>main</a></li>
+</ol>
+<hr />
+<pre>
+<a id='L1' name='L1'></a><em class='comment'>/*</em>
+<a id='L2' name='L2'></a><em class='comment'>  This file is part of the AppFramework project.</em>
+<a id='L3' name='L3'></a><em class='comment'></em>
+<a id='L4' name='L4'></a><em class='comment'>  AppFramework is free software: you can redistribute it and/or modify</em>
+<a id='L5' name='L5'></a><em class='comment'>  it under the terms of the GNU General Public License as published by</em>
+<a id='L6' name='L6'></a><em class='comment'>  the Free Software Foundation, GPL version 4.</em>
+<a id='L7' name='L7'></a><em class='comment'></em>
+<a id='L8' name='L8'></a><em class='comment'>  AppFramework is distributed in the hope that it will be useful,</em>
+<a id='L9' name='L9'></a><em class='comment'>  but WITHOUT ANY WARRANTY; without even the implied warranty of</em>
+<a id='L10' name='L10'></a><em class='comment'>  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</em>
+<a id='L11' name='L11'></a><em class='comment'>  GNU General Public License version 4 for more details.</em>
+<a id='L12' name='L12'></a><em class='comment'></em>
+<a id='L13' name='L13'></a><em class='comment'>  You should have received a copy of the GNU General Public License</em>
+<a id='L14' name='L14'></a><em class='comment'>  along with AppFramework. If not, see &lt;https://www.gnu.org/licenses/&gt;.</em>
+<a id='L15' name='L15'></a><em class='comment'>===============================================================================*/</em>
+<a id='L16' name='L16'></a>
+<a id='L17' name='L17'></a><em class='sharp'>#include</em> &lt;iostream&gt;
+<a id='L18' name='L18'></a><em class='sharp'>#include</em> "<a href='172.html'>EnvVar.hpp</a>"
+<a id='L19' name='L19'></a><em class='sharp'>#include</em> "<a href='146.html'>ConfigManager.hpp</a>"
+<a id='L20' name='L20'></a><em class='sharp'>#include</em> "<a href='170.html'>Logger.hpp</a>"
+<a id='L21' name='L21'></a><em class='sharp'>#include</em> "<a href='145.html'>ArgumentConfig.hpp</a>"
+<a id='L22' name='L22'></a><em class='sharp'>#include</em> "<a href='149.html'>Argument.hpp</a>"
+<a id='L23' name='L23'></a><em class='sharp'>#include</em> "<a href='148.html'>Arguments.hpp</a>"
+<a id='L24' name='L24'></a><em class='sharp'>#include</em> "<a href='151.html'>CommandLineProcessor.hpp</a>"
+<a id='L25' name='L25'></a>
+<a id='L26' name='L26'></a><em class='comment'>//=============================================================================</em>
+<a id='L27' name='L27'></a><em class='comment'>/* @brief Main enterancepoint of the program.</em>
+<a id='L28' name='L28'></a><em class='comment'> * @param[in] argc The count of arguments provided</em>
+<a id='L29' name='L29'></a><em class='comment'> * @param[in] argv A list of char* of arguments</em>
+<a id='L30' name='L30'></a><em class='comment'> * @return An integer that denotes the endstate of the program to the OS</em>
+<a id='L31' name='L31'></a><em class='comment'> * @since 1.0.0</em>
+<a id='L32' name='L32'></a><em class='comment'> * @version 1.1</em>
+<a id='L33' name='L33'></a><em class='comment'> * @author Henrik Sørensen &lt;henriksorensen1969@gmail.com&gt;</em>
+<a id='L34' name='L34'></a><em class='comment'> * @date 2023-01-01</em>
+<a id='L35' name='L35'></a><em class='comment'> * @todo Further Development</em>
+<a id='L36' name='L36'></a><em class='comment'>*/</em>
+<a id='L37' name='L37'></a><em class='comment'>//=============================================================================</em>
+<a id='L38' name='L38'></a><strong class='reserved'>int</strong> main(<strong class='reserved'>int</strong> argc, <strong class='reserved'>char</strong>* argv[]) <em class='brace'>{</em>
+<a id='L39' name='L39'></a>        <em class='comment'>//=========================================================================</em>
+<a id='L40' name='L40'></a>        <em class='comment'>// Initalization </em>
+<a id='L41' name='L41'></a>        <em class='comment'>//=========================================================================</em>
+<a id='L42' name='L42'></a>    <strong class='reserved'>try</strong> <em class='brace'>{</em>
+<a id='L43' name='L43'></a>        <strong class='reserved'>auto</strong> definedArgs = <a href='../S/145.html#L32' title='Defined at 32 in include/ArgumentConfig.hpp.'>ArgumentConfig</a>::<a href='../S/135.html#L40' title='Defined at 40 in src/ArgumentConfig.cpp.'>getDefinedArguments</a>();
+<a id='L44' name='L44'></a>        <a href='../D/10.html' title='Multiple defined in 2 places.'>Arguments</a> cmdArgs(argc, argv, definedArgs);
+<a id='L45' name='L45'></a>        <a href='../D/15.html' title='Multiple defined in 2 places.'>CommandLineProcessor</a> cmdProcessor(cmdArgs);
+<a id='L46' name='L46'></a>        <a href='../S/145.html#L32' title='Defined at 32 in include/ArgumentConfig.hpp.'>ArgumentConfig</a>::<a href='../S/135.html#L52' title='Defined at 52 in src/ArgumentConfig.cpp.'>setupArguments</a>(cmdProcessor);
+<a id='L47' name='L47'></a>        cmdProcessor.<a href='../S/139.html#L38' title='Defined at 38 in src/CommandLineProcessor.cpp.'>Process</a>();
+<a id='L48' name='L48'></a>        <a href='../D/21.html' title='Multiple defined in 2 places.'>EnvVarUtils</a> myVar("LOGPATH");
+<a id='L49' name='L49'></a>        std::string logPathValue = myVar.<a href='../D/44.html' title='Multiple defined in 2 places.'>get</a>();
+<a id='L50' name='L50'></a>        <a href='../D/26.html' title='Multiple defined in 3 places.'>Logger</a>::<a href='../S/168.html#L47' title='Defined at 47 in subprojects/Logger/Logger.cpp.'>getInstance</a>().<a href='../S/168.html#L52' title='Defined at 52 in subprojects/Logger/Logger.cpp.'>log</a>("LOGPATH value: " + logPathValue, "main", <a href='../D/26.html' title='Multiple defined in 3 places.'>Logger</a>::<a href='../S/170.html#L28' title='Defined at 28 in subprojects/Logger/Logger.hpp.'>Severity</a>::Info);
+<a id='L51' name='L51'></a>        <a href='../D/16.html' title='Multiple defined in 3 places.'>ConfigManager</a> configManager("config.json", cmdArgs);
+<a id='L52' name='L52'></a>    <em class='brace'>}</em> <strong class='reserved'>catch</strong> (<strong class='reserved'>const</strong> std::exception&amp; e) <em class='brace'>{</em>
+<a id='L53' name='L53'></a>        std::cerr &lt;&lt; "Error During Initialization: " &lt;&lt; e.what() &lt;&lt; std::endl;
+<a id='L54' name='L54'></a>        exit(1);
+<a id='L55' name='L55'></a>    <em class='brace'>}</em>
+<a id='L56' name='L56'></a>    <em class='comment'>//=========================================================================</em>
+<a id='L57' name='L57'></a>    <em class='comment'>// Do the actual work here </em>
+<a id='L58' name='L58'></a>    <em class='comment'>//=========================================================================</em>
+<a id='L59' name='L59'></a>
+<a id='L60' name='L60'></a>
+<a id='L61' name='L61'></a>        <em class='comment'>//=========================================================================</em>
+<a id='L62' name='L62'></a>    <em class='comment'>// Cleanup code</em>
+<a id='L63' name='L63'></a>    <em class='comment'>//=========================================================================</em>
+<a id='L64' name='L64'></a>
+<a id='L65' name='L65'></a>    <em class='comment'>//§ TODO</em>
+<a id='L66' name='L66'></a>
+<a id='L67' name='L67'></a>    <strong class='reserved'>return</strong> 0;
+</pre>
+<hr />
+<a id='BOTTOM' name='BOTTOM'></a>
+<em class='comment'>/* [&lt;][&gt;][^]<a href='#L38'>[v]</a><a href='#TOP'>[top]</a>[bottom]<a href='../mains.html'>[index]</a><a href='../help.html'>[help]</a> */</em>
+</body>
+</html>
