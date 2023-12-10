@@ -27,7 +27,8 @@
 
 void handleHelp(const std::shared_ptr<Argument>& arg);
 void handleVersion(const std::shared_ptr<Argument>& arg);
-void handleConfig(const std::shared_ptr<Argument>& arg);
+void handleDumpConfig(const std::shared_ptr<Argument>& arg);
+void dumpDefaultConfig();
 
 class ArgumentConfig {
 public:

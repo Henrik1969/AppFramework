@@ -2425,12 +2425,14 @@ cmake_check_build_system:
 
 cmake_minimum_required(VERSION 3.10)
 project(testing VERSION 1.0)
-
+set(CMAKE_BUILD_TYPE Debug)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
-set(CMAKE_BUILD_PARALLEL_LEVEL 20)
+set(CMAKE_BUILD_PARALLEL_LEVEL 5)
 
 include_directories(include)
+
+
 
 # Include subprojects
 add_subdirectory(subprojects/TimeUtils)
@@ -2464,7 +2466,12 @@ set(SOURCES
 )
 
 add_executable(main ${SOURCES})
-
+# Set include directories for the main target
+target_include_directories(main
+    PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/subprojects/UiManager
+        # ... other include directories ...
+)
 # Link the executable with TimeUtils and StringUtils
 target_link_libraries(main PRIVATE TimeUtils)
 target_link_libraries(main PRIVATE StringUtils)
@@ -2502,58 +2509,55 @@ target_link_libraries(main PRIVATE nlohmann_json::nlohmann_json)
 #include "ConfigManager.hpp"
 #include "Logger.hpp"
 #include "ArgumentConfig.hpp"
-#include "Argument.hpp"
 #include "Arguments.hpp"
 #include "CommandLineProcessor.hpp"
 #include "UiManager.hpp"
 
 //=============================================================================
-/* @brief Main enterancepoint of the program.
+/* @brief Main entrance point of the program.
  * @param[in] argc The count of arguments provided
  * @param[in] argv A list of char* of arguments
  * @return An integer that denotes the endstate of the program to the OS
  * @since 1.0.0
  * @version 1.1
- * @author Henrik Sørensen <henriksorensen1969@gmail.com>
+ * @author Henrik Sørensen
  * @date 2023-01-01
  * @todo Further Development
-*/
+ */
 //=============================================================================
 int main(int argc, char* argv[]) {
-	//=========================================================================
-	// Initalization 
-	//=========================================================================
+    //=========================================================================
+    // Initialization
+    //=========================================================================
     try {
+        // Define and process command-line arguments
         auto definedArgs = ArgumentConfig::getDefinedArguments();
         Arguments cmdArgs(argc, argv, definedArgs);
         CommandLineProcessor cmdProcessor(cmdArgs);
         ArgumentConfig::setupArguments(cmdProcessor);
         cmdProcessor.Process();
+
+        // Initialize configuration manager
+        ConfigManager configManager("config.json", cmdArgs);
+
+        // Initialize environment variables
         EnvVarUtils myVar("LOGPATH");
         std::string logPathValue = myVar.get();
         Logger::getInstance().log("LOGPATH value: " + logPathValue, "main", Logger::Severity::Info);
-        ConfigManager configManager("config.json", cmdArgs);
+
+        // Create and run the UI
+        UIManager uiManager(configManager, cmdArgs);
+        uiManager.run();
+
     } catch (const std::exception& e) {
         std::cerr << "Error During Initialization: " << e.what() << std::endl;
         exit(1);
     }
 
-    // Initialize GTK
-    gtk_init(&argc, &argv);
-
     //=========================================================================
-    // Do the actual work here 
-    //=========================================================================
- 	
- 	// Create and run the UI
-    UIManager uiManager;
-    uiManager.run();
-	
-	//=========================================================================
     // Cleanup code
     //=========================================================================
-
-    //§ TODO
+    // Any necessary cleanup before exiting
 
     return 0;
 }---- END OF FILE: /home/henrik/Projekter/AppFramework/src/main.cpp ----
@@ -2582,7 +2586,7 @@ int main(int argc, char* argv[]) {
 
 #include <string>
 
-const std::string VERSION = "1.0.1";
+const std::string VERSION = "1.0.2";
 
 #endif // VERSION_HPP
 ---- END OF FILE: /home/henrik/Projekter/AppFramework/include/Version.hpp ----
@@ -2663,23 +2667,27 @@ class <classname> {
 
 // Logger.cpp
 
-#include "Logger.hpp"
-#include "EnvVar.hpp"
-#include "StringUtils.hpp"
-#include "TimeUtils.hpp"
 #include <iostream>
 #include <fstream>
 #include <sstream>
 #include <chrono>
 #include <iomanip>
+#include "Logger.hpp"
+#include "DefaultSettings.hpp" 
+#include "EnvVar.hpp"
+#include "StringUtils.hpp"
+#include "TimeUtils.hpp"
 
 Logger::Logger() {
-    std::string logPath = "testing.log"; // Default log file name
+    // Fetch default log path from DefaultSettings
+    std::string defaultLogPath = DefaultSettings::getDefaultConfig()["AppFramework"]["Config"]["Defaults"]["Logger"]["defaultLogPath"];
+    
+    std::string logPath = defaultLogPath; // Use default log path
 
     // Use std::getenv directly to avoid dependency on EnvVar
     const char* configPath = std::getenv("LOGPATH");
     if (configPath != nullptr) {
-        logPath = std::string(configPath) + "/testing.log"; // Use the directory from LOGPATH
+        logPath = std::string(configPath) + "/" + defaultLogPath;
     }
 
     logFile.open(logPath, std::ios::out | std::ios::app);
@@ -2696,20 +2704,30 @@ Logger& Logger::getInstance() {
     return instance;
 }
 
-void Logger::log(const std::string& message, const std::string& location, Severity severity) {
-    std::lock_guard<std::mutex> lock(mtx);
-
-    // Get current time
-    auto now = std::chrono::system_clock::now();
-    auto now_time_t = std::chrono::system_clock::to_time_t(now);
-    auto now_localtime = *std::localtime(&now_time_t);
-
+void Logger::log(const std::string& message, const std::string& location, Logger::Severity severity) {
     if (logFile.is_open()) {
-        logFile << "[" << std::put_time(&now_localtime, "%Y-%m-%d %H:%M:%S") << "] "
-                << "[" << severityToString(severity) << "] "
-                << location << ": " << message << std::endl;
+        // Fetch the time format and log entry format from DefaultSettings
+        std::string timeFormat = DefaultSettings::getDefaultConfig()["AppFramework"]["Config"]["Defaults"]["Logger"]["timeFormat"];
+        std::string logEntryFormat = DefaultSettings::getDefaultConfig()["AppFramework"]["Config"]["Defaults"]["Logger"]["logEntryFormat"];
+
+        // Get the current timestamp in the specified format
+        auto now = std::chrono::system_clock::now();
+        auto now_time_t = std::chrono::system_clock::to_time_t(now);
+        std::tm now_localtime = *std::localtime(&now_time_t);
+        std::stringstream timestamp;
+        timestamp << std::put_time(&now_localtime, timeFormat.c_str());
+
+        // Replace placeholders in the log entry format
+        StringUtils::replaceAll(logEntryFormat, "%timestamp%", timestamp.str());
+        StringUtils::replaceAll(logEntryFormat, "%level%", severityToString(severity));
+        StringUtils::replaceAll(logEntryFormat, "%location%", location);
+        StringUtils::replaceAll(logEntryFormat, "%message%", message);
+
+        // Write the formatted log entry
+        logFile << logEntryFormat << std::endl;
     }
 }
+
 
 std::string Logger::severityToString(Severity severity) {
     switch (severity) {
@@ -2725,10 +2743,13 @@ std::string Logger::severityToString(Severity severity) {
 }
 
 std::string Logger::formatMessage(const std::string& message, Severity severity, const std::string& location) {
-    std::string formattedMessage = logFormat;
+    // Fetch default log entry format and time format
+    std::string defaultLogEntryFormat = DefaultSettings::getDefaultConfig()["AppFramework"]["Config"]["Defaults"]["Logger"]["logEntryFormat"];
+    std::string timeFormat = DefaultSettings::getDefaultConfig()["AppFramework"]["Config"]["Defaults"]["Logger"]["timeFormat"];
 
-    // Replace each placeholder with actual data
-    StringUtils::replaceAll(formattedMessage, "%timestamp%", TimeUtils::getCurrentTimestamp());
+    // Format the message using the default format
+    std::string formattedMessage = defaultLogEntryFormat;
+    StringUtils::replaceAll(formattedMessage, "%timestamp%", TimeUtils::getCurrentTimestamp(timeFormat));
     StringUtils::replaceAll(formattedMessage, "%level%", severityToString(severity));
     StringUtils::replaceAll(formattedMessage, "%message%", message);
     StringUtils::replaceAll(formattedMessage, "%location%", location);
@@ -2737,25 +2758,28 @@ std::string Logger::formatMessage(const std::string& message, Severity severity,
 }---- END OF FILE: /home/henrik/Projekter/AppFramework/subprojects/Logger/Logger.cpp ----
 
 ---- START OF FILE: /home/henrik/Projekter/AppFramework/subprojects/Logger/CMakeLists.txt ----
+# CMakeLists.txt for Logger subproject
+
 # Define the Logger library
 add_library(Logger
     Logger.cpp
+    # ... other source files ...
 )
 
-# Link Logger with TimeUtils and StringUtils
+# Link Logger with TimeUtils, StringUtils, and EnvVar
 target_link_libraries(Logger
     PRIVATE
-    	StringUtils
-    	TimeUtils
-    	EnvVar
+        StringUtils
+        TimeUtils
+        EnvVar
 )
 
 # Set include directories for Logger library
 target_include_directories(Logger
-    PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
-)
-
----- END OF FILE: /home/henrik/Projekter/AppFramework/subprojects/Logger/CMakeLists.txt ----
+    PUBLIC 
+        ${CMAKE_CURRENT_SOURCE_DIR}
+        ${CMAKE_CURRENT_SOURCE_DIR}/../CommandLineProcessor  # Include CommandLineProcessor subdirectory
+)---- END OF FILE: /home/henrik/Projekter/AppFramework/subprojects/Logger/CMakeLists.txt ----
 
 ---- START OF FILE: /home/henrik/Projekter/AppFramework/subprojects/Logger/Logger.hpp ----
 /*
@@ -2834,30 +2858,30 @@ private:
 
 // UiManager.hpp
 
-#ifndef UI_MANAGER_HPP
-#define UI_MANAGER_HPP
+#ifndef UIMANAGER_HPP
+#define UIMANAGER_HPP
 
 #include <gtk/gtk.h>
+#include "ConfigManager.hpp"
+#include "Arguments.hpp"
 
 class UIManager {
 private:
     GtkWidget *window;
-    GtkWidget *label;
-    GtkWidget *button;
+    ConfigManager& configManager;
+    Arguments& cmdArgs;
 
-    // Callback for button click
-    static void on_button_clicked(GtkButton *button, gpointer user_data);
-
-    // Update the label's text
-    void updateLabel();
+    void initializeGtk();
+    void createMainWindow();
 
 public:
-    UIManager();
+    UIManager(ConfigManager& configManager, Arguments& cmdArgs);
     ~UIManager();
+
     void run();
 };
 
-#endif // UI_MANAGER_HPP
+#endif // UIMANAGER_HPP
 ---- END OF FILE: /home/henrik/Projekter/AppFramework/subprojects/UiManager/UiManager.hpp ----
 
 ---- START OF FILE: /home/henrik/Projekter/AppFramework/subprojects/UiManager/CMakeLists.txt ----
@@ -2876,7 +2900,8 @@ add_library(UiManager
 # Include GTK headers
 target_include_directories(UiManager
     PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
-    ${GTK3_INCLUDE_DIRS}
+    	${GTK3_INCLUDE_DIRS}
+    	${CMAKE_CURRENT_SOURCE_DIR}/../CommandLineProcessor
 )
 
 # Link GTK libraries
@@ -2912,60 +2937,65 @@ target_compile_options(UiManager
 #include "UiManager.hpp"
 #include <clocale> 
 #include <libintl.h>
+#include <string>
 
 #define _(String) gettext(String)
 
 // Constructor
-UIManager::UIManager() {
-    // Localization setup
-    setlocale(LC_ALL, "");
-    bindtextdomain("your_app_domain", "/path/to/your/locales");
-    textdomain("your_app_domain");
 
-    // Create a new window
+
+UIManager::UIManager(ConfigManager& configManager, Arguments& cmdArgs)
+    : configManager(configManager), cmdArgs(cmdArgs) {
+    initializeGtk();
+    createMainWindow();
+}
+
+UIManager::~UIManager() {
+    // Assuming window will be automatically destroyed when the main loop quits
+    // If any additional cleanup is needed, do it here
+}
+
+void UIManager::initializeGtk() {
+    // Extract the GTK-specific arguments from the command line arguments
+    std::vector<char*> gtkArgs;
+    auto gtkArgList = cmdArgs.getGtkArguments(); // You need to implement this method
+    for (auto& arg : gtkArgList) {
+        gtkArgs.push_back(const_cast<char*>(arg.c_str()));
+    }
+    int gtkArgc = gtkArgs.size();
+    char** gtkArgv = gtkArgs.data();
+
+    // Initialize GTK
+    gtk_init(&gtkArgc, &gtkArgv);
+}
+
+void UIManager::createMainWindow() {
+    // Use settings from ConfigManager to set up the main window
+    int width = configManager.get<int>("AppFramework.Config.Defaults.gtk.window.width");
+    int height = configManager.get<int>("AppFramework.Config.Defaults.gtk.window.height");
+    int xpos = configManager.get<int>("AppFramework.Config.Defaults.gtk.window.pos_x");
+	int ypos = configManager.get<int>("AppFramework.Config.Defaults.gtk.window.pos_y");
+	std::string title = configManager.get<std::string>("AppFramework.Config.Defaults.gtk.window.title");
+ 
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-    gtk_window_set_title(GTK_WINDOW(window), _("Hello World"));
-    gtk_container_set_border_width(GTK_CONTAINER(window), 10);
 
-    // Create a vertical box to pack widgets vertically
-    GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-    gtk_container_add(GTK_CONTAINER(window), vbox);
-
-    // Create a new label
-    label = gtk_label_new("Hello, World!");
-    gtk_box_pack_start(GTK_BOX(vbox), label, TRUE, TRUE, 0);
-
-    // Create a new button
-    button = gtk_button_new_with_label("Click Me");
-    g_signal_connect(button, "clicked", G_CALLBACK(UIManager::on_button_clicked), this);
-    gtk_box_pack_start(GTK_BOX(vbox), button, TRUE, TRUE, 0);
-
-    // Show all widgets within the window
-    gtk_widget_show_all(window);
+    gtk_window_set_default_size(GTK_WINDOW(window), width, height);
+	gtk_window_move(GTK_WINDOW(window), xpos, ypos);
+	gtk_window_set_title(GTK_WINDOW(window),title.c_str());
 
     // Connect the window's destroy signal to gtk_main_quit to exit the application
     g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
+
+    // Additional setup for widgets inside the window
+    // ...
 }
 
-// Destructor
-UIManager::~UIManager() {
-    // No need to explicitly destroy the window, GTK handles it.
-}
-
-// Function to run the GTK main loop
 void UIManager::run() {
+    // Show the window and all its contents
+    gtk_widget_show_all(window);
+
+    // Enter the GTK main event loop
     gtk_main();
-}
-
-// Callback function for button click
-void UIManager::on_button_clicked(GtkButton *button, gpointer user_data) {
-    UIManager *uiManager = static_cast<UIManager*>(user_data);
-    uiManager->updateLabel();
-}
-
-// Function to update the label
-void UIManager::updateLabel() {
-    gtk_label_set_text(GTK_LABEL(label), _("Hi there"));
 }
 ---- END OF FILE: /home/henrik/Projekter/AppFramework/subprojects/UiManager/UiManager.cpp ----
 
@@ -3319,7 +3349,8 @@ namespace StringUtils {
 
 void handleHelp(const std::shared_ptr<Argument>& arg);
 void handleVersion(const std::shared_ptr<Argument>& arg);
-void handleConfig(const std::shared_ptr<Argument>& arg);
+void handleDumpConfig(const std::shared_ptr<Argument>& arg);
+void dumpDefaultConfig();
 
 class ArgumentConfig {
 public:
@@ -3350,23 +3381,36 @@ public:
 
 #include "DefaultSettings.hpp"
 
-const nlohmann::json DefaultSettings::defaultConfig = {
 //=============================================================================
 // Write your default hardcoded configs here in json format
 //=============================================================================
+const nlohmann::json DefaultSettings::defaultConfig = {
     {"AppFramework", {
         {"Config", {
             {"Defaults", {
-                {"Bg", "Lime"}
-                // Add more nested settings as needed
+                {"gtk", {
+                    {"module", "default_module"},
+                    {"window", {
+                        {"height", 600},
+                        {"pos_x", 500},
+                        {"pos_y", 500},
+                        {"width", 800},
+                        {"title", "AppFramework test"}
+                    }}
+                }},
+                {"Logger", {
+                    {"defaultLogPath", "testing.log"},
+                    {"logEntryFormat", "[%timestamp%] [%level%] %location%: %message%"},
+                    {"timeFormat", "%Y-%m-%d %H:%M:%S"}
+                }}
+                // ... other default settings ...
             }}
         }}
     }}
+};
 //=============================================================================
 //
 //=============================================================================
-
-};
 
 const nlohmann::json DefaultSettings::getDefaultConfig() {
     return defaultConfig;
@@ -3391,52 +3435,73 @@ const nlohmann::json DefaultSettings::getDefaultConfig() {
 
 // ArgumentConfig.cpp
 
-#include <iostream>
-#include "ArgumentConfig.hpp"
-#include "Version.hpp"
 
+#include <iostream>
+#include <fstream>  // Include for std::ofstream
+#include <nlohmann/json.hpp>  // Include for JSON handling
+#include "Argument.hpp" 
+#include "ArgumentConfig.hpp"
+#include "DefaultSettings.hpp"
+#include "Version.hpp"
+#include "ConfigManager.hpp"
+
+std::vector<ArgumentData> argumentDefinitions = {
+    {"--help", "-h", "Display help information", true, false, E_Argument_ValueType::None},
+    {"--version", "-v", "Display version information", true, false, E_Argument_ValueType::None},
+    {"--dumpconfig", "-D", "Dumps the default settings to config.json", true, false, E_Argument_ValueType::None}
+    // Add other arguments here
+};
 void handleHelp(const std::shared_ptr<Argument>& arg) {
     std::cout << "Help requested: " << arg->getDescription() << std::endl;
+
+    // Print the command-line options and their descriptions
+    std::cout << "Available command-line options:" << std::endl;
+    for (const auto& argData : argumentDefinitions) {
+        std::cout << "  " << argData.longName << ", " << argData.shortName << "\n    " << argData.description << std::endl;
+    }
+    exit(0);
 }
 
 void handleVersion(const std::shared_ptr<Argument>& arg) {
 	std::cout << VERSION << std::endl;
+	exit(0);
 }
 
-void handleConfig(const std::shared_ptr<Argument>& arg) {
-	#ifdef ENABLE_DEBUG
-    std::cout << "Config requested. ";
-    std::cout << "Long Name: " << arg->getLongName() << ", ";
-    std::cout << "Short Name: " << arg->getShortName() << ", ";
-    std::cout << "Value: " << arg->getValue<std::string>() << std::endl;
-    #endif //ENABLE_DEBUG
+void handleDumpConfig(const std::shared_ptr<Argument>& arg) {
+    dumpDefaultConfig();
+    exit(0); // You might want to exit the program after dumping the config
+}
+
+void dumpDefaultConfig() {
+    nlohmann::json defaultConfig = DefaultSettings::getDefaultConfig();
+    std::ofstream configFile("config.json");
+    configFile << defaultConfig.dump(4); // '4' for pretty printing
+    configFile.close();
+
+    std::cout << "Default configuration dumped to config.json" << std::endl;
 }
 
 std::map<std::string, Argument> ArgumentConfig::getDefinedArguments() {
     std::map<std::string, Argument> definedArgs;
-
-    // Directly constructing Argument objects in the map using emplace
-    definedArgs.emplace("--help", Argument("--help", "-h", "Display help information", false, E_Argument_ValueType::None));
-    definedArgs.emplace("--version", Argument("--version", "-v", "Display version information", false, E_Argument_ValueType::None));
-    definedArgs.emplace("--config", Argument("--config", "-c", "Specify config file", true, E_Argument_ValueType::String));
-    // ... other Argument objects ...
-
+    for (const auto& argData : argumentDefinitions) {
+        definedArgs.emplace(argData.longName, Argument(argData));
+    }
     return definedArgs;
 }
 
 void ArgumentConfig::setupArguments(CommandLineProcessor& cmdProcessor) {
     // Define your arguments
-    Argument helpArg("--help", "-h", "Display help information", false, E_Argument_ValueType::None);
-    Argument versionArg("--version", "-v", "Display version information", false, E_Argument_ValueType::None);
-    Argument configArg("--config", "-c", "Specify config file", true, E_Argument_ValueType::String);
-    // ... other arguments ...
+    Argument helpArg("--help", "-h", "Display help information", true, false, E_Argument_ValueType::None);
+    Argument versionArg("--version", "-v", "Display version information", true, false, E_Argument_ValueType::None);
+    Argument dumpConfigArg("--dumpconfig", "-D", "Dumps the default settings to config.json", true, false, E_Argument_ValueType::None);
 
     // Add handler functions
     cmdProcessor.AddArgumentHandler(helpArg, handleHelp);
     cmdProcessor.AddArgumentHandler(versionArg, handleVersion);
-    cmdProcessor.AddArgumentHandler(configArg, handleConfig);
+	cmdProcessor.AddArgumentHandler(dumpConfigArg, handleDumpConfig);
     // ... other handlers ...
-}---- END OF FILE: /home/henrik/Projekter/AppFramework/subprojects/CommandLineProcessor/ArgumentConfig.cpp ----
+}
+---- END OF FILE: /home/henrik/Projekter/AppFramework/subprojects/CommandLineProcessor/ArgumentConfig.cpp ----
 
 ---- START OF FILE: /home/henrik/Projekter/AppFramework/subprojects/CommandLineProcessor/ConfigManager.cpp ----
 /*
@@ -3460,68 +3525,32 @@ void ArgumentConfig::setupArguments(CommandLineProcessor& cmdProcessor) {
 #include "Arguments.hpp"
 #include "ConfigManager.hpp"
 #include "Logger.hpp"
+#include <DefaultSettings.hpp>
+#include <nlohmann/json.hpp>
 #include <iostream>
 #include <fstream>
 #include <sstream>
 
 #ifdef THREAD_SAFE
 std::mutex ConfigManager::mtx;
-#endif//
+#endif
 
-ConfigManager::ConfigManager(const std::string& configFilePath, const Arguments& cmdArgs):filePath(configFilePath) 
-{
-    std::ifstream file(filePath);
-    if (file) {
-        try {
-            file >> config;
-        } catch (const nlohmann::json::parse_error& e) {
-            Logger::getInstance().log("JSON parsing error: " + std::string(e.what()), "ConfigManager::ConfigManager", Logger::Severity::Error);
-            std::cerr << "Configuration loading error. Check log file for details." << std::endl;
-            config = nlohmann::json::object(); // Ensure config is a valid JSON object
-        }
-    } else {
-        Logger::getInstance().log("Config file not found: " + filePath, "ConfigManager::ConfigManager", Logger::Severity::Warning);
-        std::cerr << "Configuration file missing. A new one will be created." << std::endl;
-        config = nlohmann::json::object(); // Initialize config as an empty object
-    }
+template<typename T>
+void ConfigManager::set(const std::string& key, const T& value) {
+    #ifdef THREAD_SAFE
+    std::lock_guard<std::mutex> lock(mtx);
+    #endif
 
-    // Additional check to ensure config is not null
-    if (config.is_null()) {
-        config = nlohmann::json::object();
-    }
-
-    // Parse and store command line arguments from cmdArgs
-    for (const auto& argPair : cmdArgs.getArgValues()) {
-        std::string key = argPair.first;
-        std::string value = argPair.second;
-        commandLineArgs[key] = value;
-    }
-}
-
-ConfigManager::~ConfigManager() {
-    sync();
-}
-
-void ConfigManager::parseCommandLineArgs(int argc, char** argv) {
-    for (int i = 1; i < argc; ++i) {
-        std::string arg = argv[i];
-        if (arg.size() >= 2 && arg.substr(0, 2) == "--") {
-            // This is a command line argument of the form "--key=value"
-            size_t equalPos = arg.find('=');
-            if (equalPos != std::string::npos) {
-                std::string key = arg.substr(2, equalPos - 2);
-                std::string value = arg.substr(equalPos + 1);
-                commandLineArgs[key] = value;
-            }
-        }
-    }
+    nlohmann::json& ref = getRefToValue(key);
+    ref = value;
 }
 
 template<typename T>
 T ConfigManager::get(const std::string& key) const {
-#ifdef THREAD_SAFE
+    #ifdef THREAD_SAFE
     std::lock_guard<std::mutex> lock(mtx);
-#endif
+    #endif
+
     // Check if a command line argument exists and has a value for the key
     if (commandLineArgs.find(key) != commandLineArgs.end()) {
         std::istringstream valueStream(commandLineArgs.at(key));
@@ -3536,41 +3565,81 @@ T ConfigManager::get(const std::string& key) const {
     } catch (const nlohmann::json::out_of_range& e) {
         // Handle the case where the key does not exist
         Logger::getInstance().log("Key not found in configuration: " + key, "ConfigManager::get", Logger::Severity::Warning);
-        throw std::runtime_error("Configuration key not found: " + key);
-    } catch (const nlohmann::json::exception& e) {
-        // Handle other JSON exceptions
-        Logger::getInstance().log("Error accessing key '" + key + "': " + e.what(), "ConfigManager::get", Logger::Severity::Error);
-        throw;
     }
+        return T(); // Returns a default-constructed object of type T
+    // Additional catch for other JSON exceptions might be needed
 }
 
-template<typename T>
-void ConfigManager::set(const std::string& key, const T& value) {
-#ifdef THREAD_SAFE
-    std::lock_guard<std::mutex> lock(mtx);
-#endif
-    nlohmann::json& ref = getRefToValue(key); // Use non-const ref
-    ref = value;
-}
+ConfigManager::ConfigManager(const std::string& configFilePath, const Arguments& cmdArgs): filePath(configFilePath), cmdArgs(cmdArgs) {
+    applyDefaults();
 
-void ConfigManager::sync() {
-#ifdef THREAD_SAFE
-    std::lock_guard<std::mutex> lock(mtx);
-#endif
-    std::ofstream file(filePath);
+    std::ifstream file(filePath);
     if (file) {
-        file << config.dump(4);  // Save the JSON in a pretty format
+        try {
+            nlohmann::json fileConfig;
+            file >> fileConfig;
+            config.merge_patch(fileConfig);
+
+            std::cout << "ConfigManager::ConfigManager:" << std::endl; 
+            std::cout << config.dump(4) << std::endl;
+        } catch (const nlohmann::json::parse_error& e) {
+            std::cout << "Caught an exception" << std::endl;
+            Logger::getInstance().log("JSON parsing error: " + std::string(e.what()), "ConfigManager::ConfigManager", Logger::Severity::Error);
+            std::cout << "Configuration loading error. Check log file for details." << std::endl;
+        }
+    } else {
+        Logger::getInstance().log("Config file not found: " + filePath, "ConfigManager::ConfigManager", Logger::Severity::Warning);
+        std::cerr << "Configuration file missing. A new one will be created." << std::endl;
+        config = nlohmann::json::object(); // Initialize config as an empty object
+    }
+
+    // Parse and store command line arguments from cmdArgs
+    for (const auto& argPair : cmdArgs.getArgValues()) {
+        std::string key = argPair.first;
+        std::string value = argPair.second;
+        commandLineArgs[key] = value;
     }
 }
 
-const nlohmann::json& ConfigManager::getRefToValue(const std::string& key, bool forRead) const {
-    const nlohmann::json* j = &config;
-    std::istringstream iss(key);
-    std::string token;
-    while (std::getline(iss, token, '.')) {
-        j = &((*j).at(token));
+void ConfigManager::applyDefaults() {
+    auto defaultConfig = DefaultSettings::getDefaultConfig();
+    config = defaultConfig; // Start with default config
+
+    std::ifstream file(filePath);
+    if (file) {
+        try {
+            nlohmann::json fileConfig;
+            file >> fileConfig;
+            mergeJson(config, fileConfig);
+        } catch (const nlohmann::json::parse_error& e) {
+            Logger::getInstance().log("JSON parsing error: " + std::string(e.what()), "ConfigManager::ConfigManager", Logger::Severity::Error);
+        }
     }
-    return *j;
+}
+void ConfigManager::mergeJson(nlohmann::json& base, const nlohmann::json& update) {
+    for (auto& el : base.items()) {
+        if (update.contains(el.key())) {
+            if (el.value().is_object() && update[el.key()].is_object()) {
+                mergeJson(base[el.key()], update[el.key()]);
+            } else {
+                // For non-object types, or if the type in 'update' differs, overwrite the value in 'base'
+                base[el.key()] = update[el.key()];
+            }
+        }
+    }
+}
+void ConfigManager::parseCommandLineArgs(int argc, char** argv) {
+    for (int i = 1; i < argc; ++i) {
+        std::string arg = argv[i];
+        if (arg.size() >= 2 && arg.substr(0, 2) == "--") {
+            size_t equalPos = arg.find('=');
+            if (equalPos != std::string::npos) {
+                std::string key = arg.substr(2, equalPos - 2);
+                std::string value = arg.substr(equalPos + 1);
+                commandLineArgs[key] = value;
+            }
+        }
+    }
 }
 
 nlohmann::json& ConfigManager::getRefToValue(const std::string& key) {
@@ -3589,6 +3658,8 @@ template std::string ConfigManager::get<std::string>(const std::string& key) con
 template void ConfigManager::set<int>(const std::string& key, const int& value);
 template void ConfigManager::set<std::string>(const std::string& key, const std::string& value);
 
+ConfigManager::~ConfigManager() {}
+// Other methods...
 ---- END OF FILE: /home/henrik/Projekter/AppFramework/subprojects/CommandLineProcessor/ConfigManager.cpp ----
 
 ---- START OF FILE: /home/henrik/Projekter/AppFramework/subprojects/CommandLineProcessor/Argument.cpp ----
@@ -3612,29 +3683,35 @@ template void ConfigManager::set<std::string>(const std::string& key, const std:
 
 #include "Argument.hpp"
 
-Argument::Argument(const std::string& longname, const std::string& shortname,
-                   const std::string& description, bool needValue,
-                   E_Argument_ValueType valueType) 
-    : longName(longname), shortName(shortname), description(description),
-      needValue(needValue), valueType(valueType) {}
+Argument::Argument(	const std::string& longname, 
+					const std::string& shortname,
+                   	const std::string& description,
+                   	bool hasShortValue, 
+                   	bool needValue,
+                   	E_Argument_ValueType valueType) : 
+					longName(longname),
+    				shortName(shortname), 
+    				description(description),
+    				hasShortValueflag(hasShortValue),
+      				needValue(needValue), 
+      				valueType(valueType) {}
 
 Argument::Argument(const ArgumentData& data):
 longName(data.longName), 
 shortName(data.shortName), 
 description(data.description),
+hasShortValueflag(data.hasShortValue),
 needValue(data.needValue), 
 valueType(data.valueType), 
 defaultValue(data.defaultValue),
 hasDefaultValueFlag(data.hasDefaultValue){}
 
-std::string Argument::getLongName() const	{return longName;}
-std::string Argument::getShortName() const 	{return shortName;}
-std::string Argument::getDescription() const {return description;}
-bool Argument::needsValue() const {return needValue;}
-
-E_Argument_ValueType Argument::getValueType() const {
-    return valueType;
-}
+std::string 			Argument::getLongName() 	const	{return longName;}
+std::string 			Argument::getShortName() 	const 	{return shortName;}
+std::string 			Argument::getDescription() 	const 	{return description;}
+bool 					Argument::hasShortValue() 	const 	{return hasShortValueflag;}
+bool 					Argument::needsValue() 		const 	{return needValue;}
+E_Argument_ValueType 	Argument::getValueType() 	const 	{return valueType;}
 
 void Argument::setValue(const std::string& value) {
     this->value = value;
@@ -3721,12 +3798,15 @@ template float Argument::getValue<float>() const;---- END OF FILE: /home/henrik/
 #include <string>
 #include <mutex>
 #include <nlohmann/json.hpp>
-#include <unordered_map> // For storing command line arguments
+#include <unordered_map>
 
 class ConfigManager {
 public:
-    explicit ConfigManager(const std::string& configFilePath, const Arguments& cmdArgs);
+    ConfigManager(const std::string& configFilePath, const Arguments& cmdArgs);
     ~ConfigManager();
+
+    void applyDefaults();
+	void mergeJson(nlohmann::json& base, const nlohmann::json& update);
 
     template<typename T>
     T get(const std::string& key) const;
@@ -3736,24 +3816,24 @@ public:
 
     void sync();
 
-#ifdef THREAD_SAFE // Mutex for thread safety
-    static std::mutex mtx;  
-#endif
-
 private:
+    const Arguments& cmdArgs; // Reference to an Arguments instance
     nlohmann::json config;
     std::string filePath;
+    
     const nlohmann::json& getRefToValue(const std::string& key, bool forRead) const;
     nlohmann::json& getRefToValue(const std::string& key);
 
     std::unordered_map<std::string, std::string> commandLineArgs; // Store command line arguments
 
     void parseCommandLineArgs(int argc, char** argv);
+    
+#ifdef THREAD_SAFE
+    static std::mutex mtx;
+#endif
 };
 
 #endif // CONFIGMANAGER_HPP
-
-
 ---- END OF FILE: /home/henrik/Projekter/AppFramework/subprojects/CommandLineProcessor/ConfigManager.hpp ----
 
 ---- START OF FILE: /home/henrik/Projekter/AppFramework/subprojects/CommandLineProcessor/Arguments.hpp ----
@@ -3782,6 +3862,7 @@ private:
 #include <string>
 #include <map>
 #include <stdexcept>
+#include <vector>
 
 class Arguments {
 public:
@@ -3790,7 +3871,7 @@ public:
     const std::map<std::string, std::string>& getArgValues() const { return argValues; }
     std::string getArgValue(const std::string& argName) const;
     bool isInArgs(const std::string& str) const;
-
+   	std::vector<std::string> getGtkArguments() const;
 private:
     std::map<std::string, std::string> argValues; // Maps argument names to their values
 };
@@ -3899,6 +3980,23 @@ std::string Arguments::getArgValue(const std::string& argName) const {
 
 bool Arguments::isInArgs(const std::string& str) const {
     return argValues.find(str) != argValues.end();
+}
+
+std::vector<std::string> Arguments::getGtkArguments() const {
+    std::vector<std::string> gtkArgs;
+
+    for (const auto& argPair : argValues) {
+        const std::string& arg = argPair.first;
+
+        // Check if the argument is a GTK argument
+        if (arg.find("--gtk-") == 0) {
+            // Construct the argument string as it would appear on the command line
+            std::string argStr = arg + (argPair.second.empty() ? "" : "=" + argPair.second);
+            gtkArgs.push_back(argStr);
+        }
+    }
+
+    return gtkArgs;
 }---- END OF FILE: /home/henrik/Projekter/AppFramework/subprojects/CommandLineProcessor/Arguments.cpp ----
 
 ---- START OF FILE: /home/henrik/Projekter/AppFramework/subprojects/CommandLineProcessor/Argument.hpp ----
@@ -3940,6 +4038,7 @@ struct ArgumentData {
     std::string longName;
     std::string shortName;
     std::string description;
+    bool hasShortValue;
     bool needValue;
     E_Argument_ValueType valueType;
     std::string defaultValue;
@@ -3948,9 +4047,12 @@ struct ArgumentData {
 
 class Argument {
 public:
-    Argument(const std::string& longname, const std::string& shortname,
-             const std::string& description, bool needValue, 
-             E_Argument_ValueType valueType);
+    Argument(const std::string& longname,  
+    		const std::string& shortname, 
+            const std::string& description, 
+            const bool hasShortValue,
+            const bool needValue, 
+            const E_Argument_ValueType valueType);
 
     // Constructor that takes ArgumentData struct
     Argument(const ArgumentData& data);
@@ -3958,6 +4060,7 @@ public:
     std::string getLongName() const;
     std::string getShortName() const;
     std::string getDescription() const;
+    bool hasShortValue() const;
     bool needsValue() const;
     E_Argument_ValueType getValueType() const;
 
@@ -3974,6 +4077,7 @@ private:
     std::string longName;
     std::string shortName;
     std::string description;
+    bool hasShortValueflag;
     bool needValue;
     E_Argument_ValueType valueType;
     std::string value; // Store the value as a string
@@ -4015,35 +4119,18 @@ CommandLineProcessor::CommandLineProcessor(const Arguments& args) : args(args) {
 void CommandLineProcessor::AddArgumentHandler(const Argument& arg, ArgumentHandler handler) {
     auto argPtr = std::make_shared<Argument>(arg);
     handlers[arg.getLongName()] = ArgumentHandlerPair(argPtr, handler);
-    
-    #ifdef ENABLE_DEBUG
-    std::cout << "Handler added for long name: " << arg.getLongName() << std::endl;
-    #endif //ENABLE_DEBUG
 
     if (!arg.getShortName().empty()) {
         handlers[arg.getShortName()] = ArgumentHandlerPair(argPtr, handler);
-    
-        #ifdef ENABLE_DEBUG
-        std::cout << "Handler added for short name: " << arg.getShortName() << std::endl;
-    	#endif //ENABLE_DEBUG
     }
 }
 
 void CommandLineProcessor::Process() {
     for (const auto& argPair : args.getArgValues()) {
         std::string argName = argPair.first;
-        
-        #ifdef ENABLE_DEBUG
-        std::cout << "Processing argument: " << argName << std::endl;
-        #endif //ENABLE_DEBUG
 
         auto it = handlers.find(argName);
         if (it != handlers.end()) {
-
-        	#ifdef ENABLE_DEBUG	
-        	std::cout << "Handler found for: " << argName << std::endl;
-            #endif //ENABLE_DEBUG
-
             // Update the value of the argument before calling the handler
             it->second.arg->setValue(argPair.second);
             it->second.handler(it->second.arg);
@@ -4079,10 +4166,8 @@ void CommandLineProcessor::Process() {
 
 class DefaultSettings {
 public:
-    static const nlohmann::json getDefaultConfig();
-
-private:
     static const nlohmann::json defaultConfig;
+    static const nlohmann::json getDefaultConfig();
 };
 
 #endif // DEFAULTSETTINGS_HPP

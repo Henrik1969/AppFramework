@@ -1,0 +1,110 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\title{AppFramework Classes API Documentation}
+\author{Your Name}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section*{ConfigManager}
+
+\textbf{Purpose}: Manages application configuration settings.
+
+\textbf{Key Methods}:
+\begin{itemize}
+    \item \texttt{get<T>(const std::string\& key)}: Retrieves a configuration value by key.
+    \item \texttt{set<T>(const std::string\& key, const T\& value)}: Sets a configuration value by key.
+    \item \texttt{applyDefaults()}: Applies default settings.
+    \item \texttt{sync()}: Synchronizes the configuration to the file.
+\end{itemize}
+
+\textbf{Usage Snippet}:
+\begin{verbatim}
+ConfigManager configManager("config.json", cmdArgs);
+configManager.applyDefaults();
+
+// Get a config value
+int windowWidth = configManager.get<int>(
+    "AppFramework.Config.Defaults.gtk.window.width");
+
+// Set a config value
+configManager.set<std::string>(
+    "AppFramework.Config.Defaults.gtk.window.title", "New Title");
+
+// Sync config changes
+configManager.sync();
+\end{verbatim}
+
+\section*{Logger}
+
+\textbf{Purpose}: Provides logging functionality.
+
+\textbf{Key Methods}:
+\begin{itemize}
+    \item \texttt{log(const std::string\& message, const std::string\& location, Severity severity)}: Logs a message.
+\end{itemize}
+
+\textbf{Usage Snippet}:
+\begin{verbatim}
+Logger::getInstance().log("Initialization started", "main", Logger::Severity::Info);
+\end{verbatim}
+
+\section*{UiManager}
+
+\textbf{Purpose}: Manages the user interface.
+
+\textbf{Key Methods}:
+\begin{itemize}
+    \item \texttt{run()}: Runs the UI manager.
+\end{itemize}
+
+\textbf{Usage Snippet}:
+\begin{verbatim}
+UiManager uiManager(configManager, cmdArgs);
+uiManager.run();
+\end{verbatim}
+
+\section*{EnvVarUtils}
+
+\textbf{Purpose}: Manages environment variables.
+
+\textbf{Key Methods}:
+\begin{itemize}
+    \item \texttt{get()}: Retrieves the value of the environment variable.
+    \item \texttt{set(const std::string\& value)}: Sets the value of the environment variable.
+\end{itemize}
+
+\textbf{Usage Snippet}:
+\begin{verbatim}
+EnvVarUtils logPathVar("LOGPATH");
+std::string logPath = logPathVar.get();
+logPathVar.set("/new/log/path");
+\end{verbatim}
+
+\section*{CommandLineProcessor}
+
+\textbf{Purpose}: Processes command-line arguments.
+
+\textbf{Key Methods}:
+\begin{itemize}
+    \item \texttt{AddArgumentHandler(const Argument\& arg, ArgumentHandler handler)}: Adds a handler for a specific argument.
+    \item \texttt{Process()}: Processes the command-line arguments.
+\end{itemize}
+
+\textbf{Usage Snippet}:
+\begin{verbatim}
+CommandLineProcessor cmdProcessor(cmdArgs);
+
+// Define a lambda function to handle an argument
+ArgumentHandler handler = [](const std::shared_ptr<Argument>\& arg) {
+    std::cout << "Argument processed: " << arg->getLongName() << std::endl;
+};
+
+// Add and process arguments
+cmdProcessor.AddArgumentHandler(Argument("--version", "-v", "Display version information"), handler);
+cmdProcessor.Process();
+\end{verbatim}
+
+\end{document}

@@ -51,7 +51,6 @@ int main(int argc, char* argv[]) {
 
         // Initialize configuration manager
         ConfigManager configManager("config.json", cmdArgs);
-        configManager.applyDefaults(); // Apply default configuration settings
 
         // Initialize environment variables
         EnvVarUtils myVar("LOGPATH");

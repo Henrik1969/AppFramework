@@ -16,23 +16,27 @@
 
 // Logger.cpp
 
-#include "Logger.hpp"
-#include "EnvVar.hpp"
-#include "StringUtils.hpp"
-#include "TimeUtils.hpp"
 #include <iostream>
 #include <fstream>
 #include <sstream>
 #include <chrono>
 #include <iomanip>
+#include "Logger.hpp"
+#include "DefaultSettings.hpp" 
+#include "EnvVar.hpp"
+#include "StringUtils.hpp"
+#include "TimeUtils.hpp"
 
 Logger::Logger() {
-    std::string logPath = "testing.log"; // Default log file name
+    // Fetch default log path from DefaultSettings
+    std::string defaultLogPath = DefaultSettings::getDefaultConfig()["AppFramework"]["Config"]["Defaults"]["Logger"]["defaultLogPath"];
+    
+    std::string logPath = defaultLogPath; // Use default log path
 
     // Use std::getenv directly to avoid dependency on EnvVar
     const char* configPath = std::getenv("LOGPATH");
     if (configPath != nullptr) {
-        logPath = std::string(configPath) + "/testing.log"; // Use the directory from LOGPATH
+        logPath = std::string(configPath) + "/" + defaultLogPath;
     }
 
     logFile.open(logPath, std::ios::out | std::ios::app);
@@ -49,20 +53,30 @@ Logger& Logger::getInstance() {
     return instance;
 }
 
-void Logger::log(const std::string& message, const std::string& location, Severity severity) {
-    std::lock_guard<std::mutex> lock(mtx);
-
-    // Get current time
-    auto now = std::chrono::system_clock::now();
-    auto now_time_t = std::chrono::system_clock::to_time_t(now);
-    auto now_localtime = *std::localtime(&now_time_t);
-
+void Logger::log(const std::string& message, const std::string& location, Logger::Severity severity) {
     if (logFile.is_open()) {
-        logFile << "[" << std::put_time(&now_localtime, "%Y-%m-%d %H:%M:%S") << "] "
-                << "[" << severityToString(severity) << "] "
-                << location << ": " << message << std::endl;
+        // Fetch the time format and log entry format from DefaultSettings
+        std::string timeFormat = DefaultSettings::getDefaultConfig()["AppFramework"]["Config"]["Defaults"]["Logger"]["timeFormat"];
+        std::string logEntryFormat = DefaultSettings::getDefaultConfig()["AppFramework"]["Config"]["Defaults"]["Logger"]["logEntryFormat"];
+
+        // Get the current timestamp in the specified format
+        auto now = std::chrono::system_clock::now();
+        auto now_time_t = std::chrono::system_clock::to_time_t(now);
+        std::tm now_localtime = *std::localtime(&now_time_t);
+        std::stringstream timestamp;
+        timestamp << std::put_time(&now_localtime, timeFormat.c_str());
+
+        // Replace placeholders in the log entry format
+        StringUtils::replaceAll(logEntryFormat, "%timestamp%", timestamp.str());
+        StringUtils::replaceAll(logEntryFormat, "%level%", severityToString(severity));
+        StringUtils::replaceAll(logEntryFormat, "%location%", location);
+        StringUtils::replaceAll(logEntryFormat, "%message%", message);
+
+        // Write the formatted log entry
+        logFile << logEntryFormat << std::endl;
     }
 }
+
 
 std::string Logger::severityToString(Severity severity) {
     switch (severity) {
@@ -78,10 +92,13 @@ std::string Logger::severityToString(Severity severity) {
 }
 
 std::string Logger::formatMessage(const std::string& message, Severity severity, const std::string& location) {
-    std::string formattedMessage = logFormat;
+    // Fetch default log entry format and time format
+    std::string defaultLogEntryFormat = DefaultSettings::getDefaultConfig()["AppFramework"]["Config"]["Defaults"]["Logger"]["logEntryFormat"];
+    std::string timeFormat = DefaultSettings::getDefaultConfig()["AppFramework"]["Config"]["Defaults"]["Logger"]["timeFormat"];
 
-    // Replace each placeholder with actual data
-    StringUtils::replaceAll(formattedMessage, "%timestamp%", TimeUtils::getCurrentTimestamp());
+    // Format the message using the default format
+    std::string formattedMessage = defaultLogEntryFormat;
+    StringUtils::replaceAll(formattedMessage, "%timestamp%", TimeUtils::getCurrentTimestamp(timeFormat));
     StringUtils::replaceAll(formattedMessage, "%level%", severityToString(severity));
     StringUtils::replaceAll(formattedMessage, "%message%", message);
     StringUtils::replaceAll(formattedMessage, "%location%", location);

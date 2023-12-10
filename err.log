@@ -1,0 +1,20 @@
+/home/henrik/Projekter/AppFramework/subprojects/CommandLineProcessor/ConfigManager.cpp: In member function ‘T ConfigManager::get(const string&) const [with T = int]’:
+/home/henrik/Projekter/AppFramework/subprojects/CommandLineProcessor/ConfigManager.cpp:64:1: warning: control reaches end of non-void function [-Wreturn-type]
+   64 | }
+      | ^
+/home/henrik/Projekter/AppFramework/subprojects/CommandLineProcessor/ConfigManager.cpp: In member function ‘T ConfigManager::get(const string&) const [with T = std::__cxx11::basic_string<char>]’:
+/home/henrik/Projekter/AppFramework/subprojects/CommandLineProcessor/ConfigManager.cpp:64:1: warning: control reaches end of non-void function [-Wreturn-type]
+   64 | }
+      | ^
+/usr/bin/ld: CMakeFiles/main.dir/src/main.cpp.o: in function `main':
+/home/henrik/Projekter/AppFramework/src/main.cpp:64: undefined reference to `ConfigManager::~ConfigManager()'
+/usr/bin/ld: /home/henrik/Projekter/AppFramework/src/main.cpp:64: undefined reference to `ConfigManager::~ConfigManager()'
+/usr/bin/ld: subprojects/CommandLineProcessor/libCommandLineProcessor.a(ConfigManager.cpp.o): in function `int ConfigManager::get<int>(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const':
+/home/henrik/Projekter/AppFramework/subprojects/CommandLineProcessor/ConfigManager.cpp:57: undefined reference to `ConfigManager::getRefToValue(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, bool) const'
+/usr/bin/ld: subprojects/CommandLineProcessor/libCommandLineProcessor.a(ConfigManager.cpp.o): in function `std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > ConfigManager::get<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const':
+/home/henrik/Projekter/AppFramework/subprojects/CommandLineProcessor/ConfigManager.cpp:57: undefined reference to `ConfigManager::getRefToValue(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, bool) const'
+collect2: error: ld returned 1 exit status
+make[3]: *** [CMakeFiles/main.dir/build.make:107: main] Fejl 1
+make[2]: *** [CMakeFiles/Makefile2:195: CMakeFiles/main.dir/all] Fejl 2
+make[1]: *** [Makefile:91: all] Fejl 2
+make: *** [Makefile:20: rebuild] Fejl 2

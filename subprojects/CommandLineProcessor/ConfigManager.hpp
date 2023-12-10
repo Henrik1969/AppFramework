@@ -24,13 +24,16 @@
 #include <string>
 #include <mutex>
 #include <nlohmann/json.hpp>
-#include <unordered_map> // For storing command line arguments
+#include <unordered_map>
 
 class ConfigManager {
 public:
     ConfigManager(const std::string& configFilePath, const Arguments& cmdArgs);
     ~ConfigManager();
+
     void applyDefaults();
+	void mergeJson(nlohmann::json& base, const nlohmann::json& update);
+
     template<typename T>
     T get(const std::string& key) const;
 
@@ -39,23 +42,21 @@ public:
 
     void sync();
 
-#ifdef THREAD_SAFE // Mutex for thread safety
-    static std::mutex mtx;  
-#endif
-
 private:
-	const Arguments& cmdArgs; // Reference to an Arguments instance
+    const Arguments& cmdArgs; // Reference to an Arguments instance
     nlohmann::json config;
     std::string filePath;
+    
     const nlohmann::json& getRefToValue(const std::string& key, bool forRead) const;
     nlohmann::json& getRefToValue(const std::string& key);
 
     std::unordered_map<std::string, std::string> commandLineArgs; // Store command line arguments
 
     void parseCommandLineArgs(int argc, char** argv);
-
+    
+#ifdef THREAD_SAFE
+    static std::mutex mtx;
+#endif
 };
 
 #endif // CONFIGMANAGER_HPP
-
-

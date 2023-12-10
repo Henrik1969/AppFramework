@@ -36,6 +36,7 @@ struct ArgumentData {
     std::string longName;
     std::string shortName;
     std::string description;
+    bool hasShortValue;
     bool needValue;
     E_Argument_ValueType valueType;
     std::string defaultValue;
@@ -44,9 +45,12 @@ struct ArgumentData {
 
 class Argument {
 public:
-    Argument(const std::string& longname, const std::string& shortname,
-             const std::string& description, bool needValue, 
-             E_Argument_ValueType valueType);
+    Argument(const std::string& longname,  
+    		const std::string& shortname, 
+            const std::string& description, 
+            const bool hasShortValue,
+            const bool needValue, 
+            const E_Argument_ValueType valueType);
 
     // Constructor that takes ArgumentData struct
     Argument(const ArgumentData& data);
@@ -54,6 +58,7 @@ public:
     std::string getLongName() const;
     std::string getShortName() const;
     std::string getDescription() const;
+    bool hasShortValue() const;
     bool needsValue() const;
     E_Argument_ValueType getValueType() const;
 
@@ -70,6 +75,7 @@ private:
     std::string longName;
     std::string shortName;
     std::string description;
+    bool hasShortValueflag;
     bool needValue;
     E_Argument_ValueType valueType;
     std::string value; // Store the value as a string

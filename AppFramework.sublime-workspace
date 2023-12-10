@@ -4,6 +4,30 @@
 		"selected_items":
 		[
 			[
+				"C",
+				"ConfigManager"
+			],
+			[
+				"str",
+				"String"
+			],
+			[
+				"ha",
+				"hasShortValue"
+			],
+			[
+				"has",
+				"hasShortValue"
+			],
+			[
+				"han",
+				"handleUiPosition"
+			],
+			[
+				"cmd",
+				"cmdProcessor"
+			],
+			[
 				"E",
 				"ENABLE_DEBUG"
 			],
@@ -27,6 +51,613 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "subprojects/CommandLineProcessor/ConfigManager.hpp",
+			"settings":
+			{
+				"buffer_size": 1767,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			},
+			"undo_stack":
+			[
+				[
+					4,
+					1,
+					"",
+					null,
+					"AgAAANEGAAAAAAAADQgAAAAAAAAAAAAADQgAAAAAAAANCAAAAAAAAIEBAAAJc3RhdGljIENvbmZpZ01hbmFnZXImIGdldEluc3RhbmNlKGNvbnN0IHN0ZDo6c3RyaW5nJiBjb25maWdGaWxlUGF0aCA9ICIiLCBjb25zdCBBcmd1bWVudHMmIGNtZEFyZ3MgPSBBcmd1bWVudHMoKSkgewogICAgICAgIHN0YXRpYyBzdGQ6Om11dGV4IG11dGV4OwogICAgICAgIHN0ZDo6bG9ja19ndWFyZDxzdGQ6Om11dGV4PiBsb2NrKG11dGV4KTsgLy8gRW5zdXJlIHRocmVhZCBzYWZldHkgZm9yIHNpbmdsZXRvbiBpbml0aWFsaXphdGlvbgogICAgICAgIGlmICghaW5zdGFuY2UpIHsKICAgICAgICAgICAgaW5zdGFuY2UgPSBuZXcgQ29uZmlnTWFuYWdlcihjb25maWdGaWxlUGF0aCwgY21kQXJncyk7CiAgICAgICAgfQogICAgICAgIHJldHVybiAqaW5zdGFuY2U7CiAgICB9",
+					"AQAAAAAAAAABAAAAUggAAAAAAADRBgAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					5,
+					1,
+					"insert",
+					{
+						"characters": "\n"
+					},
+					"AgAAAA0IAAAAAAAADggAAAAAAAAAAAAADggAAAAAAAASCAAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAADQgAAAAAAAANCAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					9,
+					1,
+					"",
+					null,
+					"AgAAAJYCAAAAAAAA5gYAAAAAAAAAAAAA5gYAAAAAAADmBgAAAAAAAOEGAAAjaWZuZGVmIENPTkZJR01BTkFHRVJfSFBQCiNkZWZpbmUgQ09ORklHTUFOQUdFUl9IUFAKCiNpbmNsdWRlICJBcmd1bWVudHMuaHBwIgojaW5jbHVkZSA8aW9zdHJlYW0+CiNpbmNsdWRlIDxzdHJpbmc+CiNpbmNsdWRlIDxtdXRleD4KI2luY2x1ZGUgPG5sb2htYW5uL2pzb24uaHBwPgojaW5jbHVkZSA8dW5vcmRlcmVkX21hcD4gLy8gRm9yIHN0b3JpbmcgY29tbWFuZCBsaW5lIGFyZ3VtZW50cwoKY2xhc3MgQ29uZmlnTWFuYWdlciB7CnByaXZhdGU6CgoJc3RhdGljIENvbmZpZ01hbmFnZXIqIGluc3RhbmNlOwogICAgc3RkOjptdXRleCBtdHg7CgogICAgLy8gUHJpdmF0ZSBjb25zdHJ1Y3RvcgogICAgQ29uZmlnTWFuYWdlcihjb25zdCBzdGQ6OnN0cmluZyYgY29uZmlnRmlsZVBhdGgsIGNvbnN0IEFyZ3VtZW50cyYgY21kQXJncyk7CgogICAgLy8gRGVsZXRlIGNvcHkgY29uc3RydWN0b3IgYW5kIGFzc2lnbm1lbnQgb3BlcmF0b3IKICAgIENvbmZpZ01hbmFnZXIoY29uc3QgQ29uZmlnTWFuYWdlciYpID0gZGVsZXRlOwogICAgQ29uZmlnTWFuYWdlciYgb3BlcmF0b3I9KGNvbnN0IENvbmZpZ01hbmFnZXImKSA9IGRlbGV0ZTsKCWNvbnN0IEFyZ3VtZW50cyYgY21kQXJnczsgLy8gUmVmZXJlbmNlIHRvIGFuIEFyZ3VtZW50cyBpbnN0YW5jZQogICAgbmxvaG1hbm46Ompzb24gY29uZmlnOwogICAgc3RkOjpzdHJpbmcgZmlsZVBhdGg7CiAgICBjb25zdCBubG9obWFubjo6anNvbiYgZ2V0UmVmVG9WYWx1ZShjb25zdCBzdGQ6OnN0cmluZyYga2V5LCBib29sIGZvclJlYWQpIGNvbnN0OwogICAgbmxvaG1hbm46Ompzb24mIGdldFJlZlRvVmFsdWUoY29uc3Qgc3RkOjpzdHJpbmcmIGtleSk7CgogICAgc3RkOjp1bm9yZGVyZWRfbWFwPHN0ZDo6c3RyaW5nLCBzdGQ6OnN0cmluZz4gY29tbWFuZExpbmVBcmdzOyAvLyBTdG9yZSBjb21tYW5kIGxpbmUgYXJndW1lbnRzCgogICAgdm9pZCBwYXJzZUNvbW1hbmRMaW5lQXJncyhpbnQgYXJnYywgY2hhcioqIGFyZ3YpOwogICAgdm9pZCBtZXJnZUpzb24obmxvaG1hbm46Ompzb24mIGJhc2UsIGNvbnN0IG5sb2htYW5uOjpqc29uJiB1cGRhdGUpOwoKcHVibGljOgogICAgc3RhdGljIENvbmZpZ01hbmFnZXImIGdldEluc3RhbmNlKGNvbnN0IHN0ZDo6c3RyaW5nJiBjb25maWdGaWxlUGF0aCwgY29uc3QgQXJndW1lbnRzJiBjbWRBcmdzKSB7CiAgICAgICAgc3RhdGljIHN0ZDo6bXV0ZXggbXV0ZXg7CiAgICAgICAgc3RkOjpsb2NrX2d1YXJkPHN0ZDo6bXV0ZXg+IGxvY2sobXV0ZXgpOwogICAgICAgIGlmICghaW5zdGFuY2UpIHsKICAgICAgICAgICAgaW5zdGFuY2UgPSBuZXcgQ29uZmlnTWFuYWdlcihjb25maWdGaWxlUGF0aCwgY21kQXJncyk7CiAgICAgICAgfQogICAgICAgIHJldHVybiAqaW5zdGFuY2U7CiAgICB9CiAgICAKICAgIH5Db25maWdNYW5hZ2VyKCk7CiAgICB2b2lkIGFwcGx5RGVmYXVsdHMoKTsKICAgIHZvaWQgbWVyZ2VVc2VyQ29uZmlnKGNvbnN0IG5sb2htYW5uOjpqc29uJiB1c2VyQ29uZmlnKTsKICAgIHRlbXBsYXRlPHR5cGVuYW1lIFQ+CiAgICBUIGdldChjb25zdCBzdGQ6OnN0cmluZyYga2V5KSBjb25zdDsKCiAgICB0ZW1wbGF0ZTx0eXBlbmFtZSBUPgogICAgdm9pZCBzZXQoY29uc3Qgc3RkOjpzdHJpbmcmIGtleSwgY29uc3QgVCYgdmFsdWUpOwoKICAgIHZvaWQgc3luYygpOwoKfTsKQ29uZmlnTWFuYWdlciogQ29uZmlnTWFuYWdlcjo6aW5zdGFuY2UgPSBudWxscHRyOwojZW5kaWYgLy8gQ09ORklHTUFOQUdFUl9IUFAKCgo",
+					"AQAAAAAAAAABAAAAdwkAAAAAAACWAgAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					18,
+					1,
+					"cut",
+					null,
+					"AQAAAEwGAAAAAAAATAYAAAAAAABEAAAAdm9pZCBtZXJnZUpzb24obmxvaG1hbm46Ompzb24mIGJhc2UsIGNvbnN0IG5sb2htYW5uOjpqc29uJiB1cGRhdGUpOwo",
+					"AQAAAAAAAAABAAAATAYAAAAAAACQBgAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					22,
+					1,
+					"paste",
+					null,
+					"AQAAAPEDAAAAAAAANQQAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAA8QMAAAAAAADxAwAAAAAAAAAAAAAAAEJA"
+				],
+				[
+					24,
+					1,
+					"insert",
+					{
+						"characters": "\t"
+					},
+					"AQAAAPEDAAAAAAAA8gMAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAA8QMAAAAAAADxAwAAAAAAAAAAAAAAAAAA"
+				]
+			]
+		},
+		{
+			"file": "subprojects/CommandLineProcessor/Arguments.cpp",
+			"settings":
+			{
+				"buffer_size": 2819,
+				"line_ending": "Unix"
+			},
+			"undo_stack":
+			[
+			]
+		},
+		{
+			"file": "subprojects/CommandLineProcessor/ConfigManager.cpp",
+			"settings":
+			{
+				"buffer_size": 6005,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			},
+			"undo_stack":
+			[
+				[
+					4,
+					1,
+					"",
+					null,
+					"AgAAAJcCAAAAAAAAsg8AAAAAAAAAAAAAsg8AAAAAAACyDwAAAAAAAJ4XAABpbmNsdWRlICJBcmd1bWVudHMuaHBwIgojaW5jbHVkZSAiQ29uZmlnTWFuYWdlci5ocHAiCiNpbmNsdWRlICJMb2dnZXIuaHBwIgojaW5jbHVkZSA8RGVmYXVsdFNldHRpbmdzLmhwcD4KI2luY2x1ZGUgPG5sb2htYW5uL2pzb24uaHBwPiAKI2luY2x1ZGUgPGlvc3RyZWFtPgojaW5jbHVkZSA8ZnN0cmVhbT4KI2luY2x1ZGUgPHNzdHJlYW0+CgojaWZkZWYgVEhSRUFEX1NBRkUKc3RkOjptdXRleCBDb25maWdNYW5hZ2VyOjptdHg7CiNlbmRpZi8vCgpDb25maWdNYW5hZ2VyOjpDb25maWdNYW5hZ2VyKGNvbnN0IHN0ZDo6c3RyaW5nJiBjb25maWdGaWxlUGF0aCwgY29uc3QgQXJndW1lbnRzJiBjbWRBcmdzKTpmaWxlUGF0aChjb25maWdGaWxlUGF0aCksY21kQXJncyhjbWRBcmdzKSAKewoJYXBwbHlEZWZhdWx0cygpOwoKICAgIHN0ZDo6aWZzdHJlYW0gZmlsZShmaWxlUGF0aCk7CiAgICBpZiAoZmlsZSkgewogICAgCQogICAgICAgIHRyeSB7CiAgICAgICAgICAgIG5sb2htYW5uOjpqc29uIGZpbGVDb25maWc7CiAgICAgICAgICAgIGZpbGUgPj4gZmlsZUNvbmZpZzsKICAgICAgICAgICAgY29uZmlnLm1lcmdlX3BhdGNoKGZpbGVDb25maWcpOwoKICAgICAgICAgICAgc3RkOjpjb3V0IDw8ICJDb25maWdNYW5hZ2VyOjpDb25maWdNYW5hZ2VyOiI8PHN0ZDo6ZW5kbDsgCiAgICAgICAgICAgIAogICAgICAgICAgICBzdGQ6OmNvdXQgPDwgY29uZmlnLmR1bXAoNCkgPDwgc3RkOjplbmRsOwogICAgICAgICAgICAKICAgICAgICB9IGNhdGNoIChjb25zdCBubG9obWFubjo6anNvbjo6cGFyc2VfZXJyb3ImIGUpIHsKICAgICAgICAJc3RkOjpjb3V0PDwiQ2F1Z2h0IGFuIGV4Y2VwdGlvbiI8PHN0ZDo6ZW5kbDsKICAgICAgICAgICAgTG9nZ2VyOjpnZXRJbnN0YW5jZSgpLmxvZygiSlNPTiBwYXJzaW5nIGVycm9yOiAiICsgc3RkOjpzdHJpbmcoZS53aGF0KCkpLCAiQ29uZmlnTWFuYWdlcjo6Q29uZmlnTWFuYWdlciIsIExvZ2dlcjo6U2V2ZXJpdHk6OkVycm9yKTsKICAgICAgICAgICAgc3RkOjpjb3V0IDw8ICJDb25maWd1cmF0aW9uIGxvYWRpbmcgZXJyb3IuIENoZWNrIGxvZyBmaWxlIGZvciBkZXRhaWxzLiIgPDwgc3RkOjplbmRsOwogICAgICAgIH0KICAgIH0gZWxzZSB7CiAgICAgICAgTG9nZ2VyOjpnZXRJbnN0YW5jZSgpLmxvZygiQ29uZmlnIGZpbGUgbm90IGZvdW5kOiAiICsgZmlsZVBhdGgsICJDb25maWdNYW5hZ2VyOjpDb25maWdNYW5hZ2VyIiwgTG9nZ2VyOjpTZXZlcml0eTo6V2FybmluZyk7CiAgICAgICAgc3RkOjpjZXJyIDw8ICJDb25maWd1cmF0aW9uIGZpbGUgbWlzc2luZy4gQSBuZXcgb25lIHdpbGwgYmUgY3JlYXRlZC4iIDw8IHN0ZDo6ZW5kbDsKICAgICAgICBjb25maWcgPSBubG9obWFubjo6anNvbjo6b2JqZWN0KCk7IC8vIEluaXRpYWxpemUgY29uZmlnIGFzIGFuIGVtcHR5IG9iamVjdAogICAgfQogICAgCiAgICAvLyBQYXJzZSBhbmQgc3RvcmUgY29tbWFuZCBsaW5lIGFyZ3VtZW50cyBmcm9tIGNtZEFyZ3MKICAgIGZvciAoY29uc3QgYXV0byYgYXJnUGFpciA6IGNtZEFyZ3MuZ2V0QXJnVmFsdWVzKCkpIHsKICAgICAgICBzdGQ6OnN0cmluZyBrZXkgPSBhcmdQYWlyLmZpcnN0OwogICAgICAgIHN0ZDo6c3RyaW5nIHZhbHVlID0gYXJnUGFpci5zZWNvbmQ7CiAgICAgICAgY29tbWFuZExpbmVBcmdzW2tleV0gPSB2YWx1ZTsKICAgIH0KfQoKQ29uZmlnTWFuYWdlcjo6fkNvbmZpZ01hbmFnZXIoKSB7fQoKdm9pZCBDb25maWdNYW5hZ2VyOjpwYXJzZUNvbW1hbmRMaW5lQXJncyhpbnQgYXJnYywgY2hhcioqIGFyZ3YpIHsKICAgIGZvciAoaW50IGkgPSAxOyBpIDwgYXJnYzsgKytpKSB7CiAgICAgICAgc3RkOjpzdHJpbmcgYXJnID0gYXJndltpXTsKICAgICAgICBpZiAoYXJnLnNpemUoKSA+PSAyICYmIGFyZy5zdWJzdHIoMCwgMikgPT0gIi0tIikgewogICAgICAgICAgICAvLyBUaGlzIGlzIGEgY29tbWFuZCBsaW5lIGFyZ3VtZW50IG9mIHRoZSBmb3JtICItLWtleT12YWx1ZSIKICAgICAgICAgICAgc2l6ZV90IGVxdWFsUG9zID0gYXJnLmZpbmQoJz0nKTsKICAgICAgICAgICAgaWYgKGVxdWFsUG9zICE9IHN0ZDo6c3RyaW5nOjpucG9zKSB7CiAgICAgICAgICAgICAgICBzdGQ6OnN0cmluZyBrZXkgPSBhcmcuc3Vic3RyKDIsIGVxdWFsUG9zIC0gMik7CiAgICAgICAgICAgICAgICBzdGQ6OnN0cmluZyB2YWx1ZSA9IGFyZy5zdWJzdHIoZXF1YWxQb3MgKyAxKTsKICAgICAgICAgICAgICAgIGNvbW1hbmRMaW5lQXJnc1trZXldID0gdmFsdWU7CiAgICAgICAgICAgIH0KICAgICAgICB9CiAgICB9Cn0KCnRlbXBsYXRlPHR5cGVuYW1lIFQ+ClQgQ29uZmlnTWFuYWdlcjo6Z2V0KGNvbnN0IHN0ZDo6c3RyaW5nJiBrZXkpIGNvbnN0IHsKI2lmZGVmIFRIUkVBRF9TQUZFCiAgICBzdGQ6OmxvY2tfZ3VhcmQ8c3RkOjptdXRleD4gbG9jayhtdHgpOwojZW5kaWYKICAgIC8vIENoZWNrIGlmIGEgY29tbWFuZCBsaW5lIGFyZ3VtZW50IGV4aXN0cyBhbmQgaGFzIGEgdmFsdWUgZm9yIHRoZSBrZXkKICAgIGlmIChjb21tYW5kTGluZUFyZ3MuZmluZChrZXkpICE9IGNvbW1hbmRMaW5lQXJncy5lbmQoKSkgewogICAgICAgIHN0ZDo6aXN0cmluZ3N0cmVhbSB2YWx1ZVN0cmVhbShjb21tYW5kTGluZUFyZ3MuYXQoa2V5KSk7CiAgICAgICAgVCB0eXBlZFZhbHVlOwogICAgICAgIHZhbHVlU3RyZWFtID4+IHR5cGVkVmFsdWU7CiAgICAgICAgcmV0dXJuIHR5cGVkVmFsdWU7CiAgICB9CgogICAgdHJ5IHsKICAgICAgICBjb25zdCBubG9obWFubjo6anNvbiYgcmVmID0gZ2V0UmVmVG9WYWx1ZShrZXksIHRydWUpOwogICAgICAgIHJldHVybiByZWYuZ2V0PFQ+KCk7CiAgICB9IGNhdGNoIChjb25zdCBubG9obWFubjo6anNvbjo6b3V0X29mX3JhbmdlJiBlKSB7CiAgICAgICAgLy8gSGFuZGxlIHRoZSBjYXNlIHdoZXJlIHRoZSBrZXkgZG9lcyBub3QgZXhpc3QKICAgICAgICBMb2dnZXI6OmdldEluc3RhbmNlKCkubG9nKCJLZXkgbm90IGZvdW5kIGluIGNvbmZpZ3VyYXRpb246ICIgKyBrZXksICJDb25maWdNYW5hZ2VyOjpnZXQiLCBMb2dnZXI6OlNldmVyaXR5OjpXYXJuaW5nKTsKICAgICAgICB0aHJvdyBzdGQ6OnJ1bnRpbWVfZXJyb3IoIkNvbmZpZ3VyYXRpb24ga2V5IG5vdCBmb3VuZDogIiArIGtleSk7CiAgICB9IGNhdGNoIChjb25zdCBubG9obWFubjo6anNvbjo6ZXhjZXB0aW9uJiBlKSB7CiAgICAgICAgLy8gSGFuZGxlIG90aGVyIEpTT04gZXhjZXB0aW9ucwogICAgICAgIExvZ2dlcjo6Z2V0SW5zdGFuY2UoKS5sb2coIkVycm9yIGFjY2Vzc2luZyBrZXkgJyIgKyBrZXkgKyAiJzogIiArIGUud2hhdCgpLCAiQ29uZmlnTWFuYWdlcjo6Z2V0IiwgTG9nZ2VyOjpTZXZlcml0eTo6RXJyb3IpOwogICAgICAgIHRocm93OwogICAgfQp9Cgp0ZW1wbGF0ZTx0eXBlbmFtZSBUPgp2b2lkIENvbmZpZ01hbmFnZXI6OnNldChjb25zdCBzdGQ6OnN0cmluZyYga2V5LCBjb25zdCBUJiB2YWx1ZSkgewojaWZkZWYgVEhSRUFEX1NBRkUKICAgIHN0ZDo6bG9ja19ndWFyZDxzdGQ6Om11dGV4PiBsb2NrKG10eCk7CiNlbmRpZgogICAgbmxvaG1hbm46Ompzb24mIHJlZiA9IGdldFJlZlRvVmFsdWUoa2V5KTsgLy8gVXNlIG5vbi1jb25zdCByZWYKICAgIHJlZiA9IHZhbHVlOwp9Cgp2b2lkIENvbmZpZ01hbmFnZXI6OnN5bmMoKSB7CiNpZmRlZiBUSFJFQURfU0FGRQogICAgc3RkOjpsb2NrX2d1YXJkPHN0ZDo6bXV0ZXg+IGxvY2sobXR4KTsKI2VuZGlmCiAgICBzdGQ6Om9mc3RyZWFtIGZpbGUoZmlsZVBhdGgpOwogICAgaWYgKGZpbGUpIHsKICAgICAgICBmaWxlIDw8IGNvbmZpZy5kdW1wKDQpOyAgLy8gU2F2ZSB0aGUgSlNPTiBpbiBhIHByZXR0eSBmb3JtYXQKICAgIH0KfQoKLy8gRnVuY3Rpb24gdG8gYXBwbHkgZGVmYXVsdCBzZXR0aW5ncwp2b2lkIENvbmZpZ01hbmFnZXI6OmFwcGx5RGVmYXVsdHMoKSB7CiAgICBhdXRvIGRlZmF1bHRDb25maWcgPSBEZWZhdWx0U2V0dGluZ3M6OmdldERlZmF1bHRDb25maWcoKTsKICAgIGNvbmZpZyA9IGRlZmF1bHRDb25maWc7IC8vIFN0YXJ0IHdpdGggZGVmYXVsdCBjb25maWcKICAgIHN0ZDo6aWZzdHJlYW0gZmlsZShmaWxlUGF0aCk7CiAgICBpZiAoZmlsZSkgewogICAgICAgIHRyeSB7CiAgICAgICAgICAgIG5sb2htYW5uOjpqc29uIGZpbGVDb25maWc7CiAgICAgICAgICAgIGZpbGUgPj4gZmlsZUNvbmZpZzsKICAgICAgICAgICAgbWVyZ2VKc29uKGNvbmZpZywgZmlsZUNvbmZpZyk7CiAgICAgICAgfSBjYXRjaCAoY29uc3QgbmxvaG1hbm46Ompzb246OnBhcnNlX2Vycm9yJiBlKSB7CiAgICAgICAgICAgIExvZ2dlcjo6Z2V0SW5zdGFuY2UoKS5sb2coIkpTT04gcGFyc2luZyBlcnJvcjogIiArIHN0ZDo6c3RyaW5nKGUud2hhdCgpKSwgIkNvbmZpZ01hbmFnZXI6OkNvbmZpZ01hbmFnZXIiLCBMb2dnZXI6OlNldmVyaXR5OjpFcnJvcik7CiAgICAgICAgfQogICAgfQp9CgoKdm9pZCBDb25maWdNYW5hZ2VyOjptZXJnZUpzb24obmxvaG1hbm46Ompzb24mIGJhc2UsIGNvbnN0IG5sb2htYW5uOjpqc29uJiB1cGRhdGUpIHsKICAgIGZvciAoYXV0byYgZWwgOiBiYXNlLml0ZW1zKCkpIHsKICAgICAgICBpZiAodXBkYXRlLmNvbnRhaW5zKGVsLmtleSgpKSkgewogICAgICAgICAgICBpZiAoZWwudmFsdWUoKS5pc19vYmplY3QoKSAmJiB1cGRhdGVbZWwua2V5KCldLmlzX29iamVjdCgpKSB7CiAgICAgICAgICAgICAgICBtZXJnZUpzb24oYmFzZVtlbC5rZXkoKV0sIHVwZGF0ZVtlbC5rZXkoKV0pOwogICAgICAgICAgICB9IGVsc2UgaWYgKCF1cGRhdGVbZWwua2V5KCldLmlzX29iamVjdCgpKSB7CiAgICAgICAgICAgICAgICBiYXNlW2VsLmtleSgpXSA9IHVwZGF0ZVtlbC5rZXkoKV07CiAgICAgICAgICAgIH0KICAgICAgICB9IGVsc2UgewogICAgICAgICAgICAvLyBEZWJ1Z2dpbmc6IEtleSBub3QgZm91bmQgaW4gdXBkYXRlLCBsZWF2aW5nIGFzIGlzCgogICAgICAgIH0KICAgIH0KfQoKdm9pZCBDb25maWdNYW5hZ2VyOjptZXJnZVVzZXJDb25maWcoY29uc3QgbmxvaG1hbm46Ompzb24mIHVzZXJDb25maWcpIHsKICAgIC8vIE1lcmdlIG9yIG92ZXJ3cml0ZSBkZWZhdWx0IGNvbmZpZyB3aXRoIHVzZXIgY29uZmlnCiAgICBtZXJnZUpzb24oY29uZmlnLCB1c2VyQ29uZmlnKTsKfQoKY29uc3QgbmxvaG1hbm46Ompzb24mIENvbmZpZ01hbmFnZXI6OmdldFJlZlRvVmFsdWUoY29uc3Qgc3RkOjpzdHJpbmcmIGtleSwgYm9vbCBmb3JSZWFkKSBjb25zdCB7CiAgICBjb25zdCBubG9obWFubjo6anNvbiogaiA9ICZjb25maWc7CiAgICBzdGQ6OmlzdHJpbmdzdHJlYW0gaXNzKGtleSk7CiAgICBzdGQ6OnN0cmluZyB0b2tlbjsKICAgIHdoaWxlIChzdGQ6OmdldGxpbmUoaXNzLCB0b2tlbiwgJy4nKSkgewogICAgICAgIGogPSAmKCgqaikuYXQodG9rZW4pKTsKICAgIH0KICAgIHJldHVybiAqajsKfQoKbmxvaG1hbm46Ompzb24mIENvbmZpZ01hbmFnZXI6OmdldFJlZlRvVmFsdWUoY29uc3Qgc3RkOjpzdHJpbmcmIGtleSkgewogICAgbmxvaG1hbm46Ompzb24qIGogPSAmY29uZmlnOwogICAgc3RkOjppc3RyaW5nc3RyZWFtIGlzcyhrZXkpOwogICAgc3RkOjpzdHJpbmcgdG9rZW47CiAgICB3aGlsZSAoc3RkOjpnZXRsaW5lKGlzcywgdG9rZW4sICcuJykpIHsKICAgICAgICBqID0gJigoKmopW3Rva2VuXSk7CiAgICB9CiAgICByZXR1cm4gKmo7Cn0KCi8vIEV4cGxpY2l0IHRlbXBsYXRlIGluc3RhbnRpYXRpb24KdGVtcGxhdGUgaW50IENvbmZpZ01hbmFnZXI6OmdldDxpbnQ+KGNvbnN0IHN0ZDo6c3RyaW5nJiBrZXkpIGNvbnN0Owp0ZW1wbGF0ZSBzdGQ6OnN0cmluZyBDb25maWdNYW5hZ2VyOjpnZXQ8c3RkOjpzdHJpbmc+KGNvbnN0IHN0ZDo6c3RyaW5nJiBrZXkpIGNvbnN0Owp0ZW1wbGF0ZSB2b2lkIENvbmZpZ01hbmFnZXI6OnNldDxpbnQ+KGNvbnN0IHN0ZDo6c3RyaW5nJiBrZXksIGNvbnN0IGludCYgdmFsdWUpOwp0ZW1wbGF0ZSB2b2lkIENvbmZpZ01hbmFnZXI6OnNldDxzdGQ6OnN0cmluZz4oY29uc3Qgc3RkOjpzdHJpbmcmIGtleSwgY29uc3Qgc3RkOjpzdHJpbmcmIHZhbHVlKTsK",
+					"AQAAAAAAAAABAAAAlwIAAAAAAAA1GgAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					17,
+					1,
+					"",
+					null,
+					"AQAAAEALAAAAAAAAOg0AAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAQAsAAAAAAABACwAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					21,
+					1,
+					"right_delete",
+					null,
+					"AQAAAJYCAAAAAAAAlgIAAAAAAAABAAAAIw",
+					"AQAAAAAAAAABAAAAlgIAAAAAAACWAgAAAAAAAAAAAAAAAAAA"
+				],
+				[
+					27,
+					1,
+					"",
+					null,
+					"AQAAAJIDAAAAAAAAdwQAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAkgMAAAAAAACSAwAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					31,
+					1,
+					"insert",
+					{
+						"characters": "\n"
+					},
+					"AQAAAJIDAAAAAAAAkwMAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAkgMAAAAAAACSAwAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					34,
+					1,
+					"insert",
+					{
+						"characters": "\n"
+					},
+					"AQAAAHkEAAAAAAAAegQAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAeQQAAAAAAAB5BAAAAAAAAAAAAAAAAAAA"
+				],
+				[
+					38,
+					1,
+					"",
+					null,
+					"AQAAAHkEAAAAAAAA0QcAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAeQQAAAAAAAB5BAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					40,
+					1,
+					"insert",
+					{
+						"characters": "\n"
+					},
+					"AQAAAHkEAAAAAAAAegQAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAeQQAAAAAAAB5BAAAAAAAAAAAAAAAAAAA"
+				],
+				[
+					57,
+					1,
+					"insert",
+					{
+						"characters": "\n"
+					},
+					"AgAAAJIHAAAAAAAAkwcAAAAAAAAAAAAAkwcAAAAAAACXBwAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAkgcAAAAAAACSBwAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					60,
+					1,
+					"",
+					null,
+					"AQAAAJIHAAAAAAAA1gcAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAkgcAAAAAAACSBwAAAAAAAAAAAAAAAEJA"
+				],
+				[
+					63,
+					3,
+					"right_delete",
+					null,
+					"AwAAANQHAAAAAAAA1AcAAAAAAAABAAAAfdQHAAAAAAAA1AcAAAAAAAABAAAACtQHAAAAAAAA1AcAAAAAAAABAAAACg",
+					"AQAAAAAAAAABAAAA1AcAAAAAAADUBwAAAAAAAAAAAAAAAAAA"
+				],
+				[
+					68,
+					1,
+					"insert",
+					{
+						"characters": "\n"
+					},
+					"AQAAABwWAAAAAAAAHRYAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAHBYAAAAAAAAcFgAAAAAAAAAAAAAAAAAA"
+				],
+				[
+					70,
+					1,
+					"",
+					null,
+					"AQAAAB0WAAAAAAAAYRYAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAHRYAAAAAAAAdFgAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					72,
+					1,
+					"left_delete",
+					null,
+					"AQAAAF8WAAAAAAAAXxYAAAAAAAABAAAACg",
+					"AQAAAAAAAAABAAAAYBYAAAAAAABgFgAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					73,
+					29,
+					"left_delete",
+					null,
+					"HQAAAF4WAAAAAAAAXhYAAAAAAAABAAAAbl0WAAAAAAAAXRYAAAAAAAABAAAAb1wWAAAAAAAAXBYAAAAAAAABAAAAaVsWAAAAAAAAWxYAAAAAAAABAAAAdFoWAAAAAAAAWhYAAAAAAAABAAAAYVkWAAAAAAAAWRYAAAAAAAABAAAAdFgWAAAAAAAAWBYAAAAAAAABAAAAblcWAAAAAAAAVxYAAAAAAAABAAAAZVYWAAAAAAAAVhYAAAAAAAABAAAAbVUWAAAAAAAAVRYAAAAAAAABAAAAZVQWAAAAAAAAVBYAAAAAAAABAAAAbFMWAAAAAAAAUxYAAAAAAAABAAAAcFIWAAAAAAAAUhYAAAAAAAABAAAAbVEWAAAAAAAAURYAAAAAAAABAAAAaVAWAAAAAAAAUBYAAAAAAAABAAAAIE8WAAAAAAAATxYAAAAAAAABAAAAck4WAAAAAAAAThYAAAAAAAABAAAAb00WAAAAAAAATRYAAAAAAAABAAAAdEwWAAAAAAAATBYAAAAAAAABAAAAY0sWAAAAAAAASxYAAAAAAAABAAAAdUoWAAAAAAAAShYAAAAAAAABAAAAckkWAAAAAAAASRYAAAAAAAABAAAAdEgWAAAAAAAASBYAAAAAAAABAAAAc0cWAAAAAAAARxYAAAAAAAABAAAAZUYWAAAAAAAARhYAAAAAAAABAAAAZEUWAAAAAAAARRYAAAAAAAABAAAAIEQWAAAAAAAARBYAAAAAAAABAAAAL0MWAAAAAAAAQxYAAAAAAAABAAAAL0IWAAAAAAAAQhYAAAAAAAABAAAAIA",
+					"AQAAAAAAAAABAAAAXxYAAAAAAABfFgAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					74,
+					4,
+					"left_delete",
+					null,
+					"BAAAAEEWAAAAAAAAQRYAAAAAAAABAAAAIEAWAAAAAAAAQBYAAAAAAAABAAAAID8WAAAAAAAAPxYAAAAAAAABAAAAID4WAAAAAAAAPhYAAAAAAAABAAAACg",
+					"AQAAAAAAAAABAAAAQhYAAAAAAABCFgAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					88,
+					1,
+					"",
+					null,
+					"AgAAAK8TAAAAAAAArRQAAAAAAAAAAAAArRQAAAAAAACtFAAAAAAAAP4AAABubG9obWFubjo6anNvbiYgQ29uZmlnTWFuYWdlcjo6Z2V0UmVmVG9WYWx1ZShjb25zdCBzdGQ6OnN0cmluZyYga2V5KSB7CiAgICBubG9obWFubjo6anNvbiogaiA9ICZjb25maWc7CiAgICBzdGQ6OmlzdHJpbmdzdHJlYW0gaXNzKGtleSk7CiAgICBzdGQ6OnN0cmluZyB0b2tlbjsKICAgIHdoaWxlIChzdGQ6OmdldGxpbmUoaXNzLCB0b2tlbiwgJy4nKSkgewogICAgICAgIGogPSAmKCgqailbdG9rZW5dKTsKICAgIH0KICAgIHJldHVybiAqajsKfQ",
+					"AQAAAAAAAAABAAAArRQAAAAAAACvEwAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					96,
+					1,
+					"",
+					null,
+					"AQAAAK4UAAAAAAAAzxUAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAArhQAAAAAAACuFAAAAAAAAAAAAAAAAPC/"
+				]
+			]
+		},
+		{
+			"file": "subprojects/CommandLineProcessor/ArgumentConfig.cpp",
+			"settings":
+			{
+				"buffer_size": 3353,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			},
+			"undo_stack":
+			[
+				[
+					4,
+					4,
+					"left_delete",
+					null,
+					"BAAAAPcJAAAAAAAA9wkAAAAAAAABAAAAcvYJAAAAAAAA9gkAAAAAAAABAAAAZfUJAAAAAAAA9QkAAAAAAAABAAAAc/QJAAAAAAAA9AkAAAAAAAABAAAAVQ",
+					"AQAAAAAAAAABAAAA+AkAAAAAAAD4CQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					7,
+					1,
+					"insert",
+					{
+						"characters": "config"
+					},
+					"BgAAAPsJAAAAAAAA/AkAAAAAAAAAAAAA/AkAAAAAAAD9CQAAAAAAAAAAAAD9CQAAAAAAAP4JAAAAAAAAAAAAAP4JAAAAAAAA/wkAAAAAAAAAAAAA/wkAAAAAAAAACgAAAAAAAAAAAAAACgAAAAAAAAEKAAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAA+wkAAAAAAAD7CQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					8,
+					1,
+					"insert",
+					{
+						"characters": " ,"
+					},
+					"AgAAAAEKAAAAAAAAAgoAAAAAAAAAAAAAAgoAAAAAAAADCgAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAAQoAAAAAAAABCgAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					13,
+					1,
+					"right_delete",
+					null,
+					"AQAAAIYJAAAAAAAAhgkAAAAAAABXAAAAICAgIENvbmZpZ01hbmFnZXImIGNvbmZpZ01hbmFnZXIgPSBDb25maWdNYW5hZ2VyOjpnZXRJbnN0YW5jZSgpOyAvLyBBc3N1bWluZyBzaW5nbGV0b24K",
+					"AQAAAAAAAAABAAAAhgkAAAAAAADdCQAAAAAAAAAAAAAAAAAA"
+				],
+				[
+					20,
+					3,
+					"left_delete",
+					null,
+					"AwAAAKIJAAAAAAAAogkAAAAAAAABAAAAZ6EJAAAAAAAAoQkAAAAAAAABAAAAaaAJAAAAAAAAoAkAAAAAAAABAAAAZg",
+					"AQAAAAAAAAABAAAAowkAAAAAAACjCQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					21,
+					1,
+					"insert",
+					{
+						"characters": "f"
+					},
+					"AQAAAKAJAAAAAAAAoQkAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAoAkAAAAAAACgCQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					22,
+					9,
+					"left_delete",
+					null,
+					"CQAAAKAJAAAAAAAAoAkAAAAAAAABAAAAZp8JAAAAAAAAnwkAAAAAAAABAAAAbp4JAAAAAAAAngkAAAAAAAABAAAAb50JAAAAAAAAnQkAAAAAAAABAAAAQ5wJAAAAAAAAnAkAAAAAAAABAAAAZZsJAAAAAAAAmwkAAAAAAAABAAAAZ5oJAAAAAAAAmgkAAAAAAAABAAAAcpkJAAAAAAAAmQkAAAAAAAABAAAAZZgJAAAAAAAAmAkAAAAAAAABAAAAbQ",
+					"AQAAAAAAAAABAAAAoQkAAAAAAAChCQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					23,
+					1,
+					"left_delete",
+					null,
+					"AQAAAJcJAAAAAAAAlwkAAAAAAAABAAAALg",
+					"AQAAAAAAAAABAAAAmAkAAAAAAACYCQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					24,
+					1,
+					"insert",
+					{
+						"characters": " "
+					},
+					"AQAAAJcJAAAAAAAAmAkAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAlwkAAAAAAACXCQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					26,
+					1,
+					"insert",
+					{
+						"characters": "."
+					},
+					"AQAAAJcJAAAAAAAAmAkAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAlwkAAAAAAACXCQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					111,
+					1,
+					"insert",
+					{
+						"characters": "\t"
+					},
+					"AQAAAK8JAAAAAAAAsAkAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAArwkAAAAAAACvCQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					118,
+					1,
+					"insert",
+					{
+						"characters": "mer"
+					},
+					"AwAAAJgJAAAAAAAAmQkAAAAAAAAAAAAAmQkAAAAAAACaCQAAAAAAAAAAAACaCQAAAAAAAJsJAAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAmAkAAAAAAACYCQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					119,
+					3,
+					"left_delete",
+					null,
+					"AwAAAJoJAAAAAAAAmgkAAAAAAAABAAAAcpkJAAAAAAAAmQkAAAAAAAABAAAAZZgJAAAAAAAAmAkAAAAAAAABAAAAbQ",
+					"AQAAAAAAAAABAAAAmwkAAAAAAACbCQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					120,
+					1,
+					"left_delete",
+					null,
+					"AQAAAJcJAAAAAAAAlwkAAAAAAAABAAAALg",
+					"AQAAAAAAAAABAAAAmAkAAAAAAACYCQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					123,
+					1,
+					"left_delete",
+					null,
+					"AQAAAIoJAAAAAAAAigkAAAAAAAABAAAAYw",
+					"AQAAAAAAAAABAAAAiwkAAAAAAACLCQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					124,
+					1,
+					"insert",
+					{
+						"characters": "C"
+					},
+					"AQAAAIoJAAAAAAAAiwkAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAigkAAAAAAACKCQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					127,
+					1,
+					"insert",
+					{
+						"characters": "::"
+					},
+					"AgAAAJcJAAAAAAAAmAkAAAAAAAAAAAAAmAkAAAAAAACZCQAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAlwkAAAAAAACXCQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					128,
+					1,
+					"insert",
+					{
+						"characters": "me"
+					},
+					"AgAAAJkJAAAAAAAAmgkAAAAAAAAAAAAAmgkAAAAAAACbCQAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAmQkAAAAAAACZCQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					129,
+					1,
+					"insert",
+					{
+						"characters": "rge"
+					},
+					"AwAAAJsJAAAAAAAAnAkAAAAAAAAAAAAAnAkAAAAAAACdCQAAAAAAAAAAAACdCQAAAAAAAJ4JAAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAmwkAAAAAAACbCQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					130,
+					1,
+					"insert",
+					{
+						"characters": "Json"
+					},
+					"BAAAAJ4JAAAAAAAAnwkAAAAAAAAAAAAAnwkAAAAAAACgCQAAAAAAAAAAAACgCQAAAAAAAKEJAAAAAAAAAAAAAKEJAAAAAAAAogkAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAngkAAAAAAACeCQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					131,
+					1,
+					"right_delete",
+					null,
+					"AQAAAKIJAAAAAAAAogkAAAAAAAABAAAAIA",
+					"AQAAAAAAAAABAAAAogkAAAAAAACiCQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					148,
+					1,
+					"insert",
+					{
+						"characters": "//"
+					},
+					"FgAAAIYJAAAAAAAAhwkAAAAAAAAAAAAAhQkAAAAAAACGCQAAAAAAAAAAAABnCQAAAAAAAGgJAAAAAAAAAAAAAEgJAAAAAAAASQkAAAAAAAAAAAAARwkAAAAAAABICQAAAAAAAAAAAABBCQAAAAAAAEIJAAAAAAAAAAAAADEJAAAAAAAAMgkAAAAAAAAAAAAA4QgAAAAAAADiCAAAAAAAAAAAAADKCAAAAAAAAMsIAAAAAAAAAAAAAKAIAAAAAAAAoQgAAAAAAAAAAAAAZQgAAAAAAABmCAAAAAAAAAAAAACRCQAAAAAAAJIJAAAAAAAAAAAAAI8JAAAAAAAAkAkAAAAAAAAAAAAAcAkAAAAAAABxCQAAAAAAAAAAAABQCQAAAAAAAFEJAAAAAAAAAAAAAE4JAAAAAAAATwkAAAAAAAAAAAAARwkAAAAAAABICQAAAAAAAAAAAAA2CQAAAAAAADcJAAAAAAAAAAAAAOUIAAAAAAAA5ggAAAAAAAAAAAAAzQgAAAAAAADOCAAAAAAAAAAAAACiCAAAAAAAAKMIAAAAAAAAAAAAAGYIAAAAAAAAZwgAAAAAAAAAAAAA",
+					"AQAAAAAAAAALAAAAZQgAAAAAAABlCAAAAAAAAAAAAAAAAAAAoAgAAAAAAACgCAAAAAAAAAAAAAAAAAAAyggAAAAAAADKCAAAAAAAAAAAAAAAAAAA4QgAAAAAAADhCAAAAAAAAAAAAAAAAAAAMQkAAAAAAAAxCQAAAAAAAAAAAAAAAAAAQQkAAAAAAABBCQAAAAAAAAAAAAAAAAAARwkAAAAAAABHCQAAAAAAAAAAAAAAAAAASAkAAAAAAABICQAAAAAAAAAAAAAAAAAAZwkAAAAAAABnCQAAAAAAAAAAAAAAAAAAhQkAAAAAAACFCQAAAAAAAAAAAAAAAAAAhgkAAAAAAACGCQAAAAAAAAAAAAAAAAAA"
+				],
+				[
+					160,
+					1,
+					"right_delete",
+					null,
+					"AQAAAGQIAAAAAAAAZAgAAAAAAABpAQAACi8vICAgIHN0ZDo6c3RyaW5nIGNvbmZpZ0ZpbGUgPSBhcmctPmdldFZhbHVlPHN0ZDo6c3RyaW5nPigpOwovLyAgICBzdGQ6Omlmc3RyZWFtIGZpbGVTdHJlYW0oY29uZmlnRmlsZSk7Ci8vICAgIGlmICghZmlsZVN0cmVhbSkgewovLyAgICAgICAgc3RkOjpjZXJyIDw8ICJGYWlsZWQgdG8gb3BlbiBjb25maWcgZmlsZTogIiA8PCBjb25maWdGaWxlIDw8IHN0ZDo6ZW5kbDsKLy8gICAgICAgIHJldHVybjsKLy8gICAgfQovLwovLyAgICBubG9obWFubjo6anNvbiB1c2VyQ29uZmlnOwovLyAgICBmaWxlU3RyZWFtID4+IHVzZXJDb25maWc7Ci8vCi8vICAgIENvbmZpZ01hbmFnZXI6Om1lcmdlSnNvbihjb25maWcgLHVzZXJDb25maWcpOw",
+					"AQAAAAAAAAABAAAAzQkAAAAAAABkCAAAAAAAAP///////+9/"
+				],
+				[
+					161,
+					1,
+					"insert",
+					{
+						"characters": "\n"
+					},
+					"AgAAAGQIAAAAAAAAZQgAAAAAAAAAAAAAZQgAAAAAAABmCAAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAZAgAAAAAAABkCAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					166,
+					1,
+					"right_delete",
+					null,
+					"FQAAAOwKAAAAAAAA7AoAAAAAAAABAAAACZ4KAAAAAAAAngoAAAAAAAABAAAACZwKAAAAAAAAnAoAAAAAAAABAAAACYMKAAAAAAAAgwoAAAAAAAABAAAACT4KAAAAAAAAPgoAAAAAAAABAAAACRAKAAAAAAAAEAoAAAAAAAABAAAACccJAAAAAAAAxwkAAAAAAAABAAAACasJAAAAAAAAqwkAAAAAAAABAAAACakJAAAAAAAAqQkAAAAAAAABAAAACaYJAAAAAAAApgkAAAAAAAABAAAACVkJAAAAAAAAWQkAAAAAAAABAAAACT8JAAAAAAAAPwkAAAAAAAABAAAACQAJAAAAAAAAAAkAAAAAAAABAAAACf4IAAAAAAAA/ggAAAAAAAABAAAACfsIAAAAAAAA+wgAAAAAAAABAAAACfAIAAAAAAAA8AgAAAAAAAABAAAACasIAAAAAAAAqwgAAAAAAAABAAAACWwIAAAAAAAAbAgAAAAAAAABAAAACWoIAAAAAAAAaggAAAAAAAABAAAACWcIAAAAAAAAZwgAAAAAAAABAAAACWUIAAAAAAAAZQgAAAAAAAABAAAACQ",
+					"AQAAAAAAAAAVAAAAZQgAAAAAAABlCAAAAAAAAAAAAAAAAPC/ZwgAAAAAAABnCAAAAAAAAAAAAAAAAAAAaggAAAAAAABqCAAAAAAAAAAAAAAAAAAAbAgAAAAAAABsCAAAAAAAAAAAAAAAAAAAqwgAAAAAAACrCAAAAAAAAAAAAAAAAAAA8AgAAAAAAADwCAAAAAAAAAAAAAAAAAAA+wgAAAAAAAD7CAAAAAAAAAAAAAAAAAAA/ggAAAAAAAD+CAAAAAAAAAAAAAAAAAAAAAkAAAAAAAAACQAAAAAAAAAAAAAAAAAAPwkAAAAAAAA/CQAAAAAAAAAAAAAAAAAAWQkAAAAAAABZCQAAAAAAAAAAAAAAAAAApgkAAAAAAACmCQAAAAAAAAAAAAAAAAAAqQkAAAAAAACpCQAAAAAAAAAAAAAAAAAAqwkAAAAAAACrCQAAAAAAAAAAAAAAAAAAxwkAAAAAAADHCQAAAAAAAAAAAAAAAAAAEAoAAAAAAAAQCgAAAAAAAAAAAAAAAAAAPgoAAAAAAAA+CgAAAAAAAAAAAAAAAAAAgwoAAAAAAACDCgAAAAAAAAAAAAAAAAAAnAoAAAAAAACcCgAAAAAAAAAAAAAAAAAAngoAAAAAAACeCgAAAAAAAAAAAAAAAAAA7AoAAAAAAADsCgAAAAAAAAAAAAAAAAAA"
+				],
+				[
+					171,
+					1,
+					"right_delete",
+					null,
+					"EQAAACkIAAAAAAAAKQgAAAAAAAABAAAACSYIAAAAAAAAJggAAAAAAAABAAAACRsIAAAAAAAAGwgAAAAAAAABAAAACfYHAAAAAAAA9gcAAAAAAAABAAAACboHAAAAAAAAugcAAAAAAAABAAAACbgHAAAAAAAAuAcAAAAAAAABAAAACbUHAAAAAAAAtQcAAAAAAAABAAAACacHAAAAAAAApwcAAAAAAAABAAAACaAHAAAAAAAAoAcAAAAAAAABAAAACSMHAAAAAAAAIwcAAAAAAAABAAAACewGAAAAAAAA7AYAAAAAAAABAAAACaoGAAAAAAAAqgYAAAAAAAABAAAACWwGAAAAAAAAbAYAAAAAAAABAAAACWoGAAAAAAAAagYAAAAAAAABAAAACR4GAAAAAAAAHgYAAAAAAAABAAAACeQFAAAAAAAA5AUAAAAAAAABAAAACeMFAAAAAAAA4wUAAAAAAAABAAAACg",
+					"AQAAAAAAAAARAAAA4wUAAAAAAADjBQAAAAAAAAAAAAAAAAAA5AUAAAAAAADkBQAAAAAAAAAAAAAAAAAAHgYAAAAAAAAeBgAAAAAAAAAAAAAAAAAAagYAAAAAAABqBgAAAAAAAAAAAAAAAAAAbAYAAAAAAABsBgAAAAAAAAAAAAAAAAAAqgYAAAAAAACqBgAAAAAAAAAAAAAAAAAA7AYAAAAAAADsBgAAAAAAAAAAAAAAAAAAIwcAAAAAAAAjBwAAAAAAAAAAAAAAAAAAoAcAAAAAAACgBwAAAAAAAAAAAAAAAAAApwcAAAAAAACnBwAAAAAAAAAAAAAAAAAAtQcAAAAAAAC1BwAAAAAAAAAAAAAAAAAAuAcAAAAAAAC4BwAAAAAAAAAAAAAAAAAAugcAAAAAAAC6BwAAAAAAAAAAAAAAAAAA9gcAAAAAAAD2BwAAAAAAAAAAAAAAAAAAGwgAAAAAAAAbCAAAAAAAAAAAAAAAAAAAJggAAAAAAAAmCAAAAAAAAAAAAAAAAAAAKQgAAAAAAAApCAAAAAAAAAAAAAAAAAAA"
+				],
+				[
+					175,
+					1,
+					"left_delete",
+					null,
+					"AQAAAOMFAAAAAAAA4wUAAAAAAAABAAAAIA",
+					"AQAAAAAAAAABAAAA5AUAAAAAAADkBQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					181,
+					2,
+					"right_delete",
+					null,
+					"AgAAAJEEAAAAAAAAkQQAAAAAAABYAAAAICAgIHsiLS1jb25maWciLCAiLWMiLCAiU3BlY2lmeSBjb25maWcgZmlsZSIsIHRydWUsIHRydWUsIEVfQXJndW1lbnRfVmFsdWVUeXBlOjpTdHJpbmd9LJEEAAAAAAAAkQQAAAAAAAABAAAACg",
+					"AQAAAAAAAAABAAAA6QQAAAAAAACRBAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					190,
+					2,
+					"right_delete",
+					null,
+					"AgAAAJEEAAAAAAAAkQQAAAAAAABkAAAAICAgIHsiLS1wb3MiLCAiLXAiLCAiVXBwZXIgbGVmdGNvcm5lciBvZiB0aGUgbWFpbiB3aW5kb3ciLHRydWUsIHRydWUsIEVfQXJndW1lbnRfVmFsdWVUeXBlOjpTdHJpbmd9LJEEAAAAAAAAkQQAAAAAAAABAAAACg",
+					"AQAAAAAAAAABAAAAkQQAAAAAAAD1BAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					194,
+					1,
+					"right_delete",
+					null,
+					"AQAAAJkHAAAAAAAAmQcAAAAAAACOAAAAdm9pZCBoYW5kbGVVaVBvc2l0aW9uKGNvbnN0IHN0ZDo6c2hhcmVkX3B0cjxBcmd1bWVudD4mIGFyZykgewoJc3RkOjpjb3V0PDwiaGFuZGxlVWlQb3NpdGlvbiA6VG8gYmUgaW1wbGVtZW50ZXQgbGF0ZXIiPDxzdGQ6OmVuZGw7CglleGl0KDApOwp9Cg",
+					"AQAAAAAAAAABAAAAmQcAAAAAAAAnCAAAAAAAAAAAAAAAAAAA"
+				],
+				[
+					198,
+					1,
+					"right_delete",
+					null,
+					"AQAAAFoHAAAAAAAAWgcAAAAAAAA/AAAACnZvaWQgaGFuZGxlQ29uZmlnKGNvbnN0IHN0ZDo6c2hhcmVkX3B0cjxBcmd1bWVudD4mIGFyZykgewoKfQoK",
+					"AQAAAAAAAAABAAAAWgcAAAAAAACZBwAAAAAAAAAAAAAAAAAA"
+				],
+				[
+					201,
+					1,
+					"right_delete",
+					null,
+					"AQAAAJYLAAAAAAAAlgsAAAAAAADfAAAAICAgIEFyZ3VtZW50IGNvbmZpZ0FyZygiLS1jb25maWciLCAiLWMiLCAiU3BlY2lmeSBjb25maWcgZmlsZSIsIHRydWUsIHRydWUsIEVfQXJndW1lbnRfVmFsdWVUeXBlOjpTdHJpbmcpOwogICAgQXJndW1lbnQgdWlQb3NpdGlvbigiLS1wb3MiLCJwIiwiU3BlY2lmeSBVcHBlciBsZWZ0Y29ybmVyIG9mIFdpbmRvdyIsIHRydWUsIHRydWUsRV9Bcmd1bWVudF9WYWx1ZVR5cGU6OlN0cmluZyk7Cg",
+					"AQAAAAAAAAABAAAAlgsAAAAAAAB1DAAAAAAAAAAAAAAAAAAA"
+				],
+				[
+					205,
+					1,
+					"right_delete",
+					null,
+					"AQAAALYMAAAAAAAAtgwAAAAAAACAAAAAICAgIGNtZFByb2Nlc3Nvci5BZGRBcmd1bWVudEhhbmRsZXIoY29uZmlnQXJnLCBoYW5kbGVDb25maWcpOwogICAgY21kUHJvY2Vzc29yLkFkZEFyZ3VtZW50SGFuZGxlcih1aVBvc2l0aW9uLGhhbmRsZVVpUG9zaXRpb24pOwo",
+					"AQAAAAAAAAABAAAAtgwAAAAAAAA2DQAAAAAAAAAAAAAAAAAA"
+				]
+			]
+		},
+		{
+			"file": "subprojects/CommandLineProcessor/ArgumentConfig.hpp",
+			"settings":
+			{
+				"buffer_size": 1255,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			},
+			"undo_stack":
+			[
+				[
+					3,
+					2,
+					"right_delete",
+					null,
+					"AgAAANMDAAAAAAAA0wMAAAAAAAA8AAAAICAgIHZvaWQgaGFuZGxlQ29uZmlnKGNvbnN0IHN0ZDo6c2hhcmVkX3B0cjxBcmd1bWVudD4mIGFyZyk70wMAAAAAAADTAwAAAAAAAAEAAAAK",
+					"AQAAAAAAAAABAAAADwQAAAAAAADTAwAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					5,
+					2,
+					"right_delete",
+					null,
+					"AgAAABQEAAAAAAAAFAQAAAAAAAABAAAAIBQEAAAAAAAAFAQAAAAAAAABAAAAIA",
+					"AQAAAAAAAAABAAAAFAQAAAAAAAAUBAAAAAAAAAAAAAAAAAAA"
+				],
+				[
+					7,
+					1,
+					"right_delete",
+					null,
+					"AQAAAFkDAAAAAAAAWQMAAAAAAAABAAAACg",
+					"AQAAAAAAAAABAAAAWQMAAAAAAABZAwAAAAAAAAAAAAAAAAAA"
+				],
+				[
+					9,
+					1,
+					"right_delete",
+					null,
+					"AQAAAFgDAAAAAAAAWAMAAAAAAAABAAAACg",
+					"AQAAAAAAAAABAAAAWAMAAAAAAABYAwAAAAAAAAAAAAAAAAAA"
+				],
+				[
+					10,
+					1,
+					"insert",
+					{
+						"characters": "\n"
+					},
+					"AQAAAFgDAAAAAAAAWQMAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAWAMAAAAAAABYAwAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					12,
+					4,
+					"right_delete",
+					null,
+					"EwAAABYEAAAAAAAAFgQAAAAAAAABAAAAIBMEAAAAAAAAEwQAAAAAAAABAAAAINIDAAAAAAAA0gMAAAAAAAABAAAAIJQDAAAAAAAAlAMAAAAAAAABAAAAIFkDAAAAAAAAWQMAAAAAAAABAAAAIBIEAAAAAAAAEgQAAAAAAAABAAAAIBAEAAAAAAAAEAQAAAAAAAABAAAAINADAAAAAAAA0AMAAAAAAAABAAAAIJMDAAAAAAAAkwMAAAAAAAABAAAAIFkDAAAAAAAAWQMAAAAAAAABAAAAIA4EAAAAAAAADgQAAAAAAAABAAAAIA0EAAAAAAAADQQAAAAAAAABAAAACs4DAAAAAAAAzgMAAAAAAAABAAAAIJIDAAAAAAAAkgMAAAAAAAABAAAAIFkDAAAAAAAAWQMAAAAAAAABAAAAIAoEAAAAAAAACgQAAAAAAAABAAAAIMwDAAAAAAAAzAMAAAAAAAABAAAAIJEDAAAAAAAAkQMAAAAAAAABAAAAIFkDAAAAAAAAWQMAAAAAAAABAAAAIA",
+					"AQAAAAAAAAAFAAAAWQMAAAAAAABZAwAAAAAAAAAAAAAAAPC/lAMAAAAAAACUAwAAAAAAAAAAAAAAAAAA0gMAAAAAAADSAwAAAAAAAAAAAAAAAAAAEwQAAAAAAAATBAAAAAAAAAAAAAAAAAAAFgQAAAAAAAAWBAAAAAAAAAAAAAAAAAAA"
+				]
+			]
+		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -80,6 +711,10 @@
 		"selected_items":
 		[
 			[
+				"ins",
+				"Package Control: Install Package"
+			],
+			[
 				"list",
 				"Package Control: List Packages"
 			],
@@ -126,47 +761,56 @@
 	"expanded_folders":
 	[
 		"/home/henrik/Projekter/AppFramework",
-		"/home/henrik/Projekter/AppFramework/config",
+		"/home/henrik/Projekter/AppFramework/.vscode",
+		"/home/henrik/Projekter/AppFramework/docs",
+		"/home/henrik/Projekter/AppFramework/docs/Doxygen",
 		"/home/henrik/Projekter/AppFramework/include",
 		"/home/henrik/Projekter/AppFramework/src",
 		"/home/henrik/Projekter/AppFramework/subprojects",
 		"/home/henrik/Projekter/AppFramework/subprojects/CommandLineProcessor",
-		"/home/henrik/Projekter/AppFramework/subprojects/EnvVar",
-		"/home/henrik/Projekter/AppFramework/subprojects/Logger",
-		"/home/henrik/Projekter/AppFramework/subprojects/StringUtils",
-		"/home/henrik/Projekter/AppFramework/subprojects/TimeUtils",
-		"/home/henrik/Projekter/AppFramework/subprojects/UiManager",
-		"/home/henrik/Projekter/AppFramework/tools"
+		"/home/henrik/Projekter/AppFramework/subprojects/EnvVar"
 	],
 	"file_history":
 	[
+		"/home/henrik/Projekter/AppFramework/subprojects/CommandLineProcessor/ConfigManager.cpp",
+		"/home/henrik/Projekter/AppFramework/subprojects/CommandLineProcessor/ConfigManager.hpp",
+		"/home/henrik/Projekter/AppFramework/subprojects/CommandLineProcessor/ArgumentConfig.hpp",
+		"/home/henrik/Projekter/AppFramework/subprojects/CommandLineProcessor/ArgumentConfig.cpp",
+		"/home/henrik/Projekter/AppFramework/subprojects/CommandLineProcessor/Arguments.cpp",
+		"/home/henrik/Projekter/AppFramework/subprojects/CommandLineProcessor/Argument.cpp",
+		"/home/henrik/Projekter/AppFramework/CMakeLists.txt",
+		"/home/henrik/Projekter/AppFramework/src/main.cpp",
+		"/home/henrik/Projekter/AppFramework/include/Version.hpp",
+		"/home/henrik/Projekter/AppFramework/config.json",
+		"/home/henrik/Projekter/AppFramework/subprojects/CommandLineProcessor/DefaultSettings.cpp",
+		"/home/henrik/Projekter/AppFramework/subprojects/CommandLineProcessor/CommandLineProcessor.cpp",
+		"/home/henrik/Projekter/AppFramework/subprojects/Logger/Logger.cpp",
+		"/home/henrik/Projekter/AppFramework/subprojects/EnvVar/EnvVar.cpp",
+		"/home/henrik/Projekter/AppFramework/subprojects/Logger/CMakeLists.txt",
+		"/home/henrik/Projekter/AppFramework/subprojects/UiManager/UiManager.cpp",
+		"/home/henrik/Projekter/AppFramework/docs/currentapi10122023.txt",
+		"/home/henrik/Projekter/AppFramework/largefile.txt",
+		"/home/henrik/Projekter/AppFramework/testing.log",
+		"/home/henrik/Projekter/AppFramework/subprojects/CommandLineProcessor/Argument.hpp",
+		"/home/henrik/Projekter/AppFramework/subprojects/CommandLineProcessor/CommandLineProcessor.hpp",
+		"/home/henrik/Projekter/AppFramework/config/active_flags.conf",
+		"/home/henrik/Dokumenter/note.ssh.txt",
+		"/home/henrik/Projekter/AppFramework/tools/collect.sh",
+		"/home/henrik/Projekter/AppFramework/tools/concatenate_files.sh",
+		"/home/henrik/Projekter/AppFramework/subprojects/UiManager/CMakeLists.txt",
+		"/home/henrik/Projekter/AppFramework/subprojects/CommandLineProcessor/Arguments.hpp",
+		"/home/henrik/Projekter/Clock/clock.cpp",
 		"/home/henrik/.fvwm/.FvwmForm-XDGMenu-Config",
 		"/usr/share/fvwm/default-config/config",
-		"/home/henrik/Projekter/AppFramework/subprojects/CommandLineProcessor/ArgumentConfig.cpp",
-		"/home/henrik/Projekter/AppFramework/src/main.cpp",
-		"/home/henrik/Projekter/AppFramework/subprojects/CommandLineProcessor/ConfigManager.hpp",
-		"/home/henrik/Projekter/AppFramework/subprojects/CommandLineProcessor/ConfigManager.cpp",
-		"/home/henrik/Projekter/AppFramework/subprojects/UiManager/UiManager.cpp",
-		"/home/henrik/Projekter/AppFramework/subprojects/CommandLineProcessor/DefaultSettings.cpp",
 		"/home/henrik/Projekter/AppFramework/subprojects/CommandLineProcessor/DefaultSettings.hpp",
 		"/home/henrik/Projekter/AppFramework/subprojects/UiManager/UiManager.hpp",
 		"/home/henrik/Dokumenter/Rituals/A ritual to Tiamat, as a symbol of chaos and the primal forces of creation and destruction.txt",
-		"/home/henrik/Projekter/AppFramework/tools/concatenate_files.sh",
-		"/home/henrik/Projekter/AppFramework/subprojects/Logger/Logger.cpp",
 		"/home/henrik/Projekter/AppFramework/subprojects/StringUtils/StringUtils.cpp",
-		"/home/henrik/Projekter/AppFramework/subprojects/CommandLineProcessor/Argument.hpp",
-		"/home/henrik/Projekter/AppFramework/subprojects/CommandLineProcessor/Arguments.hpp",
-		"/home/henrik/Projekter/AppFramework/subprojects/CommandLineProcessor/CommandLineProcessor.hpp",
 		"/home/henrik/Projekter/AppFramework/subprojects/StringUtils/StringUtils.hpp",
 		"/home/henrik/Projekter/AppFramework/subprojects/TimeUtils/TimeUtils.cpp",
-		"/home/henrik/Projekter/AppFramework/include/Version.hpp",
 		"/home/henrik/Projekter/AppFramework/subprojects/TimeUtils/TimeUtils.hpp",
-		"/home/henrik/Projekter/AppFramework/largefile.txt",
-		"/home/henrik/Projekter/AppFramework/CMakeLists.txt",
 		"/home/henrik/Projekter/AppFramework/subprojects/CommandLineProcessor/CMakeLists.txt",
-		"/home/henrik/Projekter/AppFramework/subprojects/CommandLineProcessor/CommandLineProcessor.cpp",
 		"/home/henrik/Projekter/AppFramework/subprojects/CommandLineProcessor/CommandlineProcessor.cpp",
-		"/home/henrik/Projekter/AppFramework/subprojects/UiManager/CMakeLists.txt",
 		"/home/henrik/Projekter/AppFramework/src/Argument.cpp",
 		"/home/henrik/Projekter/AppFramework/src/ArgumentConfig.cpp",
 		"/home/henrik/Projekter/AppFramework/src/Arguments.cpp",
@@ -195,7 +839,6 @@
 		"/home/henrik/Projekter/AppFramework/Makefile",
 		"/home/henrik/Projekter/AppFramework/subprojects/wizzard/wizsimple.cpp'",
 		"/home/henrik/Projekter/AppFramework/subprojects/gtkversion/gtkversion.cpp",
-		"/home/henrik/Projekter/AppFramework/subprojects/EnvVar/EnvVar.cpp",
 		"/home/henrik/Projekter/AppFramework/subprojects/EnvVar/EnvVar.hpp",
 		"/home/henrik/.bash_functions",
 		"/home/henrik/.bashrc",
@@ -210,7 +853,6 @@
 		"/home/soerensen/Projekter/Composite/Compositeex.cpp",
 		"/home/henrik/Projekter/AppFramework/subprojects/EnvVar/CMakeLists.txt",
 		"/home/henrik/Projekter/AppFramework/src/EnvVar.cpp",
-		"/home/henrik/Projekter/AppFramework/subprojects/Logger/CMakeLists.txt",
 		"/home/soerensen/Projekter/Language/symtab.cxx",
 		"/home/soerensen/Projekter/teaching_project/main.cpp",
 		"/home/soerensen/Projekter/Scratch/Scratch.cpp",
@@ -234,7 +876,6 @@
 		"/home/henrik/Projekter/AppFramework/include/CMakeFiles",
 		"/home/henrik/Projekter/AppFramework/tools/append_disclaimer.sh",
 		"/home/henrik/Projekter/AppFramework/debian/control",
-		"/home/henrik/Projekter/AppFramework/config.json",
 		"/home/henrik/Projekter/AppFramework/include/largefile",
 		"/home/henrik/Projekter/AppFramework/tools/setprojectname.sh",
 		"/home/henrik/Projekter/AppFramework/include/EnvVar.hpp",
@@ -258,16 +899,7 @@
 		"/home/henrik/Billeder/Baggrunde/package/rename.sh",
 		"/home/henrik/Projekter/Project Ideas/Enhanced Project Prospect: Comprehensive Integrate.txt",
 		"/home/henrik/Projekter/Project Ideas/Integrated Development Environment (IDE) for Code.txt",
-		"/home/henrik/Projekter/Project Ideas/SQL Database for Code Management and Collaboration.txt",
-		"/home/henrik/Projekter/Project Ideas/Document-Centric Code Organization",
-		"/home/henrik/Dokumenter/githubPAT.txt",
-		"/home/henrik/Projekter/AppFramework/tools/toggle_flags_gui.sh",
-		"/home/henrik/Projekter/AppFramework/config/possible_flags.conf",
-		"/home/henrik/Projekter/AppFramework/config/active_flags.conf",
-		"/home/henrik/Projekter/AppFramework/tools/toggle_flags.sh",
-		"/home/henrik/Projekter/AppFramework/config/skel.hpp",
-		"/home/henrik/Projekter/AppFramework/config/compiler_flags.conf",
-		"/home/henrik/Projekter/AppFramework/src/testwater.cpp"
+		"/home/henrik/Projekter/Project Ideas/SQL Database for Code Management and Collaboration.txt"
 	],
 	"find":
 	{
@@ -285,6 +917,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"    ",
 			"EnvVar",
 			"ENVVAR_THREAD_SAFE",
 			"CONFIG_THREAD_SAFE",
@@ -319,6 +952,164 @@
 		{
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "subprojects/CommandLineProcessor/ConfigManager.hpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1767,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1767,
+								1767
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 127.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"stack_multiselect": false,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "subprojects/CommandLineProcessor/Arguments.cpp",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 2819,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								848,
+								848
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"stack_multiselect": false,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "subprojects/CommandLineProcessor/ConfigManager.cpp",
+					"selected": true,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 6005,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								6005,
+								6005
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 1482.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"stack_multiselect": false,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "subprojects/CommandLineProcessor/ArgumentConfig.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3353,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2047,
+								2047
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 64.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"stack_multiselect": false,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "subprojects/CommandLineProcessor/ArgumentConfig.hpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1255,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								857,
+								857
+							],
+							[
+								912,
+								912
+							],
+							[
+								970,
+								970
+							],
+							[
+								1031,
+								1031
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"stack_multiselect": false,
+					"type": "text"
+				}
 			]
 		}
 	],

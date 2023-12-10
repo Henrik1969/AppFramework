@@ -2,7 +2,21 @@
     "AppFramework": {
         "Config": {
             "Defaults": {
-                "Bg": "Lime"
+                "Logger": {
+                    "defaultLogPath": "testing.log",
+                    "logEntryFormat": "[%timestamp%] [%level%] %location%: %message%",
+                    "timeFormat": "%Y-%m-%d %H:%M:%S"
+                },
+                "gtk": {
+                    "module": "default_module",
+                    "window": {
+                        "height": 600,
+                        "pos_x": 500,
+                        "pos_y": 500,
+                        "title": "AppFramework test",
+                        "width": 800
+                    }
+                }
             }
         }
     }

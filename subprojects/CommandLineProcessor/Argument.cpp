@@ -18,29 +18,35 @@
 
 #include "Argument.hpp"
 
-Argument::Argument(const std::string& longname, const std::string& shortname,
-                   const std::string& description, bool needValue,
-                   E_Argument_ValueType valueType) 
-    : longName(longname), shortName(shortname), description(description),
-      needValue(needValue), valueType(valueType) {}
+Argument::Argument(	const std::string& longname, 
+					const std::string& shortname,
+                   	const std::string& description,
+                   	bool hasShortValue, 
+                   	bool needValue,
+                   	E_Argument_ValueType valueType) : 
+					longName(longname),
+    				shortName(shortname), 
+    				description(description),
+    				hasShortValueflag(hasShortValue),
+      				needValue(needValue), 
+      				valueType(valueType) {}
 
 Argument::Argument(const ArgumentData& data):
 longName(data.longName), 
 shortName(data.shortName), 
 description(data.description),
+hasShortValueflag(data.hasShortValue),
 needValue(data.needValue), 
 valueType(data.valueType), 
 defaultValue(data.defaultValue),
 hasDefaultValueFlag(data.hasDefaultValue){}
 
-std::string Argument::getLongName() const	{return longName;}
-std::string Argument::getShortName() const 	{return shortName;}
-std::string Argument::getDescription() const {return description;}
-bool Argument::needsValue() const {return needValue;}
-
-E_Argument_ValueType Argument::getValueType() const {
-    return valueType;
-}
+std::string 			Argument::getLongName() 	const	{return longName;}
+std::string 			Argument::getShortName() 	const 	{return shortName;}
+std::string 			Argument::getDescription() 	const 	{return description;}
+bool 					Argument::hasShortValue() 	const 	{return hasShortValueflag;}
+bool 					Argument::needsValue() 		const 	{return needValue;}
+E_Argument_ValueType 	Argument::getValueType() 	const 	{return valueType;}
 
 void Argument::setValue(const std::string& value) {
     this->value = value;
