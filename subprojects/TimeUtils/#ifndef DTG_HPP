@@ -1,0 +1,74 @@
+#ifndef DTG_HPP
+#define DTG_HPP
+
+#include <string>
+#include <chrono>
+
+class DTG {
+public:
+    // Enumeration for time zones
+    enum class TimeZone {
+        Alpha = 'A', Bravo = 'B', Charlie = 'C', Delta = 'D', Echo = 'E', 
+        Foxtrot = 'F', Golf = 'G', Hotel = 'H', India = 'I', Kilo = 'K', 
+        Lima = 'L', Mike = 'M', November = 'N', Oscar = 'O', Papa = 'P', 
+        Quebec = 'Q', Romeo = 'R', Sierra = 'S', Tango = 'T', Uniform = 'U', 
+        Victor = 'V', Whiskey = 'W', Xray = 'X', Yankee = 'Y', Zulu = 'Z'
+    };
+
+    // Constructors
+    DTG() : day(1), hours(0), minutes(0), month(1), year(1970), timeZone(TimeZone::Zulu) {}
+    DTG(const std::string& dtgString) { parseDTGString(dtgString); }
+
+    // Setters
+    void setDay(int d) { day = d; }
+    void setTime(const std::chrono::hours& h, const std::chrono::minutes& m) { hours = h; minutes = m; }
+    void setMonth(int m) { month = m; }
+    void setYear(int y) { year = y; }
+    void setTimeZone(TimeZone tz) { timeZone = tz; }
+
+    // Getters
+    int getDay() const { return day; }
+    std::pair<std::chrono::hours, std::chrono::minutes> getTime() const { return {hours, minutes}; }
+    int getMonth() const { return month; }
+    int getYear() const { return year; }
+    TimeZone getTimeZone() const { return timeZone; }
+    std::string getDTGString() const { return formatDTG(); }
+
+    // Time manipulation
+    void addTime(const std::chrono::hours& h, const std::chrono::minutes& m) {
+        // Implement time addition logic here
+    }
+    void subtractTime(const std::chrono::hours& h, const std::chrono::minutes& m) {
+		// Implement time subtraction logic here
+	}
+
+	// Time zone manipulation
+	void changeTimeZone(TimeZone newTimeZone) {
+	    // Implement time zone change logic here
+	}
+
+private:
+	int day;
+	std::chrono::hours hours;
+	std::chrono::minutes minutes;
+	int month;
+	int year;
+	TimeZone timeZone;
+
+	// Helper functions
+	void updateDTGFromSystemClock() {
+	    // Implement logic to update DTG from the system clock here
+	}
+
+	std::string formatDTG() const {
+	    // Implement logic to format DTG into a string here
+	    return ""; // Placeholder
+	}
+	
+	void parseDTGString(const std::string& dtgString) {
+	    // Implement logic to parse a DTG string here
+	}
+
+};
+
+#endif // DTG_HPP

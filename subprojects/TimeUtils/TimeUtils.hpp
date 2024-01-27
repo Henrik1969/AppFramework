@@ -27,6 +27,12 @@ namespace TimeUtils {
     std::string getCurrentTimestamp(const std::string& timeFormat);
     std::chrono::system_clock::time_point parseTimestamp(const std::string& timestamp, const std::string& timeFormat);
     std::chrono::seconds calculateTimeDifference(const std::string& timestamp1, const std::string& timestamp2, const std::string& timeFormat);
+
+    // DTG Format Functions
+    std::string toDTGFormat(const std::chrono::system_clock::time_point& timePoint, const char timeZone);
+    std::chrono::system_clock::time_point fromDTGFormat(const std::string& dtgString);
+    std::string getCurrentDTG(const char timeZone);
+
 } // namespace TimeUtils
 
 #endif // TIMEUTILS_HPP

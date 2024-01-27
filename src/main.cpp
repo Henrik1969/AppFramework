@@ -24,6 +24,9 @@
 #include "Arguments.hpp"
 #include "CommandLineProcessor.hpp"
 #include "UiManager.hpp"
+#include "IUIBuilder.hpp"
+#include "GtkUIBuilder.hpp"
+#include "UIDirector.hpp"
 
 //=============================================================================
 /* @brief Main entrance point of the program.
@@ -41,6 +44,7 @@ int main(int argc, char* argv[]) {
     //=========================================================================
     // Initialization
     //=========================================================================
+     gtk_init(&argc, &argv);
     try {
         // Define and process command-line arguments
         auto definedArgs = ArgumentConfig::getDefinedArguments();
@@ -58,8 +62,19 @@ int main(int argc, char* argv[]) {
         Logger::getInstance().log("LOGPATH value: " + logPathValue, "main", Logger::Severity::Info);
 
         // Create and run the UI
-        UIManager uiManager(configManager, cmdArgs);
-        uiManager.run();
+        // UIManager uiManager(configManager, cmdArgs);
+        // uiManager.run();
+
+        // Initialize the UI Builder and Director
+	    GtkUIBuilder gtkBuilder(argc,argv);
+    	UIDirector uiDirector(gtkBuilder);
+
+    	// Construct the UI
+    	uiDirector.constructUI();
+
+    	// Enter the GTK main event loop (if using GTK)
+    	gtkBuilder.run();
+
 
     } catch (const std::exception& e) {
         std::cerr << "Error During Initialization: " << e.what() << std::endl;

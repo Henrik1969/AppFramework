@@ -53,10 +53,12 @@ void UIManager::initializeGtk() {
 
 void UIManager::createMainWindow() {
     // Use settings from ConfigManager to set up the main window
+    
     int width = configManager.get<int>("AppFramework.Config.Defaults.gtk.window.width");
     int height = configManager.get<int>("AppFramework.Config.Defaults.gtk.window.height");
     int xpos = configManager.get<int>("AppFramework.Config.Defaults.gtk.window.pos_x");
 	int ypos = configManager.get<int>("AppFramework.Config.Defaults.gtk.window.pos_y");
+
 	std::string title = configManager.get<std::string>("AppFramework.Config.Defaults.gtk.window.title");
  
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
@@ -69,7 +71,7 @@ void UIManager::createMainWindow() {
     g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
 
     // Additional setup for widgets inside the window
-    // ...
+    
 }
 
 void UIManager::run() {

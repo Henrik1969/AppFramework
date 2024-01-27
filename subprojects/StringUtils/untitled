@@ -1,0 +1,46 @@
+    
+
+Regular Expression Functions
+
+    Regex Match:
+        bool regexMatch(const std::string& str, const std::string& pattern);
+
+    Regex Search:
+        std::string regexSearch(const std::string& str, const std::string& pattern);
+
+    Regex Replace:
+        void regexReplace(std::string& str, const std::string& pattern, const std::string& replaceWith);
+        std::string regexReplaceCopy(const std::string& str, const std::string& pattern, the std::string& replaceWith);
+
+Encoding and Decoding Functions
+
+    URL Encode:
+        std::string urlEncode(const std::string& str);
+
+    URL Decode:
+        std::string urlDecode(const std::string& str);
+
+    Base64 Encode:
+        std::string base64Encode(const std::string& str);
+
+    Base64 Decode:
+        std::string base64Decode(const std::string& str);
+
+Additional String Manipulation Functions
+
+    **
+
+Levenshtein Distance Calculation:
+
+    int levenshteinDistance(const std::string& str1, const std::string& str2);
+
+    Normalization Functions:
+        void normalizeString(std::string& str);
+        std::string normalizeStringCopy(const std::string& str);
+
+    Word Wrapping:
+        void wordWrap(std::string& str, size_t width);
+        std::string wordWrapCopy(const std::string& str, size_t width);
+
+    String Interpolation:
+        std::string interpolate(const std::string& str, const std::map<std::string, std::string>& variables);
